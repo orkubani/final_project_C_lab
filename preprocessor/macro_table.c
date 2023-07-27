@@ -22,7 +22,7 @@ typedef struct macro_table
 Macro_Table create_macro_table()
 {
     Macro_Table macro_table;
-    macro_table.macros = NULL;
+    macro_table.macros = calloc(1, sizeof(char**));;
     macro_table.num_of_macros = 0;
     return macro_table;
 }
@@ -52,18 +52,50 @@ void insert_macro_line(Macro *macro, const char *line)
 }
 
 
-/* Tester 
+void insert_macro_to_table(Macro_Table *table, Macro *macro)
+{
+    table->num_of_macros += 1;
+    table->macros[table->num_of_macros] = realloc(table->macros[table->num_of_macros], (table->num_of_macros) * sizeof(char *));
+    if (table->macros[table->num_of_macros] == NULL)
+    {
+        printf("Memory allocation failed.\n");
+        /*TODO Check if needed to return NULL*/
+        exit(0);
+    }
+    table->macros[table->num_of_macros - 1] = macro;
+}
+
+/* Tester */
 int main()
 {    
-    int i;
-    Macro first_macro;
+    int i, j;
+    Macro_Table first_table;
+    Macro first_macro, second_macro;
+
     first_macro = create_macro("First Macro");
-    insert_macro_line(&first_macro, "Test1");
-    insert_macro_line(&first_macro, "Test2");
-    for (i=0;i<first_macro.num_of_lines;i++)
+    insert_macro_line(&first_macro, "First line of the first Macro");
+    insert_macro_line(&first_macro, "Second line of the first Macro");
+    insert_macro_line(&first_macro, "Third line of the first Macro");
+
+    second_macro = create_macro("First Macro");
+    insert_macro_line(&second_macro, "First line of the second Macro");
+    insert_macro_line(&second_macro, "Second line of the second Macro");
+    insert_macro_line(&second_macro, "Third line of the second Macro");
+
+    first_table = create_macro_table();
+    insert_macro_to_table(&first_table, &first_macro);
+    insert_macro_to_table(&first_table, &second_macro);
+
+    for (i = 0; i < first_table.num_of_macros; i++) 
     {
-        printf("%s\n",first_macro.lines[i]);
+        printf("Macro name: %s\n", first_table.macros[i]->name);
+        printf("Macro num of lines: %d\n", first_table.macros[i]->num_of_lines);
+
+        for(j=0; j < first_macro.num_of_lines; j++)
+        {
+            printf("Line number %d: %s", j + 1, first_table.macros[i]->lines[j]);
+        }
     }
-    
+
     return 0; 
-} */
+} 
