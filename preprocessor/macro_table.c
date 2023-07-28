@@ -77,6 +77,30 @@ int is_macro_exist(Macro_Table *table, const char * macro_name)
     return 0;
 }
 
+void free_macro(Macro *macro) 
+{
+    int i;
+    
+    if (macro == NULL)
+        return;
+
+    for (i = 0; i < macro->num_of_lines; i++) 
+    {
+        free(macro->lines[i]);
+    }
+
+    free(macro->lines);
+}
+
+
+void free_macro_table(Macro_Table *table) 
+{
+    if (table == NULL)
+        return;
+
+    free(table->macros);
+}
+
 
 /* Tester */
 int main()
@@ -114,6 +138,11 @@ int main()
 
     printf("Looking for: 'First Macro'. result: %d\n", is_macro_exist(&first_table, "First Macro"));
     printf("Looking for: 'Fake Macro'. result: %d\n", is_macro_exist(&first_table, "Fake Macro"));
+    
 
+    free_macro(&first_macro);
+    free_macro(&second_macro);
+    free_macro_table(&first_table);
+    
     return 0; 
 } 
