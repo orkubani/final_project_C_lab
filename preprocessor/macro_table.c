@@ -40,7 +40,7 @@ Macro create_macro(char macro_name[MAX_LINE_LENGTH])
 
 void insert_macro_line(Macro *macro, const char *line)
 {
-    macro->lines[macro->num_of_lines] = calloc(1, sizeof(char *));
+    macro->lines[macro->num_of_lines] = calloc(MAX_LINE_LENGTH, sizeof(char));
     if (macro->lines[macro->num_of_lines] == NULL)
     {
         printf("Memory allocation failed.\n");
@@ -54,15 +54,15 @@ void insert_macro_line(Macro *macro, const char *line)
 
 void insert_macro_to_table(Macro_Table *table, Macro *macro)
 {
-    table->num_of_macros += 1;
-    table->macros[table->num_of_macros] = realloc(table->macros[table->num_of_macros], (table->num_of_macros) * sizeof(char *));
+    table->macros[table->num_of_macros] = calloc(1, sizeof(*macro));
     if (table->macros[table->num_of_macros] == NULL)
     {
         printf("Memory allocation failed.\n");
         /*TODO Check if needed to return NULL*/
         exit(0);
     }
-    table->macros[table->num_of_macros - 1] = macro;
+    table->macros[table->num_of_macros] = macro;
+    table->num_of_macros += 1;
 }
 
 /* Tester */
@@ -77,7 +77,7 @@ int main()
     insert_macro_line(&first_macro, "Second line of the first Macro");
     insert_macro_line(&first_macro, "Third line of the first Macro");
 
-    second_macro = create_macro("First Macro");
+    second_macro = create_macro("Second Macro");
     insert_macro_line(&second_macro, "First line of the second Macro");
     insert_macro_line(&second_macro, "Second line of the second Macro");
     insert_macro_line(&second_macro, "Third line of the second Macro");
@@ -93,9 +93,11 @@ int main()
 
         for(j=0; j < first_macro.num_of_lines; j++)
         {
-            printf("Line number %d: %s", j + 1, first_table.macros[i]->lines[j]);
+            printf("Line number %d: %s\n", j + 1, first_table.macros[i]->lines[j]);
         }
-    }
+
+        printf("\n");
+    } 
 
     return 0; 
 } 
