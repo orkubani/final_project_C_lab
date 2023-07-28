@@ -65,6 +65,19 @@ void insert_macro_to_table(Macro_Table *table, Macro *macro)
     table->num_of_macros += 1;
 }
 
+int is_macro_exist(Macro_Table *table, const char * macro_name)
+{
+    int i;
+    for (i = 0; i < table->num_of_macros; i++)
+    {
+        if (strcmp(table->macros[i]->name, macro_name) == 0)
+            return 1;
+    }
+
+    return 0;
+}
+
+
 /* Tester */
 int main()
 {    
@@ -97,7 +110,10 @@ int main()
         }
 
         printf("\n");
-    } 
+    }
+
+    printf("Looking for: 'First Macro'. result: %d\n", is_macro_exist(&first_table, "First Macro"));
+    printf("Looking for: 'Fake Macro'. result: %d\n", is_macro_exist(&first_table, "Fake Macro"));
 
     return 0; 
 } 
