@@ -52,24 +52,37 @@ enum line_type get_line_type(Macro_Table *table, char *line)
     return any_other_line;
 }
 
+FILE * process_as_file(char * filename)
+{
+    FILE *input_file;
+    FILE *output_file;
+    Macro_Table macro_table;
+    char line[MAX_LINE_LENGTH];
+    
+    macro_table = create_macro_table();
+
+    input_file = fopen(filename, "r");
+    if (input_file == NULL) 
+    {
+        printf("Error opening the file.\n");
+        return NULL;
+    }
+
+    while (fgets(line, sizeof(line), input_file) != NULL) 
+    {
+        printf("%s", line);
+        printf("%d\n\n", get_line_type(&macro_table, line));
+    }
+
+    return input_file; /* Change to output */
+}
 
 int main()
 {
     /*
+    
     Macro_Table first_table;
     Macro first_macro;
-
-    char blank_test_before_clean[81] = "                       ";
-
-    char comment_test_before_clean[81] = "; Cristiano Ronaldo";
-    
-    char macro_def_test_before_clean[81] = "       mcro m1";
-    
-    char macro_end_before_clean[81] = "        endmcro";
-    
-    char macro_call_before_clean[81] = "        m1";
-    
-    char any_other_line_before_clean[81] = "L1:     inc K";
 
     first_macro = create_macro("m1");
     first_table = create_macro_table();
@@ -78,22 +91,12 @@ int main()
     insert_macro_line(&first_macro, "            bne END");
 
     insert_macro_to_table(&first_table, &first_macro);
-    
-    printf("Blank Test: %d\n", get_line_type(&first_table, blank_test_before_clean));
-
-    printf("Comment Test: %d\n", get_line_type(&first_table, comment_test_before_clean));
-
-    printf("macro def test: %d\n", get_line_type(&first_table, macro_def_test_before_clean));
-
-    printf("macro end test: %d\n", get_line_type(&first_table, macro_end_before_clean));
-
-    printf("macro call test: %d\n", get_line_type(&first_table, macro_call_before_clean));
-
-    printf("any other line test: %d\n", get_line_type(&first_table, any_other_line_before_clean));
 
     free_macro(&first_macro);
     free_macro_table(&first_table);
 
     */
+
+    process_as_file("/mnt/c/Or_Kubani_Openu_CS/2023B/maabada_20476/final_project_C_lab/input_test_file.as");
     return 0;
 }

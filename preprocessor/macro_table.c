@@ -1,22 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define MAX_LINE_LENGTH 81
-
-
-typedef struct macro
-{
-    char name[MAX_LINE_LENGTH];
-    char **lines;
-    int num_of_lines;
-}Macro;
-
-
-typedef struct macro_table
-{
-    Macro **macros;
-    int num_of_macros;
-}Macro_Table;
+#include "macro_table.h"
 
 
 Macro_Table create_macro_table()

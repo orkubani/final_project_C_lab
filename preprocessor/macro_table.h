@@ -1,20 +1,20 @@
+#include "../helpers/utils.h"
 #ifndef MACRO_TABLE_H
 #define MACRO_TABLE_H
-
-#define MAX_LINE_LENGTH 81
 
 typedef struct macro
 {
     char name[MAX_LINE_LENGTH];
     char **lines;
     int num_of_lines;
-} Macro;
+}Macro;
+
 
 typedef struct macro_table
 {
     Macro **macros;
     int num_of_macros;
-} Macro_Table;
+}Macro_Table;
 
 Macro_Table create_macro_table();
 Macro create_macro(char macro_name[MAX_LINE_LENGTH]);
