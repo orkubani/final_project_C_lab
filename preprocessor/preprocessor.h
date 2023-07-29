@@ -15,8 +15,8 @@ enum line_type
 
 int is_macro_def(char *line);
 
-int is_macro_call(Macro_Table *table, char *line);
+int is_macro_call(Macro * macro, char *line);
 
-enum line_type get_line_type(Macro_Table *table, char *line);
+enum line_type get_line_type(Macro * macro, char *line);
 
 #endif /* PREPROCESSOR_H */

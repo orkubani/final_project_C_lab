@@ -16,18 +16,30 @@ int is_macro_def(char *line)
     return 0;
 }
 
-int is_macro_call(Macro_Table *table, char *line)
+int is_macro_call(Macro *macro, char *line)
 {
+    Macro * tmp;
     char clean_line[MAX_LINE_LENGTH];
+
+    tmp = macro;
     remove_prefix_white_spaces(line, clean_line);
 
-    if (get_macro(table, clean_line) != NULL) 
-        return 1;
 
+    while (macro != NULL)
+    {
+        if (get_macro(macro, clean_line) != NULL) 
+        {
+            macro = tmp;
+            return 1;
+        }
+        macro = macro->next_macro;
+    }
+    
+    macro = tmp;
     return 0;
 }
 
-enum line_type get_line_type(Macro_Table *table, char *line)
+enum line_type get_line_type(Macro *macro, char *line)
 {
     char clean_line[MAX_LINE_LENGTH];
     remove_white_spaces(line, clean_line);
@@ -47,7 +59,7 @@ enum line_type get_line_type(Macro_Table *table, char *line)
     if (is_macro_def(line)) 
         return macro_def;
 
-    if (is_macro_call(table, line)) 
+    if (is_macro_call(macro, line)) 
         return macro_call;
 
     return any_other_line;
@@ -80,7 +92,7 @@ char * process_as_file(char * filename)
 {
     FILE *input_file;
     FILE *output_file;
-    Macro_Table macro_table;
+    Macro macro_table;
     char * line = (char*)calloc(MAX_LINE_LENGTH, sizeof(char)); 
 
     char* input_filename = (char*)calloc(MAX_FILE_NAME_LENGTH, sizeof(char));
@@ -97,8 +109,6 @@ char * process_as_file(char * filename)
         printf("Error allocating memory for the output filename.\n");
         return NULL;
     }
-
-    macro_table = create_macro_table();
 
     strcpy(input_filename, filename);
     strcat(input_filename, ".as");
@@ -148,31 +158,32 @@ char * process_as_file(char * filename)
 
 int main()
 {
-    /*
+    /*Tester 
+    Macro * macro_table = NULL;
+    Macro *tmp = NULL;
+    macro_table = insert_macro_to_table(macro_table, "first_macro");
+    macro_table = insert_macro_to_table(macro_table, "second_macro");
+    macro_table = insert_macro_to_table(macro_table, "third_macro");
 
-    Macro_Table first_table;
-    Macro first_macro;
+    printf("%s\n",macro_table->name);
+    printf("%s\n",(macro_table->next_macro)->name);
+    printf("%s\n",(macro_table->next_macro->next_macro)->name);
 
-    first_macro = create_macro("m1");
-    first_table = create_macro_table();
+    tmp = get_macro(macro_table, "second_macro");
+    insert_macro_line(tmp, "first try");
+    insert_macro_line(tmp, "second try");
 
-    insert_macro_line(&first_macro, "            sub @r1, @r4");
-    insert_macro_line(&first_macro, "            bne END");
-
-    insert_macro_to_table(&first_table, &first_macro);
-
-    free_macro(&first_macro);
-    free_macro_table(&first_table);
+    free_macro_table(macro_table);
 
     */
 
-    /*char line[MAX_LINE_LENGTH];*/
+    char line[MAX_LINE_LENGTH];
     char * result = process_as_file("input_test_file");
-    /*FILE * result_check = fopen(result, "r");
+    FILE * result_check = fopen(result, "r");
     while (fgets(line, sizeof(line), result_check) != NULL) 
     {
         printf("%s\n", line);
-    }*/
+    }
 
     free(result);
     return 0;

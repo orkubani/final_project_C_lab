@@ -91,27 +91,3 @@ void free_macro_table(Macro *macro)
         free_macro(temp);
     }
 }
-
-
-int main()
-{
-    /*Tester 
-    Macro * macro_table = NULL;
-    Macro *tmp = NULL;
-    macro_table = insert_macro_to_table(macro_table, "first_macro");
-    macro_table = insert_macro_to_table(macro_table, "second_macro");
-    macro_table = insert_macro_to_table(macro_table, "third_macro");
-
-    printf("%s\n",macro_table->name);
-    printf("%s\n",(macro_table->next_macro)->name);
-    printf("%s\n",(macro_table->next_macro->next_macro)->name);
-
-    tmp = get_macro(macro_table, "second_macro");
-    insert_macro_line(tmp, "first try");
-    insert_macro_line(tmp, "second try");
-
-    free_macro_table(macro_table);
-
-    */
-    return 0;
-}
