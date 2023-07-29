@@ -55,7 +55,6 @@ enum line_type get_line_type(Macro_Table *table, char *line)
 
 char * get_macro_name_from_line(char * line)
 {
-    int i;
     char* clean_line = (char*)calloc(MAX_FILE_NAME_LENGTH, sizeof(char));
     char* macro_name = (char*)calloc(MAX_FILE_NAME_LENGTH, sizeof(char));
 
@@ -71,8 +70,9 @@ char * get_macro_name_from_line(char * line)
         return NULL;
     }
     
-    remove_white_spaces(line, clean_line);
-    strncpy(macro_name, clean_line + 4, MAX_LINE_LENGTH - 4);
+    remove_prefix_white_spaces(line, clean_line);
+    strncpy(macro_name, clean_line + 5, MAX_LINE_LENGTH - 5);
+    free(clean_line);
     return macro_name;
 }
 
@@ -128,9 +128,7 @@ char * process_as_file(char * filename)
         if (current_line_type == macro_def)
         {
             char * macro_name;
-            printf("%s\n", line);
             macro_name = get_macro_name_from_line(line);
-            printf("%s\n", macro_name);
             free(macro_name);
         } 
 
