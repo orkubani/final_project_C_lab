@@ -22,7 +22,7 @@ int is_macro_call(Macro *macro, char *line)
     char clean_line[MAX_LINE_LENGTH];
 
     tmp = macro;
-    remove_prefix_white_spaces(line, clean_line);
+    remove_white_spaces(line, clean_line);
 
 
     while (macro != NULL)
@@ -82,8 +82,8 @@ char * get_macro_name_from_line(char * line)
         return NULL;
     }
     
-    remove_prefix_white_spaces(line, clean_line);
-    strncpy(macro_name, clean_line + 5, MAX_LINE_LENGTH - 5);
+    remove_white_spaces(line, clean_line);
+    strncpy(macro_name, clean_line + 4, MAX_LINE_LENGTH - 4);
     free(clean_line);
     return macro_name;
 }
@@ -158,7 +158,7 @@ char * process_as_file(char * filename)
 
 int main()
 {
-    /*Tester 
+    /* Table Tester 
     Macro * macro_table = NULL;
     Macro *tmp = NULL;
     macro_table = insert_macro_to_table(macro_table, "first_macro");
@@ -177,6 +177,29 @@ int main()
 
     */
 
+
+    /* Line Type Tester
+    Macro * macro = NULL;
+    char blank_test_before_clean[81] = "                       ";
+    char comment_test_before_clean[81] = "; Cristiano Ronaldo";
+    char macro_def_test_before_clean[81] = "       mcro m1"; 
+    char macro_end_before_clean[81] = "        endmcro";
+    char macro_call_before_clean[81] = "        m1";
+    char any_other_line_before_clean[81] = "L1:     inc K";
+
+    macro = insert_macro_to_table(macro, "m1");
+    insert_macro_line(macro, "            sub @r1, @r4");
+    insert_macro_line(macro, "            bne END");
+    
+    printf("Blank Test: %d\n", get_line_type(macro, blank_test_before_clean));
+    printf("Comment Test: %d\n", get_line_type(macro, comment_test_before_clean));
+    printf("macro def test: %d\n", get_line_type(macro, macro_def_test_before_clean));
+    printf("macro end test: %d\n", get_line_type(macro, macro_end_before_clean));
+    printf("macro call test: %d\n", get_line_type(macro, macro_call_before_clean));
+    printf("any other line test: %d\n", get_line_type(macro, any_other_line_before_clean));
+    */
+
+    /*Reading file tester 
     char line[MAX_LINE_LENGTH];
     char * result = process_as_file("input_test_file");
     FILE * result_check = fopen(result, "r");
@@ -185,6 +208,8 @@ int main()
         printf("%s\n", line);
     }
 
-    free(result);
+    free(result); 
+    */
+
     return 0;
 }
