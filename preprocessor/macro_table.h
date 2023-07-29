@@ -10,18 +10,11 @@ typedef struct macro
     struct macro *next_macro;
 } Macro;
 
-typedef struct macro_table
-{
-    Macro **macros;
-    int num_of_macros;
-}Macro_Table;
 
-Macro_Table create_macro_table();
 Macro * create_macro(char macro_name[MAX_LINE_LENGTH]);
-void insert_macro_line(Macro *macro, const char *line);
 Macro * insert_macro_to_table(Macro *macro, char * name);
-Macro *get_macro(Macro_Table *table, const char *macro_name);
+Macro * get_macro(Macro * macro, const char * macro_name);
+void insert_macro_line(Macro *macro, const char *line);
 void free_macro(Macro *macro);
-void free_macro_table(Macro_Table *table);
 
 #endif /* MACRO_TABLE_H */
