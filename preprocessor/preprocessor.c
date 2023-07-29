@@ -53,15 +53,28 @@ enum line_type get_line_type(Macro_Table *table, char *line)
     return any_other_line;
 }
 
-FILE * process_as_file(char * filename)
+char * process_as_file(char * filename)
 {
     FILE *input_file;
     FILE *output_file;
     Macro_Table macro_table;
     char line[MAX_LINE_LENGTH]; 
-    char input_filename[MAX_FILE_NAME_LENGTH];
-    char output_filename[MAX_FILE_NAME_LENGTH];
-    
+
+    char* input_filename = (char*)malloc(MAX_FILE_NAME_LENGTH);
+    char* output_filename = (char*)malloc(MAX_FILE_NAME_LENGTH);
+
+    if (input_filename == NULL) 
+    {
+        printf("Error allocating memory for the input filename.\n");
+        return NULL;
+    }
+
+    if (output_filename == NULL) 
+    {
+        printf("Error allocating memory for the output filename.\n");
+        return NULL;
+    }
+
     macro_table = create_macro_table();
 
     strcpy(input_filename, filename);
@@ -92,7 +105,12 @@ FILE * process_as_file(char * filename)
             fputs(line, output_file);
     }
 
-    return output_file;
+    fclose(input_file);
+    fclose(output_file);
+
+    free(input_filename);
+
+    return output_filename;
 }
 
 int main()
@@ -115,6 +133,14 @@ int main()
 
     */
 
-    process_as_file("input_test_file");
+    char line[MAX_LINE_LENGTH];
+    char * result = process_as_file("input_test_file");
+    FILE * result_check = fopen(result, "r");
+    while (fgets(line, sizeof(line), result_check) != NULL) 
+    {
+        printf("%s\n", line);
+    }
+    
+    free(result);
     return 0;
 }
