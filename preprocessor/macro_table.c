@@ -45,17 +45,17 @@ void insert_macro_line(Macro *macro, const char *line)
 }
 
 
-void insert_macro_to_table(Macro_Table *table, Macro *macro)
+Macro * insert_macro_to_table(Macro *macro, char * name)
 {
-    table->macros[table->num_of_macros] = calloc(1, sizeof(*macro));
-    if (table->macros[table->num_of_macros] == NULL)
-    {
-        printf("Memory allocation failed.\n");
-        /*TODO Check if needed to return NULL*/
-        exit(0);
-    }
-    table->macros[table->num_of_macros] = macro;
-    table->num_of_macros += 1;
+   if (macro->next_macro == NULL) 
+   {
+        macro->next_macro = create_macro(name);
+        macro->next_macro->next_macro = NULL;
+        return macro->next_macro;
+   } 
+   
+   insert_macro_to_table(macro->next_macro, name);
+   return macro->next_macro;
 }
 
 
