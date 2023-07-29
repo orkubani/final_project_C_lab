@@ -13,6 +13,6 @@ enum line_type
     any_other_line
 };
 
-enum line_type get_line_type(char *line);
+enum line_type get_line_type(Macro_Table *table, char *line);
 
 #endif /* PREPROCESSOR_H */
