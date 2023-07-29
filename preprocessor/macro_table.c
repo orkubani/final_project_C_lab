@@ -46,7 +46,7 @@ Macro * get_macro(Macro * macro, const char * macro_name)
     return NULL;
 }
 
-void insert_macro_line(Macro *macro, const char *line)
+void insert_macro_line(Macro * macro, const char *line)
 {
     macro->lines[macro->num_of_lines] = calloc(MAX_LINE_LENGTH, sizeof(char));
     if (macro->lines[macro->num_of_lines] == NULL)
@@ -59,17 +59,27 @@ void insert_macro_line(Macro *macro, const char *line)
     macro->num_of_lines += 1;
 }
 
-void free_macro(Macro *macro) 
+void free_macro_lines(Macro *macro) 
 {
-    int i;
-    
-    if (macro == NULL)
-        return;
-
-    for (i = 0; i < macro->num_of_lines; i++) 
+    for (int i = 0; i < macro->num_of_lines; i++) 
     {
         free(macro->lines[i]);
     }
-
     free(macro->lines);
+}
+
+void free_macro(Macro *macro) 
+{
+    free_macro_lines(macro);
+    free(macro);
+}
+
+void free_macro_table(Macro *macro) 
+{
+    while (macro != NULL) 
+    {
+        Macro *temp = macro;
+        macro = macro->next_macro;
+        free_macro(temp);
+    }
 }
