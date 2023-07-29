@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "preprocessor.h"
 # include "macro_table.h"
@@ -52,35 +53,48 @@ enum line_type get_line_type(Macro_Table *table, char *line)
     return any_other_line;
 }
 
-FILE * process_as_file(char * filename)
+FILE * process_as_file(char * input_filename)
 {
     FILE *input_file;
     FILE *output_file;
     Macro_Table macro_table;
     char line[MAX_LINE_LENGTH];
+     /* Remeber to change*/
+    char output_name[MAX_FILE_NAME_LENGTH] = "/mnt/c/Or_Kubani_Openu_CS/2023B/maabada_20476/final_project_C_lab/test_output";
     
     macro_table = create_macro_table();
 
-    input_file = fopen(filename, "r");
+    input_file = fopen(input_filename, "r");
     if (input_file == NULL) 
     {
-        printf("Error opening the file.\n");
+        printf("Error opening the input file.\n");
+        return NULL;
+    }
+
+    strcat(output_name, ".am");
+
+    output_file = fopen(output_name, "w");
+    if (output_file == NULL) 
+    {
+        printf("Error opening the output file.\n");
         return NULL;
     }
 
     while (fgets(line, sizeof(line), input_file) != NULL) 
     {
-        printf("%s", line);
-        printf("%d\n\n", get_line_type(&macro_table, line));
+        enum line_type current_line_type;
+        current_line_type = get_line_type(&macro_table, line);
+        if (current_line_type == any_other_line)
+            fputs(line, output_file);
     }
 
-    return input_file; /* Change to output */
+    return output_file;
 }
 
 int main()
 {
     /*
-    
+
     Macro_Table first_table;
     Macro first_macro;
 
