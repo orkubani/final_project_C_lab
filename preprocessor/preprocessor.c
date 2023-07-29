@@ -143,7 +143,6 @@ char * process_as_file(char * filename)
     free(input_filename);
     free(line);
     /* Free Macros Here */
-    free_macro_table(&macro_table);
     return output_filename;
 }
 

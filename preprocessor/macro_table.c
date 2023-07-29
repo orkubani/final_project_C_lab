@@ -22,22 +22,28 @@ Macro * create_macro(char macro_name[MAX_LINE_LENGTH])
 
 Macro * insert_macro_to_table(Macro *macro, char * name)
 {
-   if (macro->next_macro == NULL) 
+   if (macro == NULL) 
+   {
+        macro = create_macro(name);
+        return macro;
+   }
+
+   else if (macro->next_macro == NULL) 
    {
         macro->next_macro = create_macro(name);
         macro->next_macro->next_macro = NULL;
-        return macro->next_macro;
+        return macro;
    } 
    
    insert_macro_to_table(macro->next_macro, name);
-   return macro->next_macro;
+   return macro;
 }
 
 Macro * get_macro(Macro * macro, const char * macro_name)
 {
     while (macro != NULL)
     {
-        if (strcmp(macro->name, macro_name)) 
+        if (strcmp(macro->name, macro_name) == 0) 
             return macro;
         
         macro = macro->next_macro;
@@ -61,7 +67,9 @@ void insert_macro_line(Macro * macro, const char *line)
 
 void free_macro_lines(Macro *macro) 
 {
-    for (int i = 0; i < macro->num_of_lines; i++) 
+    int i = 0;
+
+    for (i = 0; i < macro->num_of_lines; i++) 
     {
         free(macro->lines[i]);
     }
@@ -82,4 +90,28 @@ void free_macro_table(Macro *macro)
         macro = macro->next_macro;
         free_macro(temp);
     }
+}
+
+
+int main()
+{
+    /*Tester 
+    Macro * macro_table = NULL;
+    Macro *tmp = NULL;
+    macro_table = insert_macro_to_table(macro_table, "first_macro");
+    macro_table = insert_macro_to_table(macro_table, "second_macro");
+    macro_table = insert_macro_to_table(macro_table, "third_macro");
+
+    printf("%s\n",macro_table->name);
+    printf("%s\n",(macro_table->next_macro)->name);
+    printf("%s\n",(macro_table->next_macro->next_macro)->name);
+
+    tmp = get_macro(macro_table, "second_macro");
+    insert_macro_line(tmp, "first try");
+    insert_macro_line(tmp, "second try");
+
+    free_macro_table(macro_table);
+
+    */
+    return 0;
 }
