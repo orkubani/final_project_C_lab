@@ -53,16 +53,19 @@ enum line_type get_line_type(Macro_Table *table, char *line)
     return any_other_line;
 }
 
-FILE * process_as_file(char * input_filename)
+FILE * process_as_file(char * filename)
 {
     FILE *input_file;
     FILE *output_file;
     Macro_Table macro_table;
-    char line[MAX_LINE_LENGTH];
-     /* Remeber to change*/
-    char output_name[MAX_FILE_NAME_LENGTH] = "/mnt/c/Or_Kubani_Openu_CS/2023B/maabada_20476/final_project_C_lab/test_output";
+    char line[MAX_LINE_LENGTH]; 
+    char input_filename[MAX_FILE_NAME_LENGTH];
+    char output_filename[MAX_FILE_NAME_LENGTH];
     
     macro_table = create_macro_table();
+
+    strcpy(input_filename, filename);
+    strcat(input_filename, ".as");
 
     input_file = fopen(input_filename, "r");
     if (input_file == NULL) 
@@ -71,9 +74,10 @@ FILE * process_as_file(char * input_filename)
         return NULL;
     }
 
-    strcat(output_name, ".am");
+    strcpy(output_filename, filename);
+    strcat(output_filename, ".am");
 
-    output_file = fopen(output_name, "w");
+    output_file = fopen(output_filename, "w");
     if (output_file == NULL) 
     {
         printf("Error opening the output file.\n");
@@ -111,6 +115,6 @@ int main()
 
     */
 
-    process_as_file("/mnt/c/Or_Kubani_Openu_CS/2023B/maabada_20476/final_project_C_lab/input_test_file.as");
+    process_as_file("input_test_file");
     return 0;
 }
