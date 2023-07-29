@@ -7,8 +7,8 @@ typedef struct macro
     char name[MAX_LINE_LENGTH];
     char **lines;
     int num_of_lines;
-}Macro;
-
+    struct macro *next_macro;
+} Macro;
 
 typedef struct macro_table
 {
@@ -17,7 +17,7 @@ typedef struct macro_table
 }Macro_Table;
 
 Macro_Table create_macro_table();
-Macro create_macro(char macro_name[MAX_LINE_LENGTH]);
+Macro * create_macro(char macro_name[MAX_LINE_LENGTH]);
 void insert_macro_line(Macro *macro, const char *line);
 void insert_macro_to_table(Macro_Table *table, Macro *macro);
 Macro *get_macro(Macro_Table *table, const char *macro_name);

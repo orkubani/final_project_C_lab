@@ -13,12 +13,20 @@ Macro_Table create_macro_table()
 }
 
 
-Macro create_macro(char macro_name[MAX_LINE_LENGTH])
+Macro * create_macro(char macro_name[MAX_LINE_LENGTH])
 {
-    Macro macro;
-    strcpy(macro.name, macro_name);
-    macro.lines = calloc(1, sizeof(char**));
-    macro.num_of_lines = 0;
+    Macro *macro = NULL;
+    macro = (Macro *)calloc(1, sizeof(Macro));
+    if (macro == NULL)
+    {
+        printf("%s\n", "Allocation failed for create_macro");
+        exit(0);
+    }
+
+    strcpy(macro->name, macro_name);
+    macro->lines = calloc(1, sizeof(char**));
+    macro->num_of_lines = 0;
+    macro->next_macro = NULL;
     return macro;
 }
 
