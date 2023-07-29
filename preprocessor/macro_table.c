@@ -104,7 +104,7 @@ void free_macro_table(Macro_Table *table)
 }
 
 
-/* Tester */
+/* Tester 
 int main()
 {    
     int i, j;
@@ -147,4 +147,4 @@ int main()
     free_macro_table(&first_table);
     
     return 0; 
-} 
+} */

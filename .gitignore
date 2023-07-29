@@ -1,2 +1,4 @@
 /.vscode
 /preprocessor/*.out
+/*.out
+/*.as

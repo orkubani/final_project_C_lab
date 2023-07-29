@@ -2,19 +2,20 @@
 #include <stdio.h>
 #include <ctype.h>
 
-void remove_white_spaces(char *line)
+void remove_white_spaces(char *source_line, char *dest_line)
 {
-    char *src = line;
-    char *dst = line;
+	int i = 0;
+	int j = 0;
 
-    while (*src != '\0') 
-    {
-        if (!isspace(*src)) 
-        {
-            *dst++ = *src;
-        }
-        src++;
-    }
+	while (source_line[i] != '\0')
+	{
+		if (isspace(source_line[i]) == 0)
+		{
+			dest_line[j] = source_line[i];
+			j++;
+		}
+		i++;
+	}
 
-    *dst = '\0';
+	dest_line[j] = '\0';
 }

@@ -1,3 +1,8 @@
+#ifndef UTILS
 #define UTILS
 
-void remove_white_spaces(char *line);
+#define COMMENT_PREFIX ';'
+
+void remove_white_spaces(char *source_line, char *dest_line);
+
+#endif /* UTILS */
