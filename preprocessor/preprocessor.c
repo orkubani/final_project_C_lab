@@ -55,6 +55,7 @@ enum line_type get_line_type(Macro_Table *table, char *line)
 
 char * get_macro_name_from_line(char * line)
 {
+    int i;
     char* clean_line = (char*)calloc(MAX_FILE_NAME_LENGTH, sizeof(char));
     char* macro_name = (char*)calloc(MAX_FILE_NAME_LENGTH, sizeof(char));
 
@@ -69,11 +70,9 @@ char * get_macro_name_from_line(char * line)
         printf("Error allocating memory for the macro_name in get_macro_name_from_line.\n");
         return NULL;
     }
-
-    remove_prefix_white_spaces(line, clean_line);
-    strcpy(macro_name, clean_line + 5);
     
-    free(clean_line);
+    remove_white_spaces(line, clean_line);
+    strncpy(macro_name, clean_line + 4, MAX_LINE_LENGTH - 4);
     return macro_name;
 }
 
@@ -82,7 +81,7 @@ char * process_as_file(char * filename)
     FILE *input_file;
     FILE *output_file;
     Macro_Table macro_table;
-    char line[MAX_LINE_LENGTH]; 
+    char * line = (char*)calloc(MAX_LINE_LENGTH, sizeof(char)); 
 
     char* input_filename = (char*)calloc(MAX_FILE_NAME_LENGTH, sizeof(char));
     char* output_filename = (char*)calloc(MAX_FILE_NAME_LENGTH, sizeof(char));
@@ -121,7 +120,7 @@ char * process_as_file(char * filename)
         return NULL;
     }
 
-    while (fgets(line, sizeof(line), input_file) != NULL) 
+    while (fgets(line, MAX_LINE_LENGTH, input_file) != NULL) 
     {
         enum line_type current_line_type;
         current_line_type = get_line_type(&macro_table, line);
@@ -129,6 +128,7 @@ char * process_as_file(char * filename)
         if (current_line_type == macro_def)
         {
             char * macro_name;
+            printf("%s\n", line);
             macro_name = get_macro_name_from_line(line);
             printf("%s\n", macro_name);
             free(macro_name);
@@ -143,6 +143,7 @@ char * process_as_file(char * filename)
     fclose(input_file);
     fclose(output_file);
     free(input_filename);
+    free(line);
     /* Free Macros Here */
     free_macro_table(&macro_table);
     return output_filename;
@@ -168,10 +169,10 @@ int main()
 
     */
 
-    char line[MAX_LINE_LENGTH];
+    /*char line[MAX_LINE_LENGTH];*/
     char * result = process_as_file("input_test_file");
-    FILE * result_check = fopen(result, "r");
-    /*while (fgets(line, sizeof(line), result_check) != NULL) 
+    /*FILE * result_check = fopen(result, "r");
+    while (fgets(line, sizeof(line), result_check) != NULL) 
     {
         printf("%s\n", line);
     }*/
