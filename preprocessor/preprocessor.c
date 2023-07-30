@@ -109,6 +109,7 @@ char * process_as_file(char * filename)
     FILE *output_file;
     int is_macro_on = 0;
     Macro *macro_table = NULL;
+    Macro *macro_on = NULL;
     
     
     char * line = (char*)calloc(MAX_LINE_LENGTH, sizeof(char)); 
@@ -171,6 +172,7 @@ char * process_as_file(char * filename)
 
         else if(is_macro_on)
         {
+            insert_macro_line(macro_on, line);
             continue;
         }
 
@@ -179,7 +181,8 @@ char * process_as_file(char * filename)
             char * macro_name;
             is_macro_on = 1;
             macro_name = get_macro_name_from_line(line);
-            insert_macro_to_table(macro_table, macro_name);
+            macro_table = insert_macro_to_table(macro_table, macro_name);
+            macro_on = get_macro(macro_table, macro_name);
             free(macro_name);
         }
 
@@ -198,13 +201,12 @@ char * process_as_file(char * filename)
     fclose(output_file);
     free(input_filename);
     free(line);
-    free(macro_table);
+    free_macro_table(macro_table);
     return output_filename;
 }
 
 int main(int argc, char **argv)
 {
-    printf("'%s'\n", argv[1]);
     process_as_file(argv[1]);
     return 0;
 }
