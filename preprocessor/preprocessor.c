@@ -39,20 +39,20 @@ int is_macro_call(Macro *macro, char *line)
     return 0;
 }
 
-/*void deploy_macro(FILE * output_file, Macro * macro, char * line)
+void deploy_macro(FILE * output_file, Macro * macro, char * line)
 {
     int i;
     Macro * macro_to_deploy = NULL;
     char * macro_name = (char *)calloc(MAX_LINE_LENGTH, sizeof(char));
-    macro_to_deploy = get_macro(macro, macro_name);
     remove_white_spaces(line, macro_name);
+    macro_to_deploy = get_macro(macro, macro_name);
     for (i = 0; i < macro_to_deploy->num_of_lines; i++)
     {
         fputs(macro_to_deploy->lines[i], output_file);
     }
 
     free(macro_name);
-}*/
+}
 
 enum line_type get_line_type(Macro *macro, char *line)
 {
@@ -188,7 +188,7 @@ char * process_as_file(char * filename)
 
         else if (current_line_type == macro_call)
         {
-            /* Implement Deploy macro */
+            deploy_macro(output_file, macro_table, line);
             continue;
         }
 
