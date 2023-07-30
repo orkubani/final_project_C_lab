@@ -39,6 +39,21 @@ int is_macro_call(Macro *macro, char *line)
     return 0;
 }
 
+/*void deploy_macro(FILE * output_file, Macro * macro, char * line)
+{
+    int i;
+    Macro * macro_to_deploy = NULL;
+    char * macro_name = (char *)calloc(MAX_LINE_LENGTH, sizeof(char));
+    macro_to_deploy = get_macro(macro, macro_name);
+    remove_white_spaces(line, macro_name);
+    for (i = 0; i < macro_to_deploy->num_of_lines; i++)
+    {
+        fputs(macro_to_deploy->lines[i], output_file);
+    }
+
+    free(macro_name);
+}*/
+
 enum line_type get_line_type(Macro *macro, char *line)
 {
     char clean_line[MAX_LINE_LENGTH];
@@ -92,9 +107,11 @@ char * process_as_file(char * filename)
 {
     FILE *input_file;
     FILE *output_file;
-    Macro macro_table;
+    int is_macro_on = 0;
+    Macro *macro_table = NULL;
+    
+    
     char * line = (char*)calloc(MAX_LINE_LENGTH, sizeof(char)); 
-
     char* input_filename = (char*)calloc(MAX_FILE_NAME_LENGTH, sizeof(char));
     char* output_filename = (char*)calloc(MAX_FILE_NAME_LENGTH, sizeof(char));
 
@@ -110,9 +127,9 @@ char * process_as_file(char * filename)
         return NULL;
     }
 
+    /* Handle input file*/
     strcpy(input_filename, filename);
     strcat(input_filename, ".as");
-
     input_file = fopen(input_filename, "r");
     if (input_file == NULL) 
     {
@@ -120,9 +137,9 @@ char * process_as_file(char * filename)
         return NULL;
     }
 
+    /* Handle output file */
     strcpy(output_filename, filename);
     strcat(output_filename, ".am");
-
     output_file = fopen(output_filename, "w");
     if (output_file == NULL) 
     {
@@ -130,86 +147,65 @@ char * process_as_file(char * filename)
         return NULL;
     }
 
+
+    /* Analyze each line and perform the relevant action */
     while (fgets(line, MAX_LINE_LENGTH, input_file) != NULL) 
     {
         enum line_type current_line_type;
-        current_line_type = get_line_type(&macro_table, line);
+        current_line_type = get_line_type(macro_table, line);
+        
+        if (current_line_type == blank)
+        {
+            continue;
+        }
 
-        if (current_line_type == macro_def)
+        else if (current_line_type == comment)
+        {
+            continue;
+        }
+
+        else if (current_line_type == macro_end)
+        {
+            is_macro_on = 0;
+            printf("%s", line);
+        }
+
+        else if(is_macro_on)
+        {
+            printf("%s", line);
+        }
+
+        else if (current_line_type == macro_def)
         {
             char * macro_name;
+            is_macro_on = 1;
+            printf("%s", line);
             macro_name = get_macro_name_from_line(line);
             free(macro_name);
-        } 
-
-        if (current_line_type == any_other_line)
-        {
-            fputs(line, output_file);
         }
+
+        else if (current_line_type == macro_call)
+        {
+            /* Implement Deploy macro */
+            continue;
+        }
+
+        else /* any_other_line */
+            fputs(line, output_file);
+
     }
 
     fclose(input_file);
     fclose(output_file);
     free(input_filename);
     free(line);
-    /* Free Macros Here */
+    free(macro_table);
     return output_filename;
 }
 
-int main()
+int main(int argc, char **argv)
 {
-    /* Table Tester 
-    Macro * macro_table = NULL;
-    Macro *tmp = NULL;
-    macro_table = insert_macro_to_table(macro_table, "first_macro");
-    macro_table = insert_macro_to_table(macro_table, "second_macro");
-    macro_table = insert_macro_to_table(macro_table, "third_macro");
-
-    printf("%s\n",macro_table->name);
-    printf("%s\n",(macro_table->next_macro)->name);
-    printf("%s\n",(macro_table->next_macro->next_macro)->name);
-
-    tmp = get_macro(macro_table, "second_macro");
-    insert_macro_line(tmp, "first try");
-    insert_macro_line(tmp, "second try");
-
-    free_macro_table(macro_table);
-
-    */
-
-
-    /* Line Type Tester
-    Macro * macro = NULL;
-    char blank_test_before_clean[81] = "                       ";
-    char comment_test_before_clean[81] = "; Cristiano Ronaldo";
-    char macro_def_test_before_clean[81] = "       mcro m1"; 
-    char macro_end_before_clean[81] = "        endmcro";
-    char macro_call_before_clean[81] = "        m1";
-    char any_other_line_before_clean[81] = "L1:     inc K";
-
-    macro = insert_macro_to_table(macro, "m1");
-    insert_macro_line(macro, "            sub @r1, @r4");
-    insert_macro_line(macro, "            bne END");
-    
-    printf("Blank Test: %d\n", get_line_type(macro, blank_test_before_clean));
-    printf("Comment Test: %d\n", get_line_type(macro, comment_test_before_clean));
-    printf("macro def test: %d\n", get_line_type(macro, macro_def_test_before_clean));
-    printf("macro end test: %d\n", get_line_type(macro, macro_end_before_clean));
-    printf("macro call test: %d\n", get_line_type(macro, macro_call_before_clean));
-    printf("any other line test: %d\n", get_line_type(macro, any_other_line_before_clean));
-    */
-
-    /*Reading file tester 
-    char line[MAX_LINE_LENGTH];
-    char * result = process_as_file("input_test_file");
-    FILE * result_check = fopen(result, "r");
-    while (fgets(line, sizeof(line), result_check) != NULL) 
-    {
-        printf("%s\n", line);
-    }
-
-    free(result); 
-    */
-
+    printf("'%s'\n", argv[1]);
+    process_as_file(argv[1]);
     return 0;
 }
