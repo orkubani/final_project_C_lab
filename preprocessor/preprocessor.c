@@ -44,13 +44,16 @@ void deploy_macro(FILE * output_file, Macro * macro, char * line)
     int i;
     Macro * macro_to_deploy = NULL;
     char * macro_name = (char *)calloc(MAX_LINE_LENGTH, sizeof(char));
+    char * clean_macro_line = (char *)calloc(MAX_LINE_LENGTH, sizeof(char));
     remove_white_spaces(line, macro_name);
     macro_to_deploy = get_macro(macro, macro_name);
     for (i = 0; i < macro_to_deploy->num_of_lines; i++)
     {
-        fputs(macro_to_deploy->lines[i], output_file);
+        remove_macro_indentation(macro_to_deploy->lines[i], clean_macro_line);
+        fputs(clean_macro_line, output_file);
     }
 
+    free(clean_macro_line);
     free(macro_name);
 }
 

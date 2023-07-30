@@ -1,6 +1,7 @@
 #include "utils.h"
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 
 void remove_white_spaces(char *source_line, char *dest_line)
 {
@@ -43,3 +44,7 @@ void remove_prefix_white_spaces(char *source_line, char *dest_line)
     dest_line[j - 2] = '\0';
 }
 
+void remove_macro_indentation(char *sourceline, char *dest_line)
+{
+    strncpy(dest_line, sourceline + 4, MAX_LINE_LENGTH - 4);
+}
