@@ -167,20 +167,19 @@ char * process_as_file(char * filename)
         else if (current_line_type == macro_end)
         {
             is_macro_on = 0;
-            printf("%s", line);
         }
 
         else if(is_macro_on)
         {
-            printf("%s", line);
+            continue;
         }
 
         else if (current_line_type == macro_def)
         {
             char * macro_name;
             is_macro_on = 1;
-            printf("%s", line);
             macro_name = get_macro_name_from_line(line);
+            insert_macro_to_table(macro_table, macro_name);
             free(macro_name);
         }
 
