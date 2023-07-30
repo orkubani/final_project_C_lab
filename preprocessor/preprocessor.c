@@ -207,9 +207,3 @@ char * process_as_file(char * filename)
     free_macro_table(macro_table);
     return output_filename;
 }
-
-int main(int argc, char **argv)
-{
-    process_as_file(argv[1]);
-    return 0;
-}

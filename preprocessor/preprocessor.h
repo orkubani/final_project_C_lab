@@ -22,4 +22,6 @@ void deploy_macro(FILE * output_file, Macro * macro, char * line);
 
 enum line_type get_line_type(Macro * macro, char *line);
 
+char * process_as_file(char * filename);
+
 #endif /* PREPROCESSOR_H */
