@@ -53,7 +53,6 @@ void remove_prefix_white_spaces(char *source_line, char *dest_line)
 /**
  * Removes the macro indentation from the sourceline and saves the result in dest_line.
  * The macro indentation is assumed to start at index 4 of sourceline.
- * I assume, macro content is written in indentation of 4 chars.
  */
 void remove_macro_indentation(char *sourceline, char *dest_line)
 {
