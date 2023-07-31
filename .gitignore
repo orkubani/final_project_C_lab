@@ -2,4 +2,4 @@
 /preprocessor/*.out
 /*.out
 /*.as
-/*.am
+tests/*.am
