@@ -3,7 +3,7 @@
 
 #include "../helpers/utils.h"
 
-struct analyzed_line
+typedef struct analyzed_line
 {
     char label_name[MAX_LABEL_LENGTH]; 
 
@@ -89,8 +89,24 @@ struct analyzed_line
         }instruction; /* End of Instruction */
 
     }dir_or_inst;
-};
+}analyzed_line;
 
-typedef struct analyzed_line analyzed_line;
+typedef struct asm_instruction
+{
+    const char *inst_name;
+    int key;
+
+    /* Allowed addressing mode of the src operand */
+    int immed_as_src;
+    int label_as_src;
+    int reg_as_src;
+
+    /* Allowed addressing mode of the dest operand */
+    int immed_as_dest;
+    int label_as_dest;
+    int reg_as_dest;
+
+}asm_instruction;
+
 
 #endif /* ANALYZER_H */

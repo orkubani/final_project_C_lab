@@ -7,6 +7,9 @@
 #define MAX_LABEL_LENGTH 31
 #define FOUR_CHARS_INDENTATION 4
 #define MACRO_DEF_STR_LENGTH 4
+#define TRUE 1
+#define FALSE 0
+
 
 /**
  * @brief Removes all white spaces from the source_line and saves the result in dest_line.
