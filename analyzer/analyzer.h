@@ -118,4 +118,8 @@ typedef struct asm_directive
 
 }asm_directive;
 
+
+
+analyzed_line get_analyzed_line(char *line);
+
 #endif /* ANALYZER_H */

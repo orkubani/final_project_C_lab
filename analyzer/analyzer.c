@@ -36,3 +36,6 @@ asm_directive asm_all_directives[NUM_OF_DIR] =
     {"extern", dir_extern},
     {"entry", dir_entry},
 };
+
+
+analyzed_line get_analyzed_line(char *line);
