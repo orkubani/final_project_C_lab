@@ -5,6 +5,7 @@
 #define MAX_LINE_LENGTH 81
 #define MAX_FILE_NAME_LENGTH 200
 #define FOUR_CHARS_INDENTATION 4
+#define MACRO_DEF_STR_LENGTH 4
 
 /**
  * @brief Removes all white spaces from the source_line and saves the result in dest_line.

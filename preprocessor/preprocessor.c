@@ -4,6 +4,7 @@
 #include "preprocessor.h"
 # include "macro_table.h"
 
+/* Checks if the given line is a macro definition. */
 int is_macro_def(char *line)
 {
     char clean_line[MAX_LINE_LENGTH];
@@ -16,6 +17,7 @@ int is_macro_def(char *line)
     return 0;
 }
 
+/* Checks if the given line is a macro call. */
 int is_macro_call(Macro *macro, char *line)
 {
     Macro * tmp;
@@ -39,6 +41,7 @@ int is_macro_call(Macro *macro, char *line)
     return 0;
 }
 
+/* Deploys a macro by writing its lines to the am file. */
 void deploy_macro(FILE * output_file, Macro * macro, char * line)
 {
     int i;
@@ -57,6 +60,7 @@ void deploy_macro(FILE * output_file, Macro * macro, char * line)
     free(macro_name);
 }
 
+/* Checks the type of the input line. */
 enum line_type get_line_type(Macro *macro, char *line)
 {
     char clean_line[MAX_LINE_LENGTH];
@@ -83,6 +87,7 @@ enum line_type get_line_type(Macro *macro, char *line)
     return any_other_line;
 }
 
+/* Gets the macro name from a macro def line. */
 char * get_macro_name_from_line(char * line)
 {
     char* clean_line = (char*)calloc(MAX_FILE_NAME_LENGTH, sizeof(char));
@@ -101,11 +106,14 @@ char * get_macro_name_from_line(char * line)
     }
     
     remove_white_spaces(line, clean_line);
-    strncpy(macro_name, clean_line + 4, MAX_LINE_LENGTH - 4);
+    strncpy(macro_name, clean_line + MACRO_DEF_STR_LENGTH, MAX_LINE_LENGTH - MACRO_DEF_STR_LENGTH);
     free(clean_line);
     return macro_name;
 }
 
+
+ /* Processes the input file ".as" with the specified filename and creates an ".am" output file.
+  * The output file will contain the expanded macros and other lines as they appear in the input file. */
 char * process_as_file(char * filename)
 {
     FILE *input_file;
