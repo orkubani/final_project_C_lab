@@ -114,7 +114,7 @@ typedef struct asm_instruction
 typedef struct asm_directive
 {
     const char * dir_name;
-    int sir_key;
+    int dir_key;
 
 }asm_directive;
 
