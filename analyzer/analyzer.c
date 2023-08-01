@@ -1,6 +1,6 @@
 #include "analyzer.h"
 
-asm_instruction asm_all_instructions[16] = 
+asm_instruction asm_all_instructions[NUM_OF_INST] = 
 {
     /* {<inst_name>, <inst_key>, <immed_as_src>, <label_as_src>, <reg_as_src>, <immed_as_dest>, <label_as_dest>, <reg_as_dest>} */
 
@@ -25,4 +25,14 @@ asm_instruction asm_all_instructions[16] =
     /* Without operands */
     {"rts", inst_mov, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE},
     {"stop", inst_mov, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE},
+};
+
+asm_directive asm_all_directives[NUM_OF_DIR] = 
+{
+    /* {<dir_name>, <sir_key>} */
+
+    {"data", dir_data},
+    {"string", dir_string},
+    {"extern", dir_extern},
+    {"entry", dir_entry},
 };

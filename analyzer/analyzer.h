@@ -3,6 +3,9 @@
 
 #include "../helpers/utils.h"
 
+#define NUM_OF_INST 16
+#define NUM_OF_DIR 4
+
 typedef struct analyzed_line
 {
     char label_name[MAX_LABEL_LENGTH]; 
@@ -20,10 +23,10 @@ typedef struct analyzed_line
         {
             enum /* Four kinds of directive */
             {
-                extern_dir,
-                entry_dir,
-                string_dir,
-                data_dir
+                dir_extern,
+                dir_entry,
+                dir_string,
+                dir_data
 
             }dir_opt;
 
@@ -94,7 +97,7 @@ typedef struct analyzed_line
 typedef struct asm_instruction
 {
     const char *inst_name;
-    int key;
+    int inst_key;
 
     /* Allowed addressing mode of the src operand */
     int immed_as_src;
@@ -108,5 +111,11 @@ typedef struct asm_instruction
 
 }asm_instruction;
 
+typedef struct asm_directive
+{
+    const char * dir_name;
+    int sir_key;
+
+}asm_directive;
 
 #endif /* ANALYZER_H */
