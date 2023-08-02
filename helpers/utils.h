@@ -10,6 +10,9 @@
 #define TRUE 1
 #define FALSE 0
 
+#define SYNTAX_ERROR -2
+#define INVALID_VALUE -3
+
 
 /**
  * @brief Removes all white spaces from the source_line and saves the result in dest_line.

@@ -3,13 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-int is_syntax_error(char *line)
-{
-    /* return 1 if there is a syntax error */
-    /* return 0 if there is no syntax error */ 
-}
 
-int is_dir_or_inst(char *line)
+int is_syntax_error(char *line); /* To Implement */
+
+int is_dir_or_inst(char *line) /* Checked */
 {
     int i;
     char clean_line[MAX_LINE_LENGTH];
@@ -29,6 +26,41 @@ int is_dir_or_inst(char *line)
     }
 
     return INST_ENUM_CODE;
+}
+
+int get_dir_enum_key(asm_directive asm_all_directives[NUM_OF_DIR], char * dir_name) /* To Check */
+{
+    int i;
+
+    for (i = 0; i < NUM_OF_DIR; i++) 
+    {
+        if (strcmp(asm_all_directives[i].dir_name, dir_name) == 0) 
+        {
+            return asm_all_directives[i].dir_key;
+        }
+    }
+
+    return INVALID_VALUE;
+}
+
+int get_dir_type(char * line, asm_directive asm_all_directives[NUM_OF_DIR]) /* To Implement */
+{
+    int i;
+    char clean_line[MAX_LINE_LENGTH];
+    remove_white_spaces(line, clean_line);
+
+    if (clean_line[0] == '.')
+    {
+        if(strcmp(clean_line, ".entry") == 0)
+            return get_dir_enum_key(asm_all_directives, ".entry");
+                
+        else if(strcmp(clean_line, ".extern") == 0)
+            return get_dir_enum_key(asm_all_directives, ".extern");
+    }
+
+    /* TODO Add here check for .string */
+
+    return INVALID_VALUE;
 }
 
 Analyzed_line get_analyzed_line(char *line)
