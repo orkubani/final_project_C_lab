@@ -5,9 +5,14 @@
 
 #define NUM_OF_INST 16
 #define NUM_OF_DIR 4
+#define MAX_SYTX_ERR_LENGTH 200
 
-typedef struct analyzed_line
+#define DIR_ENUM_CODE 0
+#define INST_ENUM_CODE 1
+
+typedef struct Analyzed_line
 {
+    char syntax_error[MAX_SYTX_ERR_LENGTH];
     char label_name[MAX_LABEL_LENGTH]; 
 
     /* Only one of the following can be the line type. Blank and Comment lines are in the preprocessor responsibility. */
@@ -92,7 +97,7 @@ typedef struct analyzed_line
         }instruction; /* End of Instruction */
 
     }dir_or_inst;
-}analyzed_line;
+}Analyzed_line;
 
 typedef struct asm_instruction
 {
@@ -120,6 +125,6 @@ typedef struct asm_directive
 
 
 
-analyzed_line get_analyzed_line(char *line);
+Analyzed_line get_analyzed_line(char *line);
 
 #endif /* ANALYZER_H */
