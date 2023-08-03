@@ -140,6 +140,7 @@ int get_dir_enum_key(asm_directive asm_all_directives[NUM_OF_DIR], char * dir_na
 int get_dir_type(char * line, asm_directive asm_all_directives[NUM_OF_DIR]);
 char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directives[NUM_OF_DIR]);
 char * get_dir_string(char * line);
+void get_dir_data(char * line, Analyzed_line * analyzed_line);
 Analyzed_line get_analyzed_line(char *line);
 
 #endif /* ANALYZER_H */

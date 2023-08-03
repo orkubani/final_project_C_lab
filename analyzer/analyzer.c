@@ -126,6 +126,17 @@ char * get_dir_string(char * line) /* Checked */
     return string_content;
 }
 
+void get_dir_data(char *line, Analyzed_line *analyzed_line)
+{
+    char clean_line[MAX_LINE_LENGTH];
+    char * data_content_as_string;
+
+    remove_white_spaces(line, clean_line);
+
+    data_content_as_string = strrchr(clean_line, 'a');
+    data_content_as_string += 1; /* Skip the last 'a' */
+}
+
 Analyzed_line get_analyzed_line(char *line)
 {
     Analyzed_line analyzed_line;
@@ -177,6 +188,9 @@ Analyzed_line get_analyzed_line(char *line)
         
         else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_string)
             analyzed_line.dir_or_inst.directive.dir_operand.string = get_dir_string(line);
+
+        else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_data)
+         get_dir_data(line, &analyzed_line);
     }
         
     else
