@@ -10,6 +10,12 @@
 #define DIR_ENUM_CODE 0
 #define INST_ENUM_CODE 1
 
+#define DOT_STR_LEN 7
+#define DOT_DATA_LEN 5
+#define DOT_ENTRY_LEN 6
+#define DOT_EXTERN_LEN 7
+
+
 typedef struct Analyzed_line
 {
     char syntax_error[MAX_SYTX_ERR_LENGTH];

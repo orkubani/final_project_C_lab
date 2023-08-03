@@ -4,7 +4,7 @@
 #include <string.h>
 
 
-int is_syntax_error(char *line); /* To Implement */
+/* int is_syntax_error(char *line);  To Implement */
 
 int is_dir_or_inst(char *line) /* Checked */
 {
@@ -28,7 +28,7 @@ int is_dir_or_inst(char *line) /* Checked */
     return INST_ENUM_CODE;
 }
 
-int get_dir_enum_key(asm_directive asm_all_directives[NUM_OF_DIR], char * dir_name) /* To Check */
+int get_dir_enum_key(asm_directive asm_all_directives[NUM_OF_DIR], char * dir_name) /* Checked */
 {
     int i;
 
@@ -43,23 +43,41 @@ int get_dir_enum_key(asm_directive asm_all_directives[NUM_OF_DIR], char * dir_na
     return INVALID_VALUE;
 }
 
-int get_dir_type(char * line, asm_directive asm_all_directives[NUM_OF_DIR]) /* To Implement */
+int get_dir_type(char * line, asm_directive asm_all_directives[NUM_OF_DIR]) /* Checked */
 {
-    int i;
     char clean_line[MAX_LINE_LENGTH];
+    char * str_or_data;
+    const char * delimiter = ":.";
+    
     remove_white_spaces(line, clean_line);
 
     if (clean_line[0] == '.')
     {
-        if(strcmp(clean_line, ".entry") == 0)
+        /* entry */
+        if(strncmp(clean_line, ".entry", DOT_ENTRY_LEN) == 0)
             return get_dir_enum_key(asm_all_directives, ".entry");
-                
-        else if(strcmp(clean_line, ".extern") == 0)
-            return get_dir_enum_key(asm_all_directives, ".extern");
+        
+        /* extern */        
+        else if(strncmp(clean_line, ".extern", DOT_EXTERN_LEN) == 0)
+            return get_dir_enum_key(asm_all_directives, ".extern");;
     }
 
-    /* TODO Add here check for .string */
+    str_or_data = strstr(clean_line, delimiter);
 
+    if (str_or_data == NULL)
+        return INVALID_VALUE;
+    
+    str_or_data += strlen(delimiter) - 1; /* Get the string after the ':' */
+    
+    /* string */
+    if (strncmp(str_or_data, ".string", DOT_STR_LEN) == 0)
+        return get_dir_enum_key(asm_all_directives, ".string");
+
+    /* data */
+    else if (strncmp(str_or_data, ".data", DOT_DATA_LEN) == 0)
+        return get_dir_enum_key(asm_all_directives, ".data");
+    
+    /* Invalid directive type */
     return INVALID_VALUE;
 }
 
@@ -98,21 +116,25 @@ Analyzed_line get_analyzed_line(char *line)
     {
     /* {<dir_name>, <sir_key>} */
 
-    {"data", dir_data},
-    {"string", dir_string},
-    {"extern", dir_extern},
-    {"entry", dir_entry},
+    {".data", dir_data},
+    {".string", dir_string},
+    {".extern", dir_extern},
+    {".entry", dir_entry},
     };
 
-    if (is_syntax_error(line))
+    /* if (is_syntax_error(line))
     {
         strcpy(analyzed_line.syntax_error, "Syntax Error was detected");
         return analyzed_line;
-    }
+    } */
 
     /* Check line type */
     if (is_dir_or_inst(line) == DIR_ENUM_CODE)
+    {
         analyzed_line.analyzed_line_opt = directive;
+        analyzed_line.dir_or_inst.directive.dir_opt = get_dir_type(line, asm_all_directives);
+    }
+        
     else
         analyzed_line.analyzed_line_opt = instruction;
 
@@ -137,8 +159,12 @@ int main(int argc, char** argv)
     while (fgets(line, MAX_LINE_LENGTH, analyzer_input_test) != NULL) 
     {
         analyzed_line_result = get_analyzed_line(line);
-        printf("Line: %s", line);
-        printf("Line Type (0 - directive | 1 instruction): %d\n\n", analyzed_line_result.analyzed_line_opt);
+        if (analyzed_line_result.analyzed_line_opt == 0)
+        {
+            printf("Line: %s", line);
+            printf("Line Type: %d\n", analyzed_line_result.analyzed_line_opt);
+            printf("Dir type: %d\n\n",analyzed_line_result.dir_or_inst.directive.dir_opt);
+        } 
     }
 
     return 0;
