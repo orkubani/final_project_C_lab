@@ -116,25 +116,12 @@ char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directi
 
 char * get_dir_string(char * line) /* Checked */
 {
-    int i;
     char clean_line[MAX_LINE_LENGTH];
     char * string_content;
     remove_white_spaces(line, clean_line);
 
     string_content = strchr(clean_line, '\"');
-
-    if (string_content == NULL)
-        return NULL;
-
-    string_content += 1;
-
-    for(i = 0; string_content[i] != '\0'; i++)
-    {
-        if (string_content[i] == '\"')
-        {
-            string_content[i] = '\0';
-        }
-    }
+    string_content = remove_str_quotations(string_content);
 
     return string_content;
 }
@@ -196,37 +183,4 @@ Analyzed_line get_analyzed_line(char *line)
         analyzed_line.analyzed_line_opt = instruction;
 
     return analyzed_line;
-}
-
-int main(int argc, char** argv)
-{
-    FILE * analyzer_input_test;
-    Analyzed_line analyzed_line_result;
-    char line[MAX_LINE_LENGTH];
-
-    analyzer_input_test = fopen(argv[1], "r");
-    if (analyzer_input_test == NULL) 
-    {
-        printf("Error opening the analyzer_input_test file.\n");
-        return 0;
-    }
-
-    /* Analyze each line and perform the relevant action */
-    while (fgets(line, MAX_LINE_LENGTH, analyzer_input_test) != NULL) 
-    {
-        analyzed_line_result = get_analyzed_line(line);
-        if (analyzed_line_result.analyzed_line_opt == 0)
-        {
-            printf("Line: %s", line);
-            printf("Line Type: %d\n", analyzed_line_result.analyzed_line_opt);
-            printf("Dir type: %d\n",analyzed_line_result.dir_or_inst.directive.dir_opt);
-            if (analyzed_line_result.dir_or_inst.directive.dir_opt == 0 || analyzed_line_result.dir_or_inst.directive.dir_opt == 1) 
-            {
-                printf("Label name: %s\n",analyzed_line_result.dir_or_inst.directive.dir_operand.label_name);
-            }
-            printf("\n");
-        } 
-    }
-
-    return 0;
 }
