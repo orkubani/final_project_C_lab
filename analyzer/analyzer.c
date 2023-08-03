@@ -78,7 +78,7 @@ int get_dir_type(char * line, asm_directive asm_all_directives[NUM_OF_DIR]) /* C
     return INVALID_VALUE;
 }
 
-char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directives[NUM_OF_DIR])
+char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directives[NUM_OF_DIR]) /* Checked */
 {
     char clean_line[MAX_LINE_LENGTH];
     char * label_name;
@@ -112,6 +112,31 @@ char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directi
 
     /* Error */
     return NULL;
+}
+
+char * get_dir_string(char * line) /* Checked */
+{
+    int i;
+    char clean_line[MAX_LINE_LENGTH];
+    char * string_content;
+    remove_white_spaces(line, clean_line);
+
+    string_content = strchr(clean_line, '\"');
+
+    if (string_content == NULL)
+        return NULL;
+
+    string_content += 1;
+
+    for(i = 0; string_content[i] != '\0'; i++)
+    {
+        if (string_content[i] == '\"')
+        {
+            string_content[i] = '\0';
+        }
+    }
+
+    return string_content;
 }
 
 Analyzed_line get_analyzed_line(char *line)
@@ -162,6 +187,9 @@ Analyzed_line get_analyzed_line(char *line)
 
         if (analyzed_line.dir_or_inst.directive.dir_opt == dir_entry || analyzed_line.dir_or_inst.directive.dir_opt == dir_extern)
             analyzed_line.dir_or_inst.directive.dir_operand.label_name = get_ent_ext_label(line, analyzed_line.dir_or_inst.directive.dir_opt == dir_entry, asm_all_directives);
+        
+        else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_string)
+            analyzed_line.dir_or_inst.directive.dir_operand.string = get_dir_string(line);
     }
         
     else
