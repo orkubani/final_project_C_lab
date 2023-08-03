@@ -126,15 +126,28 @@ char * get_dir_string(char * line) /* Checked */
     return string_content;
 }
 
-void get_dir_data(char *line, Analyzed_line *analyzed_line)
+void get_dir_data(char *line, Analyzed_line *analyzed_line) /* Not Ready */
 {
     char clean_line[MAX_LINE_LENGTH];
     char * data_content_as_string;
+    int i;
+    long int num;
 
     remove_white_spaces(line, clean_line);
 
     data_content_as_string = strrchr(clean_line, 'a');
     data_content_as_string += 1; /* Skip the last 'a' */
+
+    for (i = 0; data_content_as_string[i] != '\0'; i++)
+    {
+        if (sscanf(data_content_as_string, "%ld", &num) == 1) 
+        {
+            printf("%ld\n", num);
+            data_content_as_string = strchr(data_content_as_string, ',');
+            data_content_as_string += 1;
+        }
+    }
+
 }
 
 Analyzed_line get_analyzed_line(char *line)
