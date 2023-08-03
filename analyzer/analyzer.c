@@ -51,12 +51,12 @@ int get_dir_type(char * line, asm_directive asm_all_directives[NUM_OF_DIR]) /* C
     if (clean_line[0] == '.')
     {
         /* entry */
-        if(strncmp(clean_line, ".entry", DOT_ENTRY_LEN) == 0)
-            return get_dir_enum_key(asm_all_directives, ".entry");
+        if(strncmp(clean_line, DOT_ENT_AS_STRING, DOT_ENTRY_LEN) == 0)
+            return get_dir_enum_key(asm_all_directives, DOT_ENT_AS_STRING);
         
         /* extern */        
-        else if(strncmp(clean_line, ".extern", DOT_EXTERN_LEN) == 0)
-            return get_dir_enum_key(asm_all_directives, ".extern");;
+        else if(strncmp(clean_line, DOT_EXT_AS_STRING, DOT_EXTERN_LEN) == 0)
+            return get_dir_enum_key(asm_all_directives, DOT_EXT_AS_STRING);;
     }
 
     str_or_data = strstr(clean_line, delimiter);
@@ -67,15 +67,51 @@ int get_dir_type(char * line, asm_directive asm_all_directives[NUM_OF_DIR]) /* C
     str_or_data += strlen(delimiter) - 1; /* Get the string after the ':' */
     
     /* string */
-    if (strncmp(str_or_data, ".string", DOT_STR_LEN) == 0)
-        return get_dir_enum_key(asm_all_directives, ".string");
+    if (strncmp(str_or_data, DOT_STR_AS_STRING, DOT_STR_LEN) == 0)
+        return get_dir_enum_key(asm_all_directives, DOT_STR_AS_STRING);
 
     /* data */
-    else if (strncmp(str_or_data, ".data", DOT_DATA_LEN) == 0)
-        return get_dir_enum_key(asm_all_directives, ".data");
+    else if (strncmp(str_or_data, DOT_DATA_AS_STRING, DOT_DATA_LEN) == 0)
+        return get_dir_enum_key(asm_all_directives, DOT_DATA_AS_STRING);
     
     /* Invalid directive type */
     return INVALID_VALUE;
+}
+
+char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directives[NUM_OF_DIR])
+{
+    char clean_line[MAX_LINE_LENGTH];
+    char * label_name;
+    remove_white_spaces(line, clean_line);
+
+    /* Get entry label name */
+    if (dir_opt == get_dir_enum_key(asm_all_directives, DOT_EXT_AS_STRING))
+    {
+        label_name = strstr(clean_line, DOT_EXT_AS_STRING);
+
+        if (label_name == NULL)
+            return NULL;
+    
+        label_name += strlen(DOT_EXT_AS_STRING);
+
+        return label_name;
+    }
+
+    /* Get extern label name */     
+    else if(dir_opt == get_dir_enum_key(asm_all_directives, DOT_ENT_AS_STRING))
+    {
+        label_name = strstr(clean_line, DOT_ENT_AS_STRING);
+
+        if (label_name == NULL)
+            return NULL;
+    
+        label_name += strlen(DOT_ENT_AS_STRING);
+
+        return label_name;
+    }
+
+    /* Error */
+    return NULL;
 }
 
 Analyzed_line get_analyzed_line(char *line)
@@ -119,17 +155,13 @@ Analyzed_line get_analyzed_line(char *line)
     {".entry", dir_entry},
     };
 
-    /* if (is_syntax_error(line))
-    {
-        strcpy(analyzed_line.syntax_error, "Syntax Error was detected");
-        return analyzed_line;
-    } */
-
-    /* Check line type */
     if (is_dir_or_inst(line) == DIR_ENUM_CODE)
     {
         analyzed_line.analyzed_line_opt = directive;
         analyzed_line.dir_or_inst.directive.dir_opt = get_dir_type(line, asm_all_directives);
+
+        if (analyzed_line.dir_or_inst.directive.dir_opt == dir_entry || analyzed_line.dir_or_inst.directive.dir_opt == dir_extern)
+            analyzed_line.dir_or_inst.directive.dir_operand.label_name = get_ent_ext_label(line, analyzed_line.dir_or_inst.directive.dir_opt == dir_entry, asm_all_directives);
     }
         
     else
@@ -137,7 +169,6 @@ Analyzed_line get_analyzed_line(char *line)
 
     return analyzed_line;
 }
-
 
 int main(int argc, char** argv)
 {
@@ -160,7 +191,12 @@ int main(int argc, char** argv)
         {
             printf("Line: %s", line);
             printf("Line Type: %d\n", analyzed_line_result.analyzed_line_opt);
-            printf("Dir type: %d\n\n",analyzed_line_result.dir_or_inst.directive.dir_opt);
+            printf("Dir type: %d\n",analyzed_line_result.dir_or_inst.directive.dir_opt);
+            if (analyzed_line_result.dir_or_inst.directive.dir_opt == 0 || analyzed_line_result.dir_or_inst.directive.dir_opt == 1) 
+            {
+                printf("Label name: %s\n",analyzed_line_result.dir_or_inst.directive.dir_operand.label_name);
+            }
+            printf("\n");
         } 
     }
 

@@ -10,6 +10,11 @@
 #define DIR_ENUM_CODE 0
 #define INST_ENUM_CODE 1
 
+#define DOT_ENT_AS_STRING ".entry"
+#define DOT_EXT_AS_STRING ".extern"
+#define DOT_STR_AS_STRING ".string"
+#define DOT_DATA_AS_STRING ".data"
+
 #define DOT_STR_LEN 7
 #define DOT_DATA_LEN 5
 #define DOT_ENTRY_LEN 6
@@ -132,6 +137,7 @@ typedef struct asm_directive
 int is_dir_or_inst(char *line);
 int get_dir_enum_key(asm_directive asm_all_directives[NUM_OF_DIR], char * dir_name);
 int get_dir_type(char * line, asm_directive asm_all_directives[NUM_OF_DIR]);
+char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directives[NUM_OF_DIR]);
 Analyzed_line get_analyzed_line(char *line);
 
 #endif /* ANALYZER_H */
