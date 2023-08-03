@@ -3,9 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-/* int is_syntax_error(char *line);  To Implement */
-
 int is_dir_or_inst(char *line) /* Checked */
 {
     int i;
