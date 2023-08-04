@@ -128,6 +128,7 @@ char * get_dir_string(char * line) /* Checked */
 
 void get_dir_data(char *line, Analyzed_line *analyzed_line) /* Not Ready */
 {
+    int i = 0;
     char clean_line[MAX_LINE_LENGTH];
     char * data_content_as_string;
     long int num;
@@ -139,10 +140,14 @@ void get_dir_data(char *line, Analyzed_line *analyzed_line) /* Not Ready */
 
     while (sscanf(data_content_as_string, "%ld", &num) == 1) 
     {
-        printf("%ld\n", num);
         data_content_as_string = strchr(data_content_as_string, ',');
+        analyzed_line->dir_or_inst.directive.dir_operand.data.data[i] = num;
+        i++;
+        analyzed_line->dir_or_inst.directive.dir_operand.data.data_count = i;
+
         if (data_content_as_string == NULL)
             break;
+        
         data_content_as_string += 1;
     }
 }
