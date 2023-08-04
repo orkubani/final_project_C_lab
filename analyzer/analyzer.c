@@ -40,29 +40,36 @@ static asm_directive asm_all_directives[NUM_OF_DIR] =
     {".entry", dir_entry},
 };
 
-int get_main_label(char *line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System | Before Inst */
+int get_main_label(char *clean_line, Analyzed_line *analyzed_line) /* Before Error System */
 {
     int i;
-    char clean_line[MAX_LINE_LENGTH];
     char label_name[MAX_LINE_LENGTH];
-    remove_white_spaces(line, clean_line);
 
-    if (strchr(clean_line, ':') != NULL) 
+    /* Initialize label_name with null characters. */
+    for (i = 0; i < MAX_LINE_LENGTH; i++) 
     {
-        for (i = 0; clean_line[i] != ':'; i++) 
-        {
-            label_name[i] = clean_line[i];
-        }
-
         label_name[i] = '\0';
-        strcpy(analyzed_line->label_name, label_name);
-        return 1;
     }
 
-    return 0;
+    /* There is no label def in this line. */
+    if (strchr(clean_line, ':') == NULL) 
+    {
+        strcpy(analyzed_line->label_name, label_name);
+        return 0;
+    }
+
+    /* Get the label name from the line */
+    for (i = 0; clean_line[i] != ':'; i++) 
+    {
+        label_name[i] = clean_line[i];
+    }
+
+    label_name[i] = '\0';
+    strcpy(analyzed_line->label_name, label_name);
+    return 1;
 }
 
-int is_dir_or_inst(char *clean_line, Analyzed_line *analyzed_line) /* Before Error System */
+int is_dir_or_inst(char *clean_line, Analyzed_line *analyzed_line) /* Before Error System | Before Inst Check */
 {
     int i;
 
@@ -220,7 +227,7 @@ Analyzed_line get_analyzed_line(char *line)
     char clean_line[MAX_LINE_LENGTH];
     remove_white_spaces(line, clean_line);
 
-    get_main_label(line, &analyzed_line);
+    get_main_label(clean_line, &analyzed_line);
     is_dir_or_inst(clean_line, &analyzed_line);
 
     if (analyzed_line.analyzed_line_opt == directive)
