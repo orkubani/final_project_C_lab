@@ -40,7 +40,7 @@ static asm_directive asm_all_directives[NUM_OF_DIR] =
     {".entry", dir_entry},
 };
 
-int get_main_label(char *line, Analyzed_line *analyzed_line)
+int get_main_label(char *line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System | Before Inst */
 {
     int i;
     char clean_line[MAX_LINE_LENGTH];
@@ -62,29 +62,32 @@ int get_main_label(char *line, Analyzed_line *analyzed_line)
     return 0;
 }
 
-int is_dir_or_inst(char *line) /* Checked */
+int is_dir_or_inst(char *clean_line, Analyzed_line *analyzed_line) /* Before Error System */
 {
     int i;
-    char clean_line[MAX_LINE_LENGTH];
-    remove_white_spaces(line, clean_line);
 
-    /* Option 1 when line is a directive. entry/extern */
+    /* Option 1 when line is a directive. (entry/extern) */
     if (clean_line[0] == '.')
-        return DIR_ENUM_CODE;
-    
-    /* Option 2 when line is a directive. label */
+    {
+        analyzed_line->analyzed_line_opt = directive;
+        return directive;
+    }
+        
+    /* Option 2 when line is a directive. (label) */
     for(i = 0; i < strlen(clean_line) - 1; i++)
     {
         if (clean_line[i] == ':' && clean_line[i + 1] == '.') 
         {
-            return DIR_ENUM_CODE;
+            analyzed_line->analyzed_line_opt = directive;
+            return directive;
         }
     }
 
-    return INST_ENUM_CODE;
+    analyzed_line->analyzed_line_opt = instruction;
+    return instruction;
 }
 
-int get_dir_enum_key(asm_directive asm_all_directives[NUM_OF_DIR], char * dir_name) /* Checked */
+int get_dir_enum_key(asm_directive asm_all_directives[NUM_OF_DIR], char * dir_name) /* Before Opti | Before Error System */
 {
     int i;
 
@@ -99,7 +102,7 @@ int get_dir_enum_key(asm_directive asm_all_directives[NUM_OF_DIR], char * dir_na
     return INVALID_VALUE;
 }
 
-int get_dir_type(char * line, asm_directive asm_all_directives[NUM_OF_DIR]) /* Checked */
+int get_dir_type(char * line, asm_directive asm_all_directives[NUM_OF_DIR]) /* Before Opti | Before Error System */
 {
     char clean_line[MAX_LINE_LENGTH];
     char * str_or_data;
@@ -137,7 +140,7 @@ int get_dir_type(char * line, asm_directive asm_all_directives[NUM_OF_DIR]) /* C
     return INVALID_VALUE;
 }
 
-char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directives[NUM_OF_DIR]) /* Checked */
+char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directives[NUM_OF_DIR]) /* Before Opti | Before Error System */
 {
     char clean_line[MAX_LINE_LENGTH];
     char * label_name;
@@ -173,7 +176,7 @@ char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directi
     return NULL;
 }
 
-char * get_dir_string(char * line) /* Checked */
+char * get_dir_string(char * line) /* Before Opti | Before Error System */
 {
     char clean_line[MAX_LINE_LENGTH];
     char * string_content;
@@ -185,7 +188,7 @@ char * get_dir_string(char * line) /* Checked */
     return string_content;
 }
 
-void get_dir_data(char *line, Analyzed_line *analyzed_line) /* Checkd, can be splited to helper */
+void get_dir_data(char *line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System */
 {
     int i = 0;
     char clean_line[MAX_LINE_LENGTH];
@@ -214,12 +217,14 @@ void get_dir_data(char *line, Analyzed_line *analyzed_line) /* Checkd, can be sp
 Analyzed_line get_analyzed_line(char *line)
 {
     Analyzed_line analyzed_line;
+    char clean_line[MAX_LINE_LENGTH];
+    remove_white_spaces(line, clean_line);
 
     get_main_label(line, &analyzed_line);
+    is_dir_or_inst(clean_line, &analyzed_line);
 
-    if (is_dir_or_inst(line) == DIR_ENUM_CODE)
+    if (analyzed_line.analyzed_line_opt == directive)
     {
-        analyzed_line.analyzed_line_opt = directive;
         analyzed_line.dir_or_inst.directive.dir_opt = get_dir_type(line, asm_all_directives);
 
         if (analyzed_line.dir_or_inst.directive.dir_opt == dir_entry || analyzed_line.dir_or_inst.directive.dir_opt == dir_extern)
@@ -232,8 +237,10 @@ Analyzed_line get_analyzed_line(char *line)
          get_dir_data(line, &analyzed_line);
     }
         
-    else
-        analyzed_line.analyzed_line_opt = instruction;
+    else if(analyzed_line.analyzed_line_opt == instruction)
+    {
+
+    }
 
     return analyzed_line;
 }

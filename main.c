@@ -6,6 +6,7 @@
 int main(int argc, char **argv)
 {
     int i;
+    int j;
     char * am_filename;
     FILE * am_file;
     char line[MAX_LINE_LENGTH];
@@ -26,27 +27,48 @@ int main(int argc, char **argv)
         while (fgets(line, MAX_LINE_LENGTH, am_file) != NULL) 
         {
             analyzed_line_result = get_analyzed_line(line);
-
-            
-            if (analyzed_line_result.analyzed_line_opt == 0)
-            {
             printf("Line: %s", line);
-            printf("Line Type: %d\n", analyzed_line_result.analyzed_line_opt);
-            printf("Dir type: %d\n",analyzed_line_result.dir_or_inst.directive.dir_opt);
-            
-            if (analyzed_line_result.dir_or_inst.directive.dir_opt == 0 || analyzed_line_result.dir_or_inst.directive.dir_opt == 1) 
+            printf("Main Label: '%s'\n", analyzed_line_result.label_name);
+
+            /* Print dir */
+            if (analyzed_line_result.analyzed_line_opt == directive)
             {
-                printf("Label name: %s\n",analyzed_line_result.dir_or_inst.directive.dir_operand.label_name);
+                printf("Line Type: 'directive'\n");
+
+                if (analyzed_line_result.dir_or_inst.directive.dir_opt == dir_entry)
+                {
+                    printf("Dir Type: 'dir_entry'\n");
+                    printf("Label name: '%s'\n", analyzed_line_result.dir_or_inst.directive.dir_operand.label_name);
+                } 
+                
+                if (analyzed_line_result.dir_or_inst.directive.dir_opt == dir_extern)
+                {
+                    printf("Dir Type: 'dir_extern'\n");
+                    printf("Label name: '%s'\n", analyzed_line_result.dir_or_inst.directive.dir_operand.label_name);
+                } 
+                
+                if (analyzed_line_result.dir_or_inst.directive.dir_opt == dir_string)
+                {
+                    printf("Dir Type: 'dir_string'\n");
+                    printf("String: '%s'\n", analyzed_line_result.dir_or_inst.directive.dir_operand.string);
+                } 
+
+                if (analyzed_line_result.dir_or_inst.directive.dir_opt == dir_data)
+                {
+                    printf("Dir Type: 'dir_data'\n");
+                    for(j = 0; j < analyzed_line_result.dir_or_inst.directive.dir_operand.data.data_count; j++)
+                        printf("'%d'\t", analyzed_line_result.dir_or_inst.directive.dir_operand.data.data[j]);
+                    printf("\nData Count: '%d'\n", analyzed_line_result.dir_or_inst.directive.dir_operand.data.data_count);
+                } 
+
+                printf("\n");
             }
 
-            if (analyzed_line_result.dir_or_inst.directive.dir_opt == 2) 
+            /* Print inst */
+            else if (analyzed_line_result.analyzed_line_opt == instruction) 
             {
-                printf("String content: %s\n",analyzed_line_result.dir_or_inst.directive.dir_operand.string);
+                printf("Line Type: 'instruction'\n\n");
             }
-
-            printf("\n");
-            } 
-            
         }
     }
 
