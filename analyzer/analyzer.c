@@ -1,7 +1,44 @@
 #include "analyzer.h"
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+static asm_instruction asm_all_instructions[NUM_OF_INST] =
+{
+    /* {<inst_name>, <inst_key>, <immed_as_src>, <label_as_src>, <reg_as_src>, <immed_as_dest>, <label_as_dest>, <reg_as_dest>} */
+
+    /* Require 2 operands */
+    {"mov", inst_mov, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE},
+    {"cmp", inst_mov, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE},
+    {"add", inst_mov, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE},
+    {"sub", inst_mov, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE},
+    {"lea", inst_mov, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE},
+
+    /* Require 1 operand */
+    {"not", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+    {"clr", inst_mov,  FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+    {"inc", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+    {"dec", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+    {"jmp", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+    {"bne", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+    {"red", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+    {"prn", inst_mov, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE},
+    {"jsr", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+
+    /* Without operands */
+    {"rts", inst_mov, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE},
+    {"stop", inst_mov, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE},
+};
+
+static asm_directive asm_all_directives[NUM_OF_DIR] = 
+{
+    /* {<dir_name>, <sir_key>} */
+    {".data", dir_data},
+    {".string", dir_string},
+    {".extern", dir_extern},
+    {".entry", dir_entry},
+};
 
 int get_main_label(char *line, Analyzed_line *analyzed_line)
 {
@@ -19,7 +56,6 @@ int get_main_label(char *line, Analyzed_line *analyzed_line)
 
         label_name[i] = '\0';
         strcpy(analyzed_line->label_name, label_name);
-        printf("LABEL NAME #######: %s\n",analyzed_line->label_name); 
         return 1;
     }
 
@@ -178,43 +214,6 @@ void get_dir_data(char *line, Analyzed_line *analyzed_line) /* Checkd, can be sp
 Analyzed_line get_analyzed_line(char *line)
 {
     Analyzed_line analyzed_line;
-
-    asm_instruction asm_all_instructions[NUM_OF_INST] = 
-    {
-    /* {<inst_name>, <inst_key>, <immed_as_src>, <label_as_src>, <reg_as_src>, <immed_as_dest>, <label_as_dest>, <reg_as_dest>} */
-
-    /* Require 2 operands */
-    {"mov", inst_mov, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE},
-    {"cmp", inst_mov, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE},
-    {"add", inst_mov, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE},
-    {"sub", inst_mov, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE},
-    {"lea", inst_mov, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE},
-
-    /* Require 1 operand */
-    {"not", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
-    {"clr", inst_mov,  FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
-    {"inc", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
-    {"dec", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
-    {"jmp", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
-    {"bne", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
-    {"red", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
-    {"prn", inst_mov, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE},
-    {"jsr", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
-
-    /* Without operands */
-    {"rts", inst_mov, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE},
-    {"stop", inst_mov, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE},
-    };
-
-    asm_directive asm_all_directives[NUM_OF_DIR] = 
-    {
-    /* {<dir_name>, <sir_key>} */
-
-    {".data", dir_data},
-    {".string", dir_string},
-    {".extern", dir_extern},
-    {".entry", dir_entry},
-    };
 
     get_main_label(line, &analyzed_line);
 
