@@ -94,7 +94,7 @@ int is_dir_or_inst(char *clean_line, Analyzed_line *analyzed_line) /* Before Err
     return instruction;
 }
 
-int get_dir_enum_key(asm_directive asm_all_directives[NUM_OF_DIR], char * dir_name) /* Before Opti | Before Error System */
+int get_dir_enum_key(asm_directive asm_all_directives[NUM_OF_DIR], char * dir_name) /* Before Error System */
 {
     int i;
 
@@ -106,7 +106,7 @@ int get_dir_enum_key(asm_directive asm_all_directives[NUM_OF_DIR], char * dir_na
         }
     }
 
-    return INVALID_VALUE;
+    return 0;
 }
 
 int get_dir_type(char * line, asm_directive asm_all_directives[NUM_OF_DIR]) /* Before Opti | Before Error System */
