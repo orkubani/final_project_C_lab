@@ -3,6 +3,29 @@
 #include <stdlib.h>
 #include <string.h>
 
+int get_main_label(char *line, Analyzed_line *analyzed_line)
+{
+    int i;
+    char clean_line[MAX_LINE_LENGTH];
+    char label_name[MAX_LINE_LENGTH];
+    remove_white_spaces(line, clean_line);
+
+    if (strchr(clean_line, ':') != NULL) 
+    {
+        for (i = 0; clean_line[i] != ':'; i++) 
+        {
+            label_name[i] = clean_line[i];
+        }
+
+        label_name[i] = '\0';
+        strcpy(analyzed_line->label_name, label_name);
+        printf("LABEL NAME #######: %s\n",analyzed_line->label_name); 
+        return 1;
+    }
+
+    return 0;
+}
+
 int is_dir_or_inst(char *line) /* Checked */
 {
     int i;
@@ -126,7 +149,7 @@ char * get_dir_string(char * line) /* Checked */
     return string_content;
 }
 
-void get_dir_data(char *line, Analyzed_line *analyzed_line) /* Not Ready */
+void get_dir_data(char *line, Analyzed_line *analyzed_line) /* Checkd, can be splited to helper */
 {
     int i = 0;
     char clean_line[MAX_LINE_LENGTH];
@@ -192,6 +215,8 @@ Analyzed_line get_analyzed_line(char *line)
     {".extern", dir_extern},
     {".entry", dir_entry},
     };
+
+    get_main_label(line, &analyzed_line);
 
     if (is_dir_or_inst(line) == DIR_ENUM_CODE)
     {
