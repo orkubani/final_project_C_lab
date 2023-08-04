@@ -94,57 +94,50 @@ int is_dir_or_inst(char *clean_line, Analyzed_line *analyzed_line) /* Before Err
     return instruction;
 }
 
-int get_dir_enum_key(asm_directive asm_all_directives[NUM_OF_DIR], char * dir_name) /* Before Error System */
+int get_dir_type(char * clean_line, Analyzed_line *analyzed_line) /* Before Error System */
 {
-    int i;
-
-    for (i = 0; i < NUM_OF_DIR; i++) 
-    {
-        if (strcmp(asm_all_directives[i].dir_name, dir_name) == 0) 
-        {
-            return asm_all_directives[i].dir_key;
-        }
-    }
-
-    return 0;
-}
-
-int get_dir_type(char * line, asm_directive asm_all_directives[NUM_OF_DIR]) /* Before Opti | Before Error System */
-{
-    char clean_line[MAX_LINE_LENGTH];
     char * str_or_data;
     const char * delimiter = ":.";
     
-    remove_white_spaces(line, clean_line);
-
+    /* enrty/extern */
     if (clean_line[0] == '.')
     {
         /* entry */
         if(strncmp(clean_line, DOT_ENT_AS_STRING, DOT_ENTRY_LEN) == 0)
-            return get_dir_enum_key(asm_all_directives, DOT_ENT_AS_STRING);
-        
+        {
+            analyzed_line->dir_or_inst.directive.dir_opt = dir_entry;
+            return 1;
+        }
+                    
         /* extern */        
         else if(strncmp(clean_line, DOT_EXT_AS_STRING, DOT_EXTERN_LEN) == 0)
-            return get_dir_enum_key(asm_all_directives, DOT_EXT_AS_STRING);;
+        {
+            analyzed_line->dir_or_inst.directive.dir_opt = dir_extern;
+            return 1;
+        }
     }
 
+    /* Get data/string */
     str_or_data = strstr(clean_line, delimiter);
-
     if (str_or_data == NULL)
-        return INVALID_VALUE;
-    
+        return 0;
     str_or_data += strlen(delimiter) - 1; /* Get the string after the ':' */
     
     /* string */
     if (strncmp(str_or_data, DOT_STR_AS_STRING, DOT_STR_LEN) == 0)
-        return get_dir_enum_key(asm_all_directives, DOT_STR_AS_STRING);
+    {
+        analyzed_line->dir_or_inst.directive.dir_opt = dir_string;
+        return 1;
+    }
 
     /* data */
     else if (strncmp(str_or_data, DOT_DATA_AS_STRING, DOT_DATA_LEN) == 0)
-        return get_dir_enum_key(asm_all_directives, DOT_DATA_AS_STRING);
+    {
+        analyzed_line->dir_or_inst.directive.dir_opt = dir_data;
+        return 1;
+    }
     
-    /* Invalid directive type */
-    return INVALID_VALUE;
+    return 0;
 }
 
 char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directives[NUM_OF_DIR]) /* Before Opti | Before Error System */
@@ -153,8 +146,8 @@ char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directi
     char * label_name;
     remove_white_spaces(line, clean_line);
 
-    /* Get entry label name */
-    if (dir_opt == get_dir_enum_key(asm_all_directives, DOT_EXT_AS_STRING))
+    /* Get extern label name */
+    if (dir_opt == dir_extern)
     {
         label_name = strstr(clean_line, DOT_EXT_AS_STRING);
 
@@ -166,8 +159,8 @@ char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directi
         return label_name;
     }
 
-    /* Get extern label name */     
-    else if(dir_opt == get_dir_enum_key(asm_all_directives, DOT_ENT_AS_STRING))
+    /* Get entry label name */     
+    else if(dir_opt == dir_entry)
     {
         label_name = strstr(clean_line, DOT_ENT_AS_STRING);
 
@@ -232,7 +225,7 @@ Analyzed_line get_analyzed_line(char *line)
 
     if (analyzed_line.analyzed_line_opt == directive)
     {
-        analyzed_line.dir_or_inst.directive.dir_opt = get_dir_type(line, asm_all_directives);
+        get_dir_type(clean_line, &analyzed_line);
 
         if (analyzed_line.dir_or_inst.directive.dir_opt == dir_entry || analyzed_line.dir_or_inst.directive.dir_opt == dir_extern)
             analyzed_line.dir_or_inst.directive.dir_operand.label_name = get_ent_ext_label(line, analyzed_line.dir_or_inst.directive.dir_opt == dir_entry, asm_all_directives);

@@ -134,8 +134,7 @@ typedef struct asm_directive
 
 int get_main_label(char *clean_line, Analyzed_line *analyzed_line);
 int is_dir_or_inst(char *clean_line, Analyzed_line *analyzed_line);
-int get_dir_enum_key(asm_directive asm_all_directives[NUM_OF_DIR], char * dir_name);
-int get_dir_type(char * line, asm_directive asm_all_directives[NUM_OF_DIR]);
+int get_dir_type(char * clean_line, Analyzed_line *analyzed_line);
 char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directives[NUM_OF_DIR]);
 char * get_dir_string(char * line);
 void get_dir_data(char * line, Analyzed_line * analyzed_line);
