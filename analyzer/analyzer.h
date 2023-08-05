@@ -140,8 +140,8 @@ char * get_dir_string(char * line);
 void get_dir_data(char * line, Analyzed_line * analyzed_line);
 const char * get_inst_name(int inst_enum_code);
 int get_num_inst_operands(int inst_enum_code);
-int get_inst_operands(char *clean_line, Analyzed_line *analyzed_line, int inst_opt);
-int set_inst_operand_option(char * inst_operand, Analyzed_line *analyzed_line, int operand_i);
+int set_instruction(char *clean_line, Analyzed_line *analyzed_line, int inst_opt);
+int set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i);
 Analyzed_line get_analyzed_line(char *line);
 
 #endif /* ANALYZER_H */

@@ -68,7 +68,31 @@ int main(int argc, char **argv)
             else if (analyzed_line_result.analyzed_line_opt == instruction) 
             {
                 printf("Line Type: 'instruction'\n");
-                printf("Inst opt: '%d'\n\n",analyzed_line_result.dir_or_inst.instruction.inst_opt);
+                printf("Instruction Enum Code: '%d'\n",analyzed_line_result.dir_or_inst.instruction.inst_opt);
+                
+                
+                for (j = 0; j < 2; j++)
+                {                    
+                    if (analyzed_line_result.dir_or_inst.instruction.inst_operand_options[j] == operand_const_number)
+                    {
+                        printf("Addresing type for operand number '%d': 'const_number'\n", j);
+                        printf("Operand number '%d' const number: '%d'\n", j, analyzed_line_result.dir_or_inst.instruction.inst_operands[j].const_number);
+                    }
+
+                    else if (analyzed_line_result.dir_or_inst.instruction.inst_operand_options[j] == operand_register)
+                    {
+                        printf("Addresing type for operand number '%d': 'register'\n", j);
+                        printf("Operand number '%d' reg number: '%d'\n", j, analyzed_line_result.dir_or_inst.instruction.inst_operands[j].register_number);
+                    }
+
+                    else if (analyzed_line_result.dir_or_inst.instruction.inst_operand_options[j] == operand_label) 
+                    {
+                        printf("Addresing type for operand number '%d': 'label'\n", j);
+                        printf("Operand number '%d' Label: '%s'\n", j, analyzed_line_result.dir_or_inst.instruction.inst_operands[j].label);
+                    }
+                }
+                
+                printf("\n");
             }
 
             /* Invalid lines */

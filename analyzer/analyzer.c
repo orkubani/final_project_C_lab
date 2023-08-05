@@ -267,25 +267,28 @@ int get_num_inst_operands(int inst_enum_code) /* Before Opti | Before Error Syst
     return -1;
 }
 
-int set_inst_operand_option(char * inst_operand, Analyzed_line *analyzed_line, int operand_i) /* Before Opti | Before Error System */
+int set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i) /* Before Opti | Before Error System */
 {
     if (*inst_operand == '@')
     {
         analyzed_line->dir_or_inst.instruction.inst_operand_options[operand_i] = operand_register;
+        analyzed_line->dir_or_inst.instruction.inst_operands[operand_i].register_number = get_reg_num(inst_operand);
         return 1;
     } 
 
     else if(is_integer(inst_operand))
     {
         analyzed_line->dir_or_inst.instruction.inst_operand_options[operand_i] = operand_const_number;
+        analyzed_line->dir_or_inst.instruction.inst_operands[operand_i].const_number = str_to_int(inst_operand);
         return 1;
     }
 
     analyzed_line->dir_or_inst.instruction.inst_operand_options[operand_i] = operand_label;
+    analyzed_line->dir_or_inst.instruction.inst_operands[operand_i].label = inst_operand;
     return 1; 
 }
 
-int get_inst_operands(char *clean_line, Analyzed_line *analyzed_line, int inst_opt) /* Before Opti | Before Error System */
+int set_instruction(char *clean_line, Analyzed_line *analyzed_line, int inst_opt) /* Before Opti | Before Error System */
 {
     int i;
     char * inst_content;
@@ -309,7 +312,7 @@ int get_inst_operands(char *clean_line, Analyzed_line *analyzed_line, int inst_o
 
         for (i = 0; i < num_of_operands; i++)
         {
-            set_inst_operand_option(operands[i], analyzed_line, i);
+            set_inst_operand(operands[i], analyzed_line, i);
         }
         return 1;
     }
@@ -317,7 +320,7 @@ int get_inst_operands(char *clean_line, Analyzed_line *analyzed_line, int inst_o
     else if (num_of_operands == 1)
     {
         strcpy(operands[0], inst_content);
-        set_inst_operand_option(operands[0],analyzed_line, 0);
+        set_inst_operand(operands[0],analyzed_line, 0);
         analyzed_line->dir_or_inst.instruction.inst_operand_options[1] = operand_none;
         return 1;
     }
@@ -332,7 +335,7 @@ int get_inst_operands(char *clean_line, Analyzed_line *analyzed_line, int inst_o
     return 0;
 }
 
-Analyzed_line get_analyzed_line(char *line)
+Analyzed_line get_analyzed_line(char *line) /* Before Opti | Before Error System */
 {
     Analyzed_line analyzed_line;
     char clean_line[MAX_LINE_LENGTH];
@@ -357,7 +360,7 @@ Analyzed_line get_analyzed_line(char *line)
         
     else if(analyzed_line.analyzed_line_opt == instruction)
     {
-        get_inst_operands(clean_line, &analyzed_line, analyzed_line.dir_or_inst.instruction.inst_opt);
+        set_instruction(clean_line, &analyzed_line, analyzed_line.dir_or_inst.instruction.inst_opt);
     }
 
     return analyzed_line;

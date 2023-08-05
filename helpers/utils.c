@@ -68,3 +68,19 @@ int is_integer(const char *str)
 
     return *endptr == '\0';
 }
+
+/* Covert string to int. */
+int str_to_int(const char *str) 
+{
+    char *endptr; 
+    int num;
+
+    num = strtol(str, &endptr, 10);
+
+    if (*endptr != '\0') 
+        /* Invalid string */
+        return -1;
+    
+    else 
+        return num;
+}

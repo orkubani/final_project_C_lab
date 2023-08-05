@@ -1,4 +1,5 @@
 #include "analyzer_helper.h"
+#include "utils.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -42,4 +43,21 @@ void split_operands(const char *inst_content, char *first_operand, char *second_
     }
     
     second_operand[j] = '\0';
+}
+
+int get_reg_num(char * reg)
+{
+    int reg_num;
+    char * reg_num_str;
+
+    reg_num_str = strchr(reg, 'r');
+    reg_num_str += 1; /* Skip the 'r' */
+
+    reg_num = str_to_int(reg_num_str);
+
+    if ( 0 <= reg_num && reg_num <= 7)
+        return reg_num;
+
+    /* Invalid reg_num */
+    return -1;
 }
