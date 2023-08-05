@@ -5,6 +5,7 @@
 #define MAX_LINE_LENGTH 81
 #define MAX_FILE_NAME_LENGTH 200
 #define MAX_LABEL_LENGTH 31
+#define MAX_OPERAND_LENGTH 31
 #define FOUR_CHARS_INDENTATION 4
 #define MACRO_DEF_STR_LENGTH 4
 #define TRUE 1
@@ -39,5 +40,12 @@ void remove_prefix_white_spaces(char *source_line, char *dest_line);
  * @note I assume, macro content is written in indentation of 4 chars.
  */
 void remove_macro_indentation(char *sourceline, char *dest_line);
+
+/**
+ * @brief Checks if string is an int.
+ * 
+ * @param str The input string to check if is an int.
+ */
+ int is_integer(const char *str); 
 
 #endif /* UTILS */

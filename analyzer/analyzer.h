@@ -93,7 +93,7 @@ typedef struct Analyzed_line
                 operand_label = 3,
                 operand_register = 5
 
-            }inst_operand_options;
+            }inst_operand_options[2];
 
             union
             {
@@ -138,6 +138,9 @@ int get_dir_type(char * clean_line, Analyzed_line *analyzed_line);
 char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directives[NUM_OF_DIR]);
 char * get_dir_string(char * line);
 void get_dir_data(char * line, Analyzed_line * analyzed_line);
+const char * get_inst_name(int inst_enum_code);
+int get_num_inst_operands(int inst_enum_code);
+int get_inst_operands(char *clean_line, Analyzed_line *analyzed_line, int inst_opt);
 Analyzed_line get_analyzed_line(char *line);
 
 #endif /* ANALYZER_H */

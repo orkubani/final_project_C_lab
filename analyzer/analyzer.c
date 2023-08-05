@@ -225,6 +225,87 @@ void get_dir_data(char *line, Analyzed_line *analyzed_line) /* Before Opti | Bef
     }
 }
 
+const char * get_inst_name(int inst_enum_code) /* Before Opti | Before Error System */
+{
+    int i;
+    
+    for (i = 0; i < NUM_OF_INST; i++)
+    {
+        if (inst_enum_code == asm_all_instructions[i].inst_key) 
+        {
+            return asm_all_instructions[i].inst_name;
+        }
+    }
+
+    return NULL;
+}
+
+int get_num_inst_operands(int inst_enum_code) /* Before Opti | Before Error System */
+{
+    int i;
+    int src = 0;
+    int dest = 0;
+
+    for (i=0; i < NUM_OF_INST; i++)
+    {
+        if (inst_enum_code == asm_all_instructions[i].inst_key) 
+        {
+            if (asm_all_instructions[i].immed_as_src == TRUE || 
+                asm_all_instructions[i].label_as_src == TRUE || 
+                asm_all_instructions[i].reg_as_src == TRUE) 
+                src = 1;
+            
+            if (asm_all_instructions[i].immed_as_dest == TRUE || 
+                asm_all_instructions[i].label_as_dest == TRUE || 
+                asm_all_instructions[i].reg_as_dest == TRUE) 
+                dest = 1;
+
+            return src + dest;
+        }
+    }
+
+    return -1;
+}
+
+int get_inst_operands(char *clean_line, Analyzed_line *analyzed_line, int inst_opt) /* Before Opti | Before Error System */
+{
+    char * inst_content;
+    const char* inst_name;
+    int num_of_operands;
+    char first_operand[MAX_OPERAND_LENGTH];
+    char second_operand[MAX_OPERAND_LENGTH];
+    int inst_len = 0;
+
+    /* Initilize first_operand & second_operand to be NULL */
+    memset(first_operand, 0, sizeof(first_operand));
+    memset(second_operand, 0, sizeof(second_operand));
+
+    inst_name = get_inst_name(inst_opt);
+    inst_content = strpbrk(clean_line, inst_name);
+    inst_len = strlen(inst_name);
+    inst_content += inst_len;
+    num_of_operands = get_num_inst_operands(inst_opt);
+
+    if (num_of_operands == 2)
+    {
+        split_operands(inst_content, first_operand, second_operand);
+    }
+
+    else if (num_of_operands == 1)
+    {
+        strcpy(first_operand, inst_content);
+    }
+
+    else if (num_of_operands == 0)
+    {
+        analyzed_line->dir_or_inst.instruction.inst_operand_options[0] = operand_none;
+        analyzed_line->dir_or_inst.instruction.inst_operand_options[1] = operand_none;
+        return 1;
+    }
+        
+    return 0;
+}
+
 Analyzed_line get_analyzed_line(char *line)
 {
     Analyzed_line analyzed_line;
@@ -250,7 +331,7 @@ Analyzed_line get_analyzed_line(char *line)
         
     else if(analyzed_line.analyzed_line_opt == instruction)
     {
-
+        get_inst_operands(clean_line, &analyzed_line, analyzed_line.dir_or_inst.instruction.inst_opt);
     }
 
     return analyzed_line;

@@ -1,6 +1,7 @@
 #include "utils.h"
 #include <stdio.h>
 #include <ctype.h>
+#include <stdlib.h>
 #include <string.h>
 
 /**
@@ -57,4 +58,13 @@ void remove_prefix_white_spaces(char *source_line, char *dest_line)
 void remove_macro_indentation(char *sourceline, char *dest_line)
 {
     strncpy(dest_line, sourceline + FOUR_CHARS_INDENTATION, MAX_LINE_LENGTH - FOUR_CHARS_INDENTATION);
+}
+
+/* Checks if string is an int. */
+int is_integer(const char *str) 
+{
+    char *endptr;
+    strtol(str, &endptr, 10);
+
+    return *endptr == '\0';
 }
