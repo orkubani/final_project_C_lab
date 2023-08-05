@@ -1,27 +1,21 @@
+; file ps.as
+
 .entry LENGTH
 .extern W
 MAIN:   mov @r3 ,LENGTH
 LOOP:   jmp L1
         mcro m1 
             sub @r1, @r4
-            bne END
+            bne L3
         endmcro
-; just a comment
-        mcro m2
-            test1
-            test2
-        endmcro        
-        prn -5
-.entry LOOP        
-        bne LOOP
+        prn -5  
+        bne W
         m1
 L1:     inc K
-        bne LOOP
-        m2
+.entry LOOP
+        jmp W
 END:    stop
-
-
-
 STR:    .string "abcdef"
 LENGTH: .data 6,-9,15
 K:      .data 22
+.extern L3
