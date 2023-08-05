@@ -40,7 +40,7 @@ static asm_directive asm_all_directives[NUM_OF_DIR] =
     {".entry", dir_entry},
 };
 
-int get_main_label(char *clean_line, Analyzed_line *analyzed_line) /* Before Error System */
+int get_main_label(char *clean_line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System */
 {
     int i;
     char label_name[MAX_LINE_LENGTH];
@@ -69,7 +69,7 @@ int get_main_label(char *clean_line, Analyzed_line *analyzed_line) /* Before Err
     return 1;
 }
 
-int is_dir_or_inst(char *clean_line, Analyzed_line *analyzed_line) /* Before Error System | Before Inst Check */
+int is_dir_or_inst(char *clean_line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System */
 {
     int i;
 
@@ -90,11 +90,21 @@ int is_dir_or_inst(char *clean_line, Analyzed_line *analyzed_line) /* Before Err
         }
     }
 
-    analyzed_line->analyzed_line_opt = instruction;
-    return instruction;
+    for (i = 0; i < NUM_OF_INST; i++)
+    {
+        if (strstr(clean_line, asm_all_instructions[i].inst_name) != NULL)
+        {
+            analyzed_line->analyzed_line_opt = instruction;
+            return instruction;
+        }
+    }
+
+    /* Not dir or inst */
+    analyzed_line->analyzed_line_opt = -1;
+    return 0;
 }
 
-int get_dir_type(char * clean_line, Analyzed_line *analyzed_line) /* Before Error System */
+int get_dir_type(char * clean_line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System */
 {
     char * str_or_data;
     const char * delimiter = ":.";
