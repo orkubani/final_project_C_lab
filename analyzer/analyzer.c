@@ -10,25 +10,25 @@ static asm_instruction asm_all_instructions[NUM_OF_INST] =
 
     /* Require 2 operands */
     {"mov", inst_mov, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE},
-    {"cmp", inst_mov, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE},
-    {"add", inst_mov, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE},
-    {"sub", inst_mov, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE},
-    {"lea", inst_mov, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE},
+    {"cmp", inst_cmp, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE},
+    {"add", inst_add, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE},
+    {"sub", inst_sub, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE},
+    {"lea", inst_lea, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE},
 
     /* Require 1 operand */
-    {"not", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
-    {"clr", inst_mov,  FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
-    {"inc", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
-    {"dec", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
-    {"jmp", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
-    {"bne", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
-    {"red", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
-    {"prn", inst_mov, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE},
-    {"jsr", inst_mov, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+    {"not", inst_not, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+    {"clr", inst_clr,  FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+    {"inc", inst_inc, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+    {"dec", inst_dec, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+    {"jmp", inst_jmp, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+    {"bne", inst_bne, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+    {"red", inst_red, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
+    {"prn", inst_prn, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE},
+    {"jsr", inst_jsr, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE},
 
     /* Without operands */
-    {"rts", inst_mov, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE},
-    {"stop", inst_mov, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE},
+    {"rts", inst_rts, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE},
+    {"stop", inst_stop, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE},
 };
 
 static asm_directive asm_all_directives[NUM_OF_DIR] = 
@@ -69,7 +69,7 @@ int get_main_label(char *clean_line, Analyzed_line *analyzed_line) /* Before Opt
     return 1;
 }
 
-int is_dir_or_inst(char *clean_line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System */
+int is_dir_or_inst(char *clean_line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System | Before update of dir type */
 {
     int i;
 
@@ -95,6 +95,7 @@ int is_dir_or_inst(char *clean_line, Analyzed_line *analyzed_line) /* Before Opt
         if (strstr(clean_line, asm_all_instructions[i].inst_name) != NULL)
         {
             analyzed_line->analyzed_line_opt = instruction;
+            analyzed_line->dir_or_inst.instruction.inst_opt = asm_all_instructions[i].inst_key;
             return instruction;
         }
     }

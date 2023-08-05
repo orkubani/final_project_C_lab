@@ -67,7 +67,14 @@ int main(int argc, char **argv)
             /* Print inst */
             else if (analyzed_line_result.analyzed_line_opt == instruction) 
             {
-                printf("Line Type: 'instruction'\n\n");
+                printf("Line Type: 'instruction'\n");
+                printf("Inst opt: '%d'\n\n",analyzed_line_result.dir_or_inst.instruction.inst_opt);
+            }
+
+            /* Invalid lines */
+            else 
+            {
+                printf("Line Type: 'BUG'\n\n");
             }
         }
     }
