@@ -84,41 +84,14 @@ void set_dir_or_inst(char *line, Analyzed_line *analyzed_line) /* Before Error S
     char clean_line[MAX_LINE_LENGTH];
     remove_white_spaces(line, clean_line);
 
-    /* Directive Option 1 when line is a '.entry' directive. */
-    if (strstr(clean_line, DOT_ENT_AS_STRING) != NULL)
+    /* Directive */
+    for (i = 0; i < NUM_OF_DIR; i++) 
     {
-        analyzed_line->analyzed_line_opt = directive;
-        analyzed_line->dir_or_inst.directive.dir_opt = dir_entry;
-        return;
-    }
-
-    /* Directive Option 2 when line is a '.extern' directive. */
-    else if (strstr(clean_line, DOT_EXT_AS_STRING) != NULL)
-    {
-        analyzed_line->analyzed_line_opt = directive;
-        analyzed_line->dir_or_inst.directive.dir_opt = dir_extern;
-        return;
-    }
-
-    for(i = 0; i < strlen(clean_line) - 1; i++)
-    {
-        if (clean_line[i] == ':' && clean_line[i + 1] == '.') 
+        if (strstr(clean_line, asm_all_directives[i].dir_name) != NULL) 
         {
-            /* Directive Option 3 when line is a '.data' directive. */
-            if (strstr(clean_line, DOT_DATA_AS_STRING) != NULL)
-            {
-                analyzed_line->analyzed_line_opt = directive;
-                analyzed_line->dir_or_inst.directive.dir_opt = dir_data;
-                return;
-            }
-
-            /* Directive Option 4 when line is a '.entry' directive. */
-            else if (strstr(clean_line, DOT_STR_AS_STRING) != NULL)
-            {
-                analyzed_line->analyzed_line_opt = directive;
-                analyzed_line->dir_or_inst.directive.dir_opt = dir_string;
-                return;
-            }
+            analyzed_line->analyzed_line_opt = directive;
+            analyzed_line->dir_or_inst.directive.dir_opt = asm_all_directives[i].dir_key;
+            return;
         }
     }
 
