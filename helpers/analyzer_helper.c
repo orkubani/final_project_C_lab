@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-char * remove_str_quotations(char * str_content)
+char * remove_str_quotations(char * str_content) /* Before Opti | Before Error System */
 {
     int i;
 
@@ -44,7 +44,7 @@ void split_operands(const char *inst_content, char *first_operand, char *second_
     second_operand[j] = '\0';
 }
 
-int get_reg_num(char * reg)
+int get_reg_num(char * reg) /* Before Opti | Before Error System */
 {
     int reg_num;
     char * reg_num_str;

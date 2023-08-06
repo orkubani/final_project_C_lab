@@ -132,16 +132,20 @@ typedef struct asm_directive
 }asm_directive;
 
 /**
- * @brief Check if there is a Label def in the line. If yes, set it to the Label's name, otherwise set to NULL.
+ * @brief Checks if there is a Label def in the line. If yes, set it to the Label's name, otherwise set to NULL.
  *
  * @param clean_line The input clean line (without white spaces) to check.
  * @param analyzed_line Pointer to the 'analyzed_line' obj.
  */
 void set_main_label(char *clean_line, Analyzed_line *analyzed_line);
 
-int is_dir_or_inst(char *clean_line, Analyzed_line *analyzed_line);
-
-int get_dir_type(char * clean_line, Analyzed_line *analyzed_line);
+/**
+ * @brief Checks and sets if the current line is an Assembly instruction / directive.
+ *
+ * @param clean_line The input clean line (without white spaces) to check.
+ * @param analyzed_line Pointer to the 'analyzed_line' obj.
+ */
+void set_dir_ot_inst(char *clean_line, Analyzed_line *analyzed_line);
 
 char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directives[NUM_OF_DIR]);
 
