@@ -107,7 +107,6 @@ typedef struct Analyzed_line
     }dir_or_inst;
 }Analyzed_line;
 
-/* Struct that maps all the relevant Assembly Insructions. */
 typedef struct asm_instruction
 {
     const char *inst_name;
@@ -125,7 +124,6 @@ typedef struct asm_instruction
 
 }asm_instruction;
 
-/* Struct that maps all the relevant Assembly Directives. */
 typedef struct asm_directive
 {
     const char * dir_name;

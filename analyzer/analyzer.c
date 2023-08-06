@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* Struct that maps all the relevant Assembly Insructions. */
 static asm_instruction asm_all_instructions[NUM_OF_INST] =
 {
     /* {<inst_name>, <inst_key>, <immed_as_src>, <label_as_src>, <reg_as_src>, <immed_as_dest>, <label_as_dest>, <reg_as_dest>} */
@@ -32,6 +33,7 @@ static asm_instruction asm_all_instructions[NUM_OF_INST] =
     {"stop", inst_stop, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE},
 };
 
+/* Struct that maps all the relevant Assembly Directives. */
 static asm_directive asm_all_directives[NUM_OF_DIR] = 
 {
     /* {<dir_name>, <sir_key>} */
