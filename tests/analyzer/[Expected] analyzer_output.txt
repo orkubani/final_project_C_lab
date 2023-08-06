@@ -1,0 +1,109 @@
+Line: .entry LENGTH
+Main Label: ''
+Line Type: 'directive'
+Dir Type: 'dir_entry'
+Label name: 'LENGTH'
+
+Line: .extern W
+Main Label: ''
+Line Type: 'directive'
+Dir Type: 'dir_extern'
+Label name: 'W'
+
+Line: MAIN:   mov @r3 ,LENGTH
+Main Label: 'MAIN'
+Line Type: 'instruction'
+Instruction Enum Code: '0'
+Addresing type for operand number '0': 'register'
+Operand number '0' reg number: '3'
+Addresing type for operand number '1': 'label'
+Operand number '1' Label: 'LENGTH'
+
+Line: LOOP:   jmp L1
+Main Label: 'LOOP'
+Line Type: 'instruction'
+Instruction Enum Code: '9'
+Addresing type for operand number '0': 'label'
+Operand number '0' Label: 'L1'
+
+Line:         prn -5  
+Main Label: ''
+Line Type: 'instruction'
+Instruction Enum Code: '12'
+Addresing type for operand number '0': 'const_number'
+Operand number '0' const number: '-5'
+
+Line:         bne W
+Main Label: ''
+Line Type: 'instruction'
+Instruction Enum Code: '10'
+Addresing type for operand number '0': 'label'
+Operand number '0' Label: 'W'
+
+Line:         sub @r1, @r4
+Main Label: ''
+Line Type: 'instruction'
+Instruction Enum Code: '3'
+Addresing type for operand number '0': 'register'
+Operand number '0' reg number: '1'
+Addresing type for operand number '1': 'register'
+Operand number '1' reg number: '4'
+
+Line:         bne L3
+Main Label: ''
+Line Type: 'instruction'
+Instruction Enum Code: '10'
+Addresing type for operand number '0': 'label'
+Operand number '0' Label: 'L3'
+
+Line: L1:     inc K
+Main Label: 'L1'
+Line Type: 'instruction'
+Instruction Enum Code: '7'
+Addresing type for operand number '0': 'label'
+Operand number '0' Label: 'K'
+
+Line: .entry LOOP
+Main Label: ''
+Line Type: 'directive'
+Dir Type: 'dir_entry'
+Label name: 'LOOP'
+
+Line:         jmp W
+Main Label: ''
+Line Type: 'instruction'
+Instruction Enum Code: '9'
+Addresing type for operand number '0': 'label'
+Operand number '0' Label: 'W'
+
+Line: END:    stop
+Main Label: 'END'
+Line Type: 'instruction'
+Instruction Enum Code: '15'
+
+Line: STR:    .string "abcdef"
+Main Label: 'STR'
+Line Type: 'directive'
+Dir Type: 'dir_string'
+String: 'abcdef'
+
+Line: LENGTH: .data 6,-9,15
+Main Label: 'LENGTH'
+Line Type: 'directive'
+Dir Type: 'dir_data'
+'6'	'-9'	'15'	
+Data Count: '3'
+
+Line: K:      .data 22
+Main Label: 'K'
+Line Type: 'directive'
+Dir Type: 'dir_data'
+'22'	
+Data Count: '1'
+
+Line: .extern L3
+Main Label: ''
+Line Type: 'directive'
+Dir Type: 'dir_extern'
+Label name: 'L3'
+

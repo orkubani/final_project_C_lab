@@ -1,5 +1,4 @@
 #include "analyzer_helper.h"
-#include "utils.h"
 #include <stdlib.h>
 #include <string.h>
 

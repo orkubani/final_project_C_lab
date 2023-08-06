@@ -2,7 +2,6 @@
 #define ANALYZER_H
 
 #include "../helpers/utils.h"
-#include "../helpers/analyzer_helper.h"
 
 #define NUM_OF_INST 16
 #define NUM_OF_DIR 4
