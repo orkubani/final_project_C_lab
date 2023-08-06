@@ -190,7 +190,7 @@ void set_dir_data(char *line, Analyzed_line *analyzed_line) /* Before Error Syst
 }
 
 /* Set an Assembly directive according to the directive type. */
-void set_directive(char * line, Analyzed_line *analyzed_line)
+void set_directive(char * line, Analyzed_line *analyzed_line) /* Before Error System */
 {
     if (analyzed_line->dir_or_inst.directive.dir_opt == dir_entry || analyzed_line->dir_or_inst.directive.dir_opt == dir_extern)
     {
