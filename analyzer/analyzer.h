@@ -134,23 +134,23 @@ typedef struct asm_directive
 /**
  * @brief Checks if there is a Label def in the line. If yes, set it to the Label's name, otherwise set to NULL.
  *
- * @param clean_line The input clean line (without white spaces) to check.
+ * @param line The input line to check.
  * @param analyzed_line Pointer to the 'analyzed_line' obj.
  */
-void set_main_label(char *clean_line, Analyzed_line *analyzed_line);
+void set_main_label(char *line, Analyzed_line *analyzed_line);
 
 /**
  * @brief Checks and sets if the current line is an Assembly instruction / directive.
  *
- * @param clean_line The input clean line (without white spaces) to check.
+ * @param line The input line to check.
  * @param analyzed_line Pointer to the 'analyzed_line' obj.
  */
-void set_dir_ot_inst(char *clean_line, Analyzed_line *analyzed_line);
+void set_dir_or_inst(char *line, Analyzed_line *analyzed_line);
 
 /**
  * @brief Set the label name of a '.entry' / '.extern' Assembly directive.
  *
- * @param clean_line The input clean line (without white spaces) to check.
+ * @param line The input line to check.
  * @param analyzed_line Pointer to the 'analyzed_line' obj.
  */
 void set_ent_ext_label(char * line, Analyzed_line *analyzed_line);

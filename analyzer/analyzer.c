@@ -42,10 +42,12 @@ static asm_directive asm_all_directives[NUM_OF_DIR] =
 };
 
 /* Checks if there is a Label def in the line. If yes, set it to the Label's name, otherwise set to NULL.  */
-void set_main_label(char *clean_line, Analyzed_line *analyzed_line) /* Before Error System */
+void set_main_label(char *line, Analyzed_line *analyzed_line) /* Before Error System */
 {
     int i;
     char label_name[MAX_LINE_LENGTH];
+    char clean_line[MAX_LINE_LENGTH];
+    remove_white_spaces(line, clean_line);
 
     /* Initialize label_name with null characters. */
     for (i = 0; i < MAX_LINE_LENGTH; i++) 
@@ -76,9 +78,11 @@ void set_main_label(char *clean_line, Analyzed_line *analyzed_line) /* Before Er
 }
 
 /* Checks and sets if the current line is an Assembly instruction / directive. */
-void set_dir_ot_inst(char *clean_line, Analyzed_line *analyzed_line) /* Before Error System */
+void set_dir_or_inst(char *line, Analyzed_line *analyzed_line) /* Before Error System */
 {
     int i;
+    char clean_line[MAX_LINE_LENGTH];
+    remove_white_spaces(line, clean_line);
 
     /* Directive Option 1 when line is a '.entry' directive. */
     if (strstr(clean_line, DOT_ENT_AS_STRING) != NULL)
@@ -327,13 +331,13 @@ Analyzed_line get_analyzed_line(char *line) /* Before Opti | Before Error System
     char clean_line[MAX_LINE_LENGTH];
     remove_white_spaces(line, clean_line);
 
-    set_main_label(clean_line, &analyzed_line);
-    set_dir_ot_inst(clean_line, &analyzed_line);
+    set_main_label(line, &analyzed_line);
+    set_dir_or_inst(line, &analyzed_line);
 
     if (analyzed_line.analyzed_line_opt == directive)
     {
         if (analyzed_line.dir_or_inst.directive.dir_opt == dir_entry || analyzed_line.dir_or_inst.directive.dir_opt == dir_extern)
-            set_ent_ext_label(clean_line, &analyzed_line);
+            set_ent_ext_label(line, &analyzed_line);
         
         else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_string)
             analyzed_line.dir_or_inst.directive.dir_operand.string = get_dir_string(line);
