@@ -189,6 +189,30 @@ void set_dir_data(char *line, Analyzed_line *analyzed_line) /* Before Error Syst
     }
 }
 
+/* Set an Assembly directive according to the directive type. */
+void set_directive(char * line, Analyzed_line *analyzed_line)
+{
+    if (analyzed_line->dir_or_inst.directive.dir_opt == dir_entry || analyzed_line->dir_or_inst.directive.dir_opt == dir_extern)
+    {
+        set_ent_ext_label(line, analyzed_line);
+        return;
+    }
+        
+    else if (analyzed_line->dir_or_inst.directive.dir_opt == dir_string)
+    {
+        set_dir_string(line, analyzed_line);
+        return;
+    }
+        
+    else if (analyzed_line->dir_or_inst.directive.dir_opt == dir_data)
+    {
+        set_dir_data(line, analyzed_line);
+        return;
+    }
+
+    return;
+}
+
 const char * get_inst_name(int inst_enum_code) /* Before Opti | Before Error System */
 {
     int i;
@@ -312,14 +336,7 @@ Analyzed_line get_analyzed_line(char *line) /* Before Opti | Before Error System
 
     if (analyzed_line.analyzed_line_opt == directive)
     {
-        if (analyzed_line.dir_or_inst.directive.dir_opt == dir_entry || analyzed_line.dir_or_inst.directive.dir_opt == dir_extern)
-            set_ent_ext_label(line, &analyzed_line);
-        
-        else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_string)
-            set_dir_string(line, &analyzed_line);
-
-        else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_data)
-            set_dir_data(line, &analyzed_line);
+        set_directive(line, &analyzed_line);
     }
         
     else if(analyzed_line.analyzed_line_opt == instruction)

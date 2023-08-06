@@ -174,6 +174,14 @@ void set_dir_string(char * line, Analyzed_line *analyzed_line);
 void set_dir_data(char *line, Analyzed_line *analyzed_line);
 
 /**
+ * @brief Set an Assembly directive according to the directive type.
+ *
+ * @param line The input line to check.
+ * @param analyzed_line Pointer to the 'analyzed_line' obj.
+ */
+void set_directive(char * line, Analyzed_line *analyzed_line);
+
+/**
  * @brief 
  *
  * @param 
