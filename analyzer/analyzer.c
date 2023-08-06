@@ -41,7 +41,8 @@ static asm_directive asm_all_directives[NUM_OF_DIR] =
     {".entry", dir_entry},
 };
 
-int get_main_label(char *clean_line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System */
+/* Check if there is a Label def in the line. If yes, set it to the Label's name, otherwise set to NULL.  */
+void set_main_label(char *clean_line, Analyzed_line *analyzed_line) /* Before Error System */
 {
     int i;
     char label_name[MAX_LINE_LENGTH];
@@ -55,19 +56,23 @@ int get_main_label(char *clean_line, Analyzed_line *analyzed_line) /* Before Opt
     /* There is no label def in this line. */
     if (strchr(clean_line, ':') == NULL) 
     {
+        /* Set the label_name to NULL. */
         strcpy(analyzed_line->label_name, label_name);
-        return 0;
     }
 
-    /* Get the label name from the line */
-    for (i = 0; clean_line[i] != ':'; i++) 
+    else 
     {
-        label_name[i] = clean_line[i];
-    }
+        /* Get the label name from the line */
+        for (i = 0; clean_line[i] != ':'; i++) 
+        {
+            label_name[i] = clean_line[i];
+        }
 
-    label_name[i] = '\0';
-    strcpy(analyzed_line->label_name, label_name);
-    return 1;
+        label_name[i] = '\0';
+
+        /* Set the label_name */
+        strcpy(analyzed_line->label_name, label_name);
+    }
 }
 
 int is_dir_or_inst(char *clean_line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System | Before update of dir type */
@@ -336,13 +341,15 @@ int set_instruction(char *clean_line, Analyzed_line *analyzed_line, int inst_opt
     return 0;
 }
 
+/* Analayzes and "Brakes" a line into a structure of Assembly directive / instruction. */
 Analyzed_line get_analyzed_line(char *line) /* Before Opti | Before Error System */
 {
+    /* Create 'analyzed_line' obj and remove white spaces. */
     Analyzed_line analyzed_line;
     char clean_line[MAX_LINE_LENGTH];
     remove_white_spaces(line, clean_line);
 
-    get_main_label(clean_line, &analyzed_line);
+    set_main_label(clean_line, &analyzed_line);
     is_dir_or_inst(clean_line, &analyzed_line);
 
     if (analyzed_line.analyzed_line_opt == directive)

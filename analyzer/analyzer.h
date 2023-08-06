@@ -131,16 +131,32 @@ typedef struct asm_directive
 
 }asm_directive;
 
-int get_main_label(char *clean_line, Analyzed_line *analyzed_line);
+/**
+ * @brief Check if there is a Label def in the line. If yes, set it to the Label's name, otherwise set to NULL.
+ *
+ * @param clean_line The input clean line (without white spaces) to check.
+ * @param analyzed_line Pointer to the 'analyzed_line' obj.
+ */
+void set_main_label(char *clean_line, Analyzed_line *analyzed_line);
+
 int is_dir_or_inst(char *clean_line, Analyzed_line *analyzed_line);
+
 int get_dir_type(char * clean_line, Analyzed_line *analyzed_line);
+
 char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directives[NUM_OF_DIR]);
+
 char * get_dir_string(char * line);
+
 void get_dir_data(char * line, Analyzed_line * analyzed_line);
+
 const char * get_inst_name(int inst_enum_code);
+
 int get_num_inst_operands(int inst_enum_code);
+
 int set_instruction(char *clean_line, Analyzed_line *analyzed_line, int inst_opt);
+
 int set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i);
+
 Analyzed_line get_analyzed_line(char *line);
 
 #endif /* ANALYZER_H */
