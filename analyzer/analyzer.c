@@ -276,7 +276,7 @@ int set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int oper
     return 1; 
 }
 
-int set_instruction(char *clean_line, Analyzed_line *analyzed_line, int inst_opt) /* Before Opti | Before Error System */
+int set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System */
 {
     int i;
     char * inst_content;
@@ -284,15 +284,17 @@ int set_instruction(char *clean_line, Analyzed_line *analyzed_line, int inst_opt
     int num_of_operands;
     char operands[2][MAX_OPERAND_LENGTH];
     int inst_len = 0;
+    char clean_line[MAX_LINE_LENGTH];
+    remove_white_spaces(line, clean_line);
 
     /* Initilize first_operand & second_operand to be NULL */
     memset(operands, 0, sizeof(operands));
 
-    inst_name = get_inst_name(inst_opt);
+    inst_name = get_inst_name(analyzed_line->dir_or_inst.instruction.inst_opt);
     inst_content = strpbrk(clean_line, inst_name);
     inst_len = strlen(inst_name);
     inst_content += inst_len;
-    num_of_operands = get_num_inst_operands(inst_opt);
+    num_of_operands = get_num_inst_operands(analyzed_line->dir_or_inst.instruction.inst_opt);
 
     if (num_of_operands == 2)
     {
@@ -328,8 +330,6 @@ Analyzed_line get_analyzed_line(char *line) /* Before Opti | Before Error System
 {
     /* Create 'analyzed_line' obj and remove white spaces. */
     Analyzed_line analyzed_line;
-    char clean_line[MAX_LINE_LENGTH];
-    remove_white_spaces(line, clean_line);
 
     set_main_label(line, &analyzed_line);
     set_dir_or_inst(line, &analyzed_line);
@@ -341,7 +341,7 @@ Analyzed_line get_analyzed_line(char *line) /* Before Opti | Before Error System
         
     else if(analyzed_line.analyzed_line_opt == instruction)
     {
-        set_instruction(clean_line, &analyzed_line, analyzed_line.dir_or_inst.instruction.inst_opt);
+        set_instruction(line, &analyzed_line);
     }
 
     return analyzed_line;

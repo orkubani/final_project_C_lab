@@ -203,7 +203,7 @@ int get_num_inst_operands(int inst_enum_code);
  * @param 
  * @param 
  */
-int set_instruction(char *clean_line, Analyzed_line *analyzed_line, int inst_opt);
+int set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i);
 
 /**
  * @brief 
@@ -211,7 +211,7 @@ int set_instruction(char *clean_line, Analyzed_line *analyzed_line, int inst_opt
  * @param 
  * @param 
  */
-int set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i);
+int set_instruction(char *line, Analyzed_line *analyzed_line);
 
 /**
  * @brief 
