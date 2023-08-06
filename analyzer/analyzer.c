@@ -149,7 +149,7 @@ void set_ent_ext_label(char * line, Analyzed_line *analyzed_line) /* Before Erro
 }
 
 /* Set the string of a '.string' Assembly directive. */
-void set_dir_string(char * line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System */
+void set_dir_string(char * line, Analyzed_line *analyzed_line) /* Before Error System */
 {
     char clean_line[MAX_LINE_LENGTH];
     char * string_content = NULL;
@@ -162,7 +162,8 @@ void set_dir_string(char * line, Analyzed_line *analyzed_line) /* Before Opti | 
     return;
 }
 
-void get_dir_data(char *line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System */
+/* Set the data of a '.data' Assembly directive. */
+void set_dir_data(char *line, Analyzed_line *analyzed_line) /* Before Error System */
 {
     int i = 0;
     char clean_line[MAX_LINE_LENGTH];
@@ -171,8 +172,8 @@ void get_dir_data(char *line, Analyzed_line *analyzed_line) /* Before Opti | Bef
 
     remove_white_spaces(line, clean_line);
 
-    data_content_as_string = strrchr(clean_line, 'a');
-    data_content_as_string += 1; /* Skip the last 'a' */
+    data_content_as_string = strrchr(clean_line, ':');
+    data_content_as_string += (strlen(DOT_DATA_AS_STRING) + 1); /* Skip the last 'a' */
 
     while (sscanf(data_content_as_string, "%ld", &num) == 1) 
     {
@@ -318,7 +319,7 @@ Analyzed_line get_analyzed_line(char *line) /* Before Opti | Before Error System
             set_dir_string(line, &analyzed_line);
 
         else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_data)
-            get_dir_data(line, &analyzed_line);
+            set_dir_data(line, &analyzed_line);
     }
         
     else if(analyzed_line.analyzed_line_opt == instruction)
