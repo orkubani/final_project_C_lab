@@ -156,12 +156,12 @@ void set_dir_or_inst(char *line, Analyzed_line *analyzed_line);
 void set_ent_ext_label(char * line, Analyzed_line *analyzed_line);
 
 /**
- * @brief 
+ * @brief Set the string of a '.string' Assembly directive.
  *
- * @param 
- * @param 
+ * @param line The input line to check.
+ * @param analyzed_line Pointer to the 'analyzed_line' obj.
  */
-char * get_dir_string(char * line);
+void set_dir_string(char * line, Analyzed_line *analyzed_line);
 
 /**
  * @brief 

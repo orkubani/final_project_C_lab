@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-char * remove_str_quotations(char * str_content) /* Before Opti | Before Error System */
+/* Remove the str quotations to save it as is. */
+char * remove_str_quotations(char * str_content) /* Before Error System */
 {
     int i;
 

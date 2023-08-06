@@ -175,16 +175,18 @@ void set_ent_ext_label(char * line, Analyzed_line *analyzed_line) /* Before Erro
     return;
 }
 
-char * get_dir_string(char * line) /* Before Opti | Before Error System */
+/* Set the string of a '.string' Assembly directive. */
+void set_dir_string(char * line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System */
 {
     char clean_line[MAX_LINE_LENGTH];
-    char * string_content;
+    char * string_content = NULL;
     remove_white_spaces(line, clean_line);
 
     string_content = strchr(clean_line, '\"');
     string_content = remove_str_quotations(string_content);
 
-    return string_content;
+    analyzed_line->dir_or_inst.directive.dir_operand.string = string_content;
+    return;
 }
 
 void get_dir_data(char *line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System */
@@ -340,7 +342,7 @@ Analyzed_line get_analyzed_line(char *line) /* Before Opti | Before Error System
             set_ent_ext_label(line, &analyzed_line);
         
         else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_string)
-            analyzed_line.dir_or_inst.directive.dir_operand.string = get_dir_string(line);
+            set_dir_string(line, &analyzed_line);
 
         else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_data)
             get_dir_data(line, &analyzed_line);
