@@ -24,7 +24,7 @@ int main(int argc, char **argv)
             return 0;
         }
 
-        analyzer_tester_output = fopen("tests/analyzer/analyzer_output.txt", "w");
+        analyzer_tester_output = fopen("/mnt/c/Or_Kubani_Openu_CS/2023B/maabada_20476/final_project_C_lab/tests/analyzer/analyzer_output.txt", "w");
         if (analyzer_tester_output == NULL) 
         {
             printf("Error opening the analyzer_tester_output file.\n");

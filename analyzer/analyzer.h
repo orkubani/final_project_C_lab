@@ -147,20 +147,68 @@ void set_main_label(char *clean_line, Analyzed_line *analyzed_line);
  */
 void set_dir_ot_inst(char *clean_line, Analyzed_line *analyzed_line);
 
-char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directives[NUM_OF_DIR]);
+/**
+ * @brief Set the label name of a '.entry' / '.extern' Assembly directive.
+ *
+ * @param clean_line The input clean line (without white spaces) to check.
+ * @param analyzed_line Pointer to the 'analyzed_line' obj.
+ */
+void set_ent_ext_label(char * line, Analyzed_line *analyzed_line);
 
+/**
+ * @brief 
+ *
+ * @param 
+ * @param 
+ */
 char * get_dir_string(char * line);
 
+/**
+ * @brief 
+ *
+ * @param 
+ * @param 
+ */
 void get_dir_data(char * line, Analyzed_line * analyzed_line);
 
+/**
+ * @brief 
+ *
+ * @param 
+ * @param 
+ */
 const char * get_inst_name(int inst_enum_code);
 
+/**
+ * @brief 
+ *
+ * @param 
+ * @param 
+ */
 int get_num_inst_operands(int inst_enum_code);
 
+/**
+ * @brief 
+ *
+ * @param 
+ * @param 
+ */
 int set_instruction(char *clean_line, Analyzed_line *analyzed_line, int inst_opt);
 
+/**
+ * @brief 
+ *
+ * @param 
+ * @param 
+ */
 int set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i);
 
+/**
+ * @brief 
+ *
+ * @param 
+ * @param 
+ */
 Analyzed_line get_analyzed_line(char *line);
 
 #endif /* ANALYZER_H */

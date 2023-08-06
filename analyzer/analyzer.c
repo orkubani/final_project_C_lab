@@ -134,40 +134,41 @@ void set_dir_ot_inst(char *clean_line, Analyzed_line *analyzed_line) /* Before E
     return;
 }
 
-char * get_ent_ext_label(char * line, int dir_opt, asm_directive asm_all_directives[NUM_OF_DIR]) /* Before Opti | Before Error System */
+/* Set the label name of a '.entry' / '.extern' Assembly directive. */
+void set_ent_ext_label(char * line, Analyzed_line *analyzed_line) /* Before Error System */
 {
     char clean_line[MAX_LINE_LENGTH];
     char * label_name;
     remove_white_spaces(line, clean_line);
 
     /* Get extern label name */
-    if (dir_opt == dir_extern)
+    if (analyzed_line->dir_or_inst.directive.dir_opt == dir_extern)
     {
         label_name = strstr(clean_line, DOT_EXT_AS_STRING);
 
         if (label_name == NULL)
-            return NULL;
-    
-        label_name += strlen(DOT_EXT_AS_STRING);
-
-        return label_name;
+            return;
+      
+        label_name += strlen(DOT_EXT_AS_STRING); /* Skip the '.extern' string */
+        analyzed_line->dir_or_inst.directive.dir_operand.label_name = label_name;
+        return;
     }
 
     /* Get entry label name */     
-    else if(dir_opt == dir_entry)
+    else if(analyzed_line->dir_or_inst.directive.dir_opt == dir_entry)
     {
         label_name = strstr(clean_line, DOT_ENT_AS_STRING);
 
         if (label_name == NULL)
-            return NULL;
-    
-        label_name += strlen(DOT_ENT_AS_STRING);
-
-        return label_name;
+            return;
+        
+        label_name += strlen(DOT_ENT_AS_STRING); /* Skip the '.entry' string */
+        analyzed_line->dir_or_inst.directive.dir_operand.label_name = label_name;
+        return;
     }
 
     /* Error */
-    return NULL;
+    return;
 }
 
 char * get_dir_string(char * line) /* Before Opti | Before Error System */
@@ -332,7 +333,7 @@ Analyzed_line get_analyzed_line(char *line) /* Before Opti | Before Error System
     if (analyzed_line.analyzed_line_opt == directive)
     {
         if (analyzed_line.dir_or_inst.directive.dir_opt == dir_entry || analyzed_line.dir_or_inst.directive.dir_opt == dir_extern)
-            analyzed_line.dir_or_inst.directive.dir_operand.label_name = get_ent_ext_label(line, analyzed_line.dir_or_inst.directive.dir_opt == dir_entry, asm_all_directives);
+            set_ent_ext_label(clean_line, &analyzed_line);
         
         else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_string)
             analyzed_line.dir_or_inst.directive.dir_operand.string = get_dir_string(line);
