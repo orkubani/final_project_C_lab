@@ -158,14 +158,29 @@ void set_ent_ext_label(char * line, Analyzed_line *analyzed_line)
 }
 
 /* Set the string of a '.string' Assembly directive. */
-void set_dir_string(char * line, Analyzed_line *analyzed_line) /* Before Error System */
+void set_dir_string(char * line, Analyzed_line *analyzed_line)
 {
     char clean_line[MAX_LINE_LENGTH];
     char * string_content = NULL;
+
+    if (is_valid_analyzed_line(analyzed_line) == FALSE) 
+        return;
+
     remove_white_spaces(line, clean_line);
 
     string_content = strchr(clean_line, '\"');
+    if (string_content == NULL)
+    {
+        sprintf(analyzed_line->syntax_error, "Invalid '.string' content syntax! Quotations are missing!");
+        return;
+    }
+
     string_content = remove_str_quotations(string_content);
+    if (string_content[0] == '\0')
+    {
+        sprintf(analyzed_line->syntax_error, "Invalid '.string' content syntax! The closer quotation is missing!");
+        return;
+    }
 
     strcpy(analyzed_line->dir_or_inst.directive.dir_operand.string, string_content);
     return;
