@@ -277,6 +277,9 @@ void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int ope
 {
     int reg_num = -1;
 
+    if (is_valid_analyzed_line(analyzed_line) == FALSE)
+        return; 
+    
     /* Set Register */
     if (*inst_operand == '@')
     {
@@ -291,9 +294,9 @@ void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int ope
                 return;
             }
 
+            sprintf(analyzed_line->syntax_error, "Invalid register number! '%d'", reg_num);
             return;
         }
-
         return;
     } 
 

@@ -1,4 +1,5 @@
 #include "analyzer_helper.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -58,12 +59,6 @@ int get_reg_num(char * reg) /* Before Opti | Before Error System */
     reg_num = str_to_int(reg_num_str);
 
     return reg_num;
-}
-
-/* Call this function when there is an error in the analyzer. */
-void set_analyzer_error(Analyzed_line * analyzed_line, char error_content[MAX_SYTX_ERR_LENGTH])
-{
-    strcpy(analyzed_line->syntax_error, error_content);
 }
 
 /* Checks if there is an error that raised until now regarding the current line. */

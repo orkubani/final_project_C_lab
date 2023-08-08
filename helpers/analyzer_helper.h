@@ -28,15 +28,6 @@ void split_operands(const char *inst_content, char *first_operand, char *second_
  */
 int get_reg_num(char * reg);
 
-
-/**
- * @brief Call this function when there is an error in the analyzer.
- *
- * @param analyzed_line Pointer to the 'analyzed_line' obj.
- * @param error_content The error reason
- */
-void set_analyzer_error(Analyzed_line * analyzed_line, char error_content[MAX_SYTX_ERR_LENGTH]);
-
 /**
  * @brief Checks if there is an error that raised until now regarding the current line.
  *
