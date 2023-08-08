@@ -230,6 +230,16 @@ const char * get_inst_name(int inst_enum_code) /* Before Opti | Before Error Sys
     return NULL;
 }
 
+char * get_inst_content(const char * inst_name, char * clean_line)
+{
+    char * inst_content;
+    int inst_len = 0;
+
+    inst_content = strpbrk(clean_line, inst_name);
+    inst_len = strlen(inst_name);
+    return inst_content += inst_len;
+}
+
 int get_num_inst_operands(int inst_enum_code) /* Before Opti | Before Error System */
 {
     int i;
@@ -285,8 +295,7 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | 
     const char* inst_name;
     char * inst_content;
     int num_of_operands;
-    char operands[2][MAX_OPERAND_LENGTH];
-    int inst_len = 0;
+    char operands[TWO_OPERANDS][MAX_OPERAND_LENGTH];
     char clean_line[MAX_LINE_LENGTH];
     remove_white_spaces(line, clean_line);
 
@@ -294,12 +303,10 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | 
     memset(operands, 0, sizeof(operands));
 
     inst_name = get_inst_name(analyzed_line->dir_or_inst.instruction.inst_opt);
-    inst_content = strpbrk(clean_line, inst_name);
-    inst_len = strlen(inst_name);
-    inst_content += inst_len;
+    inst_content = get_inst_content(inst_name, clean_line);
     num_of_operands = get_num_inst_operands(analyzed_line->dir_or_inst.instruction.inst_opt);
 
-    if (num_of_operands == 2)
+    if (num_of_operands == TWO_OPERANDS)
     {
         split_operands(inst_content, operands[0], operands[1]);
 
@@ -310,7 +317,7 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | 
         return;
     }
 
-    else if (num_of_operands == 1)
+    else if (num_of_operands == SINGLE_OPERAND)
     {
         strcpy(operands[0], inst_content);
         set_inst_operand(operands[0],analyzed_line, 0);
@@ -318,7 +325,7 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | 
         return;
     }
 
-    else if (num_of_operands == 0)
+    else if (num_of_operands == ZERO_OPERANDS)
     {
         analyzed_line->dir_or_inst.instruction.inst_operand_options[0] = operand_none;
         analyzed_line->dir_or_inst.instruction.inst_operand_options[1] = operand_none;

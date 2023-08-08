@@ -7,6 +7,10 @@
 #define NUM_OF_DIR 4
 #define MAX_SYTX_ERR_LENGTH 200
 
+#define TWO_OPERANDS 2
+#define SINGLE_OPERAND 1
+#define ZERO_OPERANDS 0
+
 #define DOT_ENT_AS_STRING ".entry"
 #define DOT_EXT_AS_STRING ".extern"
 #define DOT_STR_AS_STRING ".string"
@@ -186,6 +190,14 @@ void set_directive(char * line, Analyzed_line *analyzed_line);
  * @param 
  */
 const char * get_inst_name(int inst_enum_code);
+
+/**
+ * @brief 
+ *
+ * @param 
+ * @param 
+ */
+char * get_inst_content(const char * inst_name, char * clean_line);
 
 /**
  * @brief 
