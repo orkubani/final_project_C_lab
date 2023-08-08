@@ -129,7 +129,7 @@ void set_ent_ext_label(char * line, Analyzed_line *analyzed_line) /* Before Erro
             return;
       
         label_name += strlen(DOT_EXT_AS_STRING); /* Skip the '.extern' string */
-        analyzed_line->dir_or_inst.directive.dir_operand.label_name = label_name;
+        strcpy(analyzed_line->dir_or_inst.directive.dir_operand.label_name, label_name);
         return;
     }
 
@@ -142,7 +142,7 @@ void set_ent_ext_label(char * line, Analyzed_line *analyzed_line) /* Before Erro
             return;
         
         label_name += strlen(DOT_ENT_AS_STRING); /* Skip the '.entry' string */
-        analyzed_line->dir_or_inst.directive.dir_operand.label_name = label_name;
+        strcpy(analyzed_line->dir_or_inst.directive.dir_operand.label_name, label_name);
         return;
     }
 
@@ -160,7 +160,7 @@ void set_dir_string(char * line, Analyzed_line *analyzed_line) /* Before Error S
     string_content = strchr(clean_line, '\"');
     string_content = remove_str_quotations(string_content);
 
-    analyzed_line->dir_or_inst.directive.dir_operand.string = string_content;
+    strcpy(analyzed_line->dir_or_inst.directive.dir_operand.string, string_content);
     return;
 }
 
@@ -307,7 +307,7 @@ void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int ope
 
     /* Set Label */
     analyzed_line->dir_or_inst.instruction.inst_operand_options[operand_i] = operand_label;
-    analyzed_line->dir_or_inst.instruction.inst_operands[operand_i].label = inst_operand;
+    strcpy(analyzed_line->dir_or_inst.instruction.inst_operands[operand_i].label, inst_operand);
     return; 
 }
 

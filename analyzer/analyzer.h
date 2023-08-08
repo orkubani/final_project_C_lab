@@ -6,6 +6,7 @@
 #define NUM_OF_INST 16
 #define NUM_OF_DIR 4
 #define MAX_SYTX_ERR_LENGTH 200
+#define MAX_STR_LENGTH 40
 
 #define TWO_OPERANDS 2
 #define SINGLE_OPERAND 1
@@ -47,8 +48,8 @@ typedef struct Analyzed_line
 
             union
             {
-                char * label_name; /* .entry or .extern */
-                char * string; /* .string */
+                char label_name[MAX_LABEL_LENGTH]; /* .entry or .extern */
+                char string[MAX_STR_LENGTH]; /* .string */
                 struct /* .data */
                 {
                     int data[MAX_LINE_LENGTH];
@@ -100,7 +101,7 @@ typedef struct Analyzed_line
             {
                 int const_number;
                 int register_number;
-                char * label;
+                char label[MAX_LABEL_LENGTH];
 
             }inst_operands[2]; /* 2 for source and dest */
 
