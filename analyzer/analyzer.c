@@ -44,7 +44,7 @@ static asm_directive asm_all_directives[NUM_OF_DIR] =
 };
 
 /* Checks if there is a Label def in the line. If yes, set it to the Label's name, otherwise set to NULL.  */
-void set_main_label(char *line, Analyzed_line *analyzed_line) /* Before Error System */
+void set_main_label(char *line, Analyzed_line *analyzed_line)
 {
     int i;
     char label_name[MAX_LINE_LENGTH];
