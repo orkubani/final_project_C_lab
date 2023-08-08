@@ -19,11 +19,6 @@
 #define DOT_STR_AS_STRING ".string"
 #define DOT_DATA_AS_STRING ".data"
 
-#define DOT_STR_LEN 7
-#define DOT_DATA_LEN 5
-#define DOT_ENTRY_LEN 6
-#define DOT_EXTERN_LEN 7
-
 /* Ast that defines a Direcitve / Instruction in Assembly */
 typedef struct Analyzed_line
 {
@@ -114,6 +109,7 @@ typedef struct Analyzed_line
     }dir_or_inst;
 }Analyzed_line;
 
+/* Struct that defines an Assembly Instruction and the relevant data. */
 typedef struct asm_instruction
 {
     const char *inst_name;
@@ -131,6 +127,7 @@ typedef struct asm_instruction
 
 }asm_instruction;
 
+/* Struct that defines an Assembly directive and the relevant data. */
 typedef struct asm_directive
 {
     const char * dir_name;
