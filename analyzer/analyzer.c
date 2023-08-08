@@ -266,7 +266,7 @@ void set_directive(char * line, Analyzed_line *analyzed_line)
 }
 
 /* Get the instruction name from the table based on the instruction enum code. */
-const char * get_inst_name(int inst_enum_code) /* Before Error System */
+const char * get_inst_name(int inst_enum_code)
 {
     int i;
     
@@ -278,6 +278,7 @@ const char * get_inst_name(int inst_enum_code) /* Before Error System */
         }
     }
 
+    /* Error */
     return NULL;
 }
 
@@ -375,6 +376,10 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Error S
     char clean_line[MAX_LINE_LENGTH];
     int first_op = 0;
     int second_op = 1;
+
+    if (is_valid_analyzed_line(analyzed_line) == FALSE) 
+        return;
+
     remove_white_spaces(line, clean_line);
 
     /* Initilize first_operand & second_operand to be NULL */
@@ -382,6 +387,12 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Error S
 
     /* Get inst data */
     inst_name = get_inst_name(analyzed_line->dir_or_inst.instruction.inst_opt);
+    if (inst_name == NULL)
+    {
+        sprintf(analyzed_line->syntax_error, "Can't find instruction name for inst_opt: '%d'", analyzed_line->dir_or_inst.instruction.inst_opt);
+        return;
+    }
+
     inst_content = get_inst_content(inst_name, clean_line);
     num_of_operands = get_num_inst_operands(analyzed_line->dir_or_inst.instruction.inst_opt);
 
