@@ -257,33 +257,33 @@ int get_num_inst_operands(int inst_enum_code) /* Before Opti | Before Error Syst
     return -1;
 }
 
-int set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i) /* Before Opti | Before Error System */
+void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i) /* Before Opti | Before Error System */
 {
     if (*inst_operand == '@')
     {
         analyzed_line->dir_or_inst.instruction.inst_operand_options[operand_i] = operand_register;
         analyzed_line->dir_or_inst.instruction.inst_operands[operand_i].register_number = get_reg_num(inst_operand);
-        return 1;
+        return;
     } 
 
     else if(is_integer(inst_operand))
     {
         analyzed_line->dir_or_inst.instruction.inst_operand_options[operand_i] = operand_const_number;
         analyzed_line->dir_or_inst.instruction.inst_operands[operand_i].const_number = str_to_int(inst_operand);
-        return 1;
+        return;
     }
 
     analyzed_line->dir_or_inst.instruction.inst_operand_options[operand_i] = operand_label;
     analyzed_line->dir_or_inst.instruction.inst_operands[operand_i].label = inst_operand;
-    return 1; 
+    return; 
 }
 
 /* Set an Assembly Instruction and related data regarding the instruction. */
 void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System */
 {
     int i;
-    char * inst_content;
     const char* inst_name;
+    char * inst_content;
     int num_of_operands;
     char operands[2][MAX_OPERAND_LENGTH];
     int inst_len = 0;

@@ -201,7 +201,7 @@ int get_num_inst_operands(int inst_enum_code);
  * @param 
  * @param 
  */
-int set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i);
+void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i);
 
 /**
  * @brief Set an Assembly Instruction and related data regarding the instruction.
