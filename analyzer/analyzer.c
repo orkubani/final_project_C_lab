@@ -118,10 +118,14 @@ void set_dir_or_inst(char *line, Analyzed_line *analyzed_line)
 }
 
 /* Set the label name of a '.entry' / '.extern' Assembly directive. */
-void set_ent_ext_label(char * line, Analyzed_line *analyzed_line) /* Before Error System */
+void set_ent_ext_label(char * line, Analyzed_line *analyzed_line)
 {
     char clean_line[MAX_LINE_LENGTH];
     char * label_name;
+
+    if (is_valid_analyzed_line(analyzed_line) == FALSE) 
+        return;
+    
     remove_white_spaces(line, clean_line);
 
     /* Get extern label name */
@@ -131,7 +135,7 @@ void set_ent_ext_label(char * line, Analyzed_line *analyzed_line) /* Before Erro
 
         if (label_name == NULL)
             return;
-      
+            
         label_name += strlen(DOT_EXT_AS_STRING); /* Skip the '.extern' string */
         strcpy(analyzed_line->dir_or_inst.directive.dir_operand.label_name, label_name);
         return;
@@ -150,7 +154,6 @@ void set_ent_ext_label(char * line, Analyzed_line *analyzed_line) /* Before Erro
         return;
     }
 
-    /* Error */
     return;
 }
 
