@@ -59,3 +59,9 @@ int get_reg_num(char * reg) /* Before Opti | Before Error System */
 
     return reg_num;
 }
+
+/* Call this function when there is an error in the analyzer. */
+void set_analyzer_error(Analyzed_line * analyzed_line, char error_content[MAX_SYTX_ERR_LENGTH])
+{
+    strcpy(analyzed_line->syntax_error, error_content);
+}
