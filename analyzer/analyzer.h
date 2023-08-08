@@ -192,10 +192,10 @@ void set_directive(char * line, Analyzed_line *analyzed_line);
 const char * get_inst_name(int inst_enum_code);
 
 /**
- * @brief 
+ * @brief Get the inst_content - the data that comes after the opcode.
  *
- * @param 
- * @param 
+ * @param inst_name The name of the instruction.
+ * @param clean_line The input line (Without spaces) to check.
  */
 char * get_inst_content(const char * inst_name, char * clean_line);
 

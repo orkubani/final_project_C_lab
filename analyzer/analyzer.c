@@ -231,7 +231,8 @@ const char * get_inst_name(int inst_enum_code) /* Before Error System */
     return NULL;
 }
 
-char * get_inst_content(const char * inst_name, char * clean_line)
+/* Get the inst_content - the data that comes after the opcode. */
+char * get_inst_content(const char * inst_name, char * clean_line) /* Before Error System */
 {
     char * inst_content;
     int inst_len = 0;
