@@ -184,10 +184,10 @@ void set_dir_data(char *line, Analyzed_line *analyzed_line);
 void set_directive(char * line, Analyzed_line *analyzed_line);
 
 /**
- * @brief 
+ * @brief Get the instruction name from the table based on the instruction enum code.
  *
- * @param 
- * @param 
+ * @param inst_enum_code instruction enum code.
+ * @return Pointer to a const string of the instruction name.
  */
 const char * get_inst_name(int inst_enum_code);
 

@@ -215,7 +215,8 @@ void set_directive(char * line, Analyzed_line *analyzed_line) /* Before Error Sy
     return;
 }
 
-const char * get_inst_name(int inst_enum_code) /* Before Opti | Before Error System */
+/* Get the instruction name from the table based on the instruction enum code. */
+const char * get_inst_name(int inst_enum_code) /* Before Error System */
 {
     int i;
     
@@ -302,10 +303,12 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | 
     /* Initilize first_operand & second_operand to be NULL */
     memset(operands, 0, sizeof(operands));
 
+    /* Get inst data */
     inst_name = get_inst_name(analyzed_line->dir_or_inst.instruction.inst_opt);
     inst_content = get_inst_content(inst_name, clean_line);
     num_of_operands = get_num_inst_operands(analyzed_line->dir_or_inst.instruction.inst_opt);
 
+    /* Set instruction with two operands */
     if (num_of_operands == TWO_OPERANDS)
     {
         split_operands(inst_content, operands[0], operands[1]);
@@ -317,6 +320,7 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | 
         return;
     }
 
+    /* Set instruction with a single operand */
     else if (num_of_operands == SINGLE_OPERAND)
     {
         strcpy(operands[0], inst_content);
@@ -325,6 +329,7 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | 
         return;
     }
 
+    /* Set instruction with zero operands */
     else if (num_of_operands == ZERO_OPERANDS)
     {
         analyzed_line->dir_or_inst.instruction.inst_operand_options[0] = operand_none;
