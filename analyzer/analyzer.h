@@ -229,10 +229,10 @@ void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int ope
 void set_instruction(char *line, Analyzed_line *analyzed_line);
 
 /**
- * @brief 
+ * @brief Analayzes and "Brakes" a line into a structure of Assembly directive / instruction.
  *
- * @param 
- * @param 
+ * @param line to analyze.
+ * @return The line after analyzation.
  */
 Analyzed_line get_analyzed_line(char *line);
 

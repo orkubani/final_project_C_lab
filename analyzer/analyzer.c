@@ -365,19 +365,22 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Error S
 }
 
 /* Analayzes and "Brakes" a line into a structure of Assembly directive / instruction. */
-Analyzed_line get_analyzed_line(char *line) /* Before Opti | Before Error System */
+Analyzed_line get_analyzed_line(char *line) /* Before Error System */
 {
     /* Create 'analyzed_line' obj and remove white spaces. */
     Analyzed_line analyzed_line;
 
+    /* Set main fields of the Analyzed_line obj */
     set_main_label(line, &analyzed_line);
     set_dir_or_inst(line, &analyzed_line);
 
+    /* Set Assembly Directive */
     if (analyzed_line.analyzed_line_opt == directive)
     {
         set_directive(line, &analyzed_line);
     }
-        
+    
+    /* Set Assembly Instruction */
     else if(analyzed_line.analyzed_line_opt == instruction)
     {
         set_instruction(line, &analyzed_line);
