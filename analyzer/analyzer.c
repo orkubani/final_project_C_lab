@@ -278,7 +278,8 @@ int set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int oper
     return 1; 
 }
 
-int set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System */
+/* Set an Assembly Instruction and related data regarding the instruction. */
+void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System */
 {
     int i;
     char * inst_content;
@@ -306,7 +307,7 @@ int set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | B
         {
             set_inst_operand(operands[i], analyzed_line, i);
         }
-        return 1;
+        return;
     }
 
     else if (num_of_operands == 1)
@@ -314,17 +315,17 @@ int set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | B
         strcpy(operands[0], inst_content);
         set_inst_operand(operands[0],analyzed_line, 0);
         analyzed_line->dir_or_inst.instruction.inst_operand_options[1] = operand_none;
-        return 1;
+        return;
     }
 
     else if (num_of_operands == 0)
     {
         analyzed_line->dir_or_inst.instruction.inst_operand_options[0] = operand_none;
         analyzed_line->dir_or_inst.instruction.inst_operand_options[1] = operand_none;
-        return 1;
+        return;
     }
         
-    return 0;
+    return;
 }
 
 /* Analayzes and "Brakes" a line into a structure of Assembly directive / instruction. */

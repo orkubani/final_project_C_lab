@@ -204,12 +204,12 @@ int get_num_inst_operands(int inst_enum_code);
 int set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i);
 
 /**
- * @brief 
+ * @brief Set an Assembly Instruction and related data regarding the instruction.
  *
- * @param 
- * @param 
+ * @param line The input line to check.
+ * @param analyzed_line Pointer to the 'analyzed_line' obj.
  */
-int set_instruction(char *line, Analyzed_line *analyzed_line);
+void set_instruction(char *line, Analyzed_line *analyzed_line);
 
 /**
  * @brief 
