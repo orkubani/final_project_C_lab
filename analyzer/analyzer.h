@@ -216,6 +216,7 @@ int get_num_inst_operands(int inst_enum_code);
  *
  * @param inst_operand The operand as a string to be analyzed.
  * @param analyzed_line Pointer to the 'analyzed_line' obj.
+ * @param operand_i The index of the operand.
  */
 void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i);
 

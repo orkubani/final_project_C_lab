@@ -273,7 +273,7 @@ int get_num_inst_operands(int inst_enum_code) /* Before Error System */
 }
 
 /* Set instruction operand - Register / Const Number / Label. */
-void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i) /* Before Opti | Before Error System */
+void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i) /* Before Error System */
 {
     int reg_num = -1;
 
@@ -312,7 +312,7 @@ void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int ope
 }
 
 /* Set an Assembly Instruction and related data regarding the instruction. */
-void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | Before Error System */
+void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Error System */
 {
     int i;
     const char* inst_name;
@@ -320,6 +320,8 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | 
     int num_of_operands;
     char operands[TWO_OPERANDS][MAX_OPERAND_LENGTH];
     char clean_line[MAX_LINE_LENGTH];
+    int first_op = 0;
+    int second_op = 1;
     remove_white_spaces(line, clean_line);
 
     /* Initilize first_operand & second_operand to be NULL */
@@ -333,7 +335,7 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | 
     /* Set instruction with two operands */
     if (num_of_operands == TWO_OPERANDS)
     {
-        split_operands(inst_content, operands[0], operands[1]);
+        split_operands(inst_content, operands[first_op], operands[second_op]);
 
         for (i = 0; i < num_of_operands; i++)
         {
@@ -345,17 +347,17 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Opti | 
     /* Set instruction with a single operand */
     else if (num_of_operands == SINGLE_OPERAND)
     {
-        strcpy(operands[0], inst_content);
-        set_inst_operand(operands[0],analyzed_line, 0);
-        analyzed_line->dir_or_inst.instruction.inst_operand_options[1] = operand_none;
+        strcpy(operands[first_op], inst_content);
+        set_inst_operand(operands[first_op],analyzed_line, first_op);
+        analyzed_line->dir_or_inst.instruction.inst_operand_options[second_op] = operand_none;
         return;
     }
 
     /* Set instruction with zero operands */
     else if (num_of_operands == ZERO_OPERANDS)
     {
-        analyzed_line->dir_or_inst.instruction.inst_operand_options[0] = operand_none;
-        analyzed_line->dir_or_inst.instruction.inst_operand_options[1] = operand_none;
+        analyzed_line->dir_or_inst.instruction.inst_operand_options[first_op] = operand_none;
+        analyzed_line->dir_or_inst.instruction.inst_operand_options[second_op] = operand_none;
         return;
     }
         
