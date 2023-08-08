@@ -272,15 +272,32 @@ int get_num_inst_operands(int inst_enum_code) /* Before Error System */
     return -1;
 }
 
+/* Set instruction operand - Register / Const Number / Label. */
 void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i) /* Before Opti | Before Error System */
 {
+    int reg_num = -1;
+
+    /* Set Register */
     if (*inst_operand == '@')
     {
-        analyzed_line->dir_or_inst.instruction.inst_operand_options[operand_i] = operand_register;
-        analyzed_line->dir_or_inst.instruction.inst_operands[operand_i].register_number = get_reg_num(inst_operand);
+        if(*(inst_operand + 1) == 'r')
+        {
+            reg_num = str_to_int(inst_operand + 2);
+
+            if (reg_num >= MIN_REG_NUM && reg_num <= MAX_REG_NUM)
+            {
+                analyzed_line->dir_or_inst.instruction.inst_operand_options[operand_i] = operand_register;
+                analyzed_line->dir_or_inst.instruction.inst_operands[operand_i].register_number = get_reg_num(inst_operand);
+                return;
+            }
+
+            return;
+        }
+
         return;
     } 
 
+    /* Set Const Number */
     else if(is_integer(inst_operand))
     {
         analyzed_line->dir_or_inst.instruction.inst_operand_options[operand_i] = operand_const_number;
@@ -288,6 +305,7 @@ void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int ope
         return;
     }
 
+    /* Set Label */
     analyzed_line->dir_or_inst.instruction.inst_operand_options[operand_i] = operand_label;
     analyzed_line->dir_or_inst.instruction.inst_operands[operand_i].label = inst_operand;
     return; 

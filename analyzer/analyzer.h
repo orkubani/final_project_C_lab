@@ -11,6 +11,9 @@
 #define SINGLE_OPERAND 1
 #define ZERO_OPERANDS 0
 
+#define MIN_REG_NUM 0
+#define MAX_REG_NUM 7
+
 #define DOT_ENT_AS_STRING ".entry"
 #define DOT_EXT_AS_STRING ".extern"
 #define DOT_STR_AS_STRING ".string"
@@ -209,10 +212,10 @@ char * get_inst_content(const char * inst_name, char * clean_line);
 int get_num_inst_operands(int inst_enum_code);
 
 /**
- * @brief 
+ * @brief Set instruction operand - Register / Const Number / Label.
  *
- * @param 
- * @param 
+ * @param inst_operand The operand as a string to be analyzed.
+ * @param analyzed_line Pointer to the 'analyzed_line' obj.
  */
 void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i);
 
