@@ -80,10 +80,14 @@ void set_main_label(char *line, Analyzed_line *analyzed_line)
 }
 
 /* Checks and sets if the current line is an Assembly instruction / directive. */
-void set_dir_or_inst(char *line, Analyzed_line *analyzed_line) /* Before Error System */
+void set_dir_or_inst(char *line, Analyzed_line *analyzed_line)
 {
     int i;
     char clean_line[MAX_LINE_LENGTH];
+
+    if (is_valid_analyzed_line(analyzed_line) == FALSE) 
+        return;
+
     remove_white_spaces(line, clean_line);
 
     /* Directive */
@@ -109,7 +113,7 @@ void set_dir_or_inst(char *line, Analyzed_line *analyzed_line) /* Before Error S
     }
 
     /* Not dir or inst. */
-    analyzed_line->analyzed_line_opt = -1;
+    sprintf(analyzed_line->syntax_error, "The current line is not a valid Assembly instruction/directive!");
     return;
 }
 
