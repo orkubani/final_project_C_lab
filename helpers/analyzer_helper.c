@@ -46,6 +46,7 @@ void split_operands(const char *inst_content, char *first_operand, char *second_
     second_operand[j] = '\0';
 }
 
+/* Get the number of a given register. */
 int get_reg_num(char * reg) /* Before Opti | Before Error System */
 {
     int reg_num;
@@ -56,9 +57,5 @@ int get_reg_num(char * reg) /* Before Opti | Before Error System */
 
     reg_num = str_to_int(reg_num_str);
 
-    if ( 0 <= reg_num && reg_num <= 7)
-        return reg_num;
-
-    /* Invalid reg_num */
-    return -1;
+    return reg_num;
 }

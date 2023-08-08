@@ -21,10 +21,10 @@ char * remove_str_quotations(char * str_content);
 void split_operands(const char *inst_content, char *first_operand, char *second_operand);
 
 /**
- * @brief 
+ * @brief Get the number of a given register.
  *
- * @param 
- * @param 
+ * @param reg The regist in 'rX' layout.
+ * @return The number of the register. 
  */
 int get_reg_num(char * reg);
 
