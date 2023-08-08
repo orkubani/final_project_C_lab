@@ -45,6 +45,7 @@ void remove_macro_indentation(char *sourceline, char *dest_line);
  * @brief Checks if string is an int.
  * 
  * @param str The input string to check if is an int.
+ * @return True if the str is an int.
  */
 int is_integer(const char *str); 
 
@@ -52,6 +53,7 @@ int is_integer(const char *str);
  * @brief Covert string to int.
  * 
  * @param str The input string to convert to int.
+ * @return The number as an int
  */
 int str_to_int(const char *str); 
 
