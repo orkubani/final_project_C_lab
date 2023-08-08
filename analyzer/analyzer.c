@@ -49,6 +49,10 @@ void set_main_label(char *line, Analyzed_line *analyzed_line)
     int i;
     char label_name[MAX_LINE_LENGTH];
     char clean_line[MAX_LINE_LENGTH];
+
+    if (is_valid_analyzed_line(analyzed_line) == FALSE) 
+        return;
+
     remove_white_spaces(line, clean_line);
 
     /* Initialize label_name with null characters. */
@@ -235,8 +239,11 @@ void set_dir_data(char *line, Analyzed_line *analyzed_line)
 }
 
 /* Set an Assembly directive according to the directive type. */
-void set_directive(char * line, Analyzed_line *analyzed_line) /* Before Error System */
+void set_directive(char * line, Analyzed_line *analyzed_line) 
 {
+    if (is_valid_analyzed_line(analyzed_line) == FALSE) 
+        return;
+
     if (analyzed_line->dir_or_inst.directive.dir_opt == dir_entry || analyzed_line->dir_or_inst.directive.dir_opt == dir_extern)
     {
         set_ent_ext_label(line, analyzed_line);
