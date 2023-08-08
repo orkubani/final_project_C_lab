@@ -196,14 +196,15 @@ const char * get_inst_name(int inst_enum_code);
  *
  * @param inst_name The name of the instruction.
  * @param clean_line The input line (Without spaces) to check.
+ * @return The data that comes after the opcode.
  */
 char * get_inst_content(const char * inst_name, char * clean_line);
 
 /**
- * @brief 
+ * @brief Get the numbers of operands of the current instruction.
  *
- * @param 
- * @param 
+ * @param inst_enum_code instruction enum code.
+ * @return The numbers of operands of the current instruction
  */
 int get_num_inst_operands(int inst_enum_code);
 

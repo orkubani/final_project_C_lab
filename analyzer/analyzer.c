@@ -242,7 +242,8 @@ char * get_inst_content(const char * inst_name, char * clean_line) /* Before Err
     return inst_content += inst_len;
 }
 
-int get_num_inst_operands(int inst_enum_code) /* Before Opti | Before Error System */
+/* Get the numbers of operands of the current instruction. */
+int get_num_inst_operands(int inst_enum_code) /* Before Error System */
 {
     int i;
     int src = 0;
@@ -252,11 +253,13 @@ int get_num_inst_operands(int inst_enum_code) /* Before Opti | Before Error Syst
     {
         if (inst_enum_code == asm_all_instructions[i].inst_key) 
         {
+            /* Checks if at least one of the Addressing Modes is allowed as src. */
             if (asm_all_instructions[i].immed_as_src == TRUE || 
                 asm_all_instructions[i].label_as_src == TRUE || 
                 asm_all_instructions[i].reg_as_src == TRUE) 
                 src = 1;
             
+            /* Checks if at least one of the Addressing Modes is allowed as dest. */
             if (asm_all_instructions[i].immed_as_dest == TRUE || 
                 asm_all_instructions[i].label_as_dest == TRUE || 
                 asm_all_instructions[i].reg_as_dest == TRUE) 
