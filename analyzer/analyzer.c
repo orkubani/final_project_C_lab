@@ -187,20 +187,34 @@ void set_dir_string(char * line, Analyzed_line *analyzed_line)
 }
 
 /* Set the data of a '.data' Assembly directive. */
-void set_dir_data(char *line, Analyzed_line *analyzed_line) /* Before Error System */
+void set_dir_data(char *line, Analyzed_line *analyzed_line)
 {
     int i = 0;
     char clean_line[MAX_LINE_LENGTH];
     char * data_content_as_string;
     long int num;
+    int num_conversion_result;
+
+    if (is_valid_analyzed_line(analyzed_line) == FALSE) 
+        return;
 
     remove_white_spaces(line, clean_line);
 
     data_content_as_string = strrchr(clean_line, ':');
     data_content_as_string += (strlen(DOT_DATA_AS_STRING) + 1); /* Skip the last 'a' */
 
-    while (sscanf(data_content_as_string, "%ld", &num) == 1) 
+    while (sscanf(data_content_as_string, "%ld%n", &num, &num_conversion_result) == 1) 
     {
+        /* Catch floats */
+        if (num_conversion_result == 0 || data_content_as_string[num_conversion_result] != ',')
+        {
+            if (data_content_as_string[num_conversion_result] != '\0')
+            {
+                sprintf(analyzed_line->syntax_error, "Invalid data content! .data content must be an integer!");
+                return;
+            }
+        }
+
         data_content_as_string = strchr(data_content_as_string, ',');
         analyzed_line->dir_or_inst.directive.dir_operand.data.data[i] = num;
         i++;
@@ -210,6 +224,13 @@ void set_dir_data(char *line, Analyzed_line *analyzed_line) /* Before Error Syst
             break;
         
         data_content_as_string += 1;
+    }
+
+    /* Catch Strings / Chars */
+    if (data_content_as_string != NULL)
+    {
+        sprintf(analyzed_line->syntax_error, "Invalid data content! .data content must be an integer!");
+        return;
     }
 }
 
