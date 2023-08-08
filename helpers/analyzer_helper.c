@@ -23,7 +23,8 @@ char * remove_str_quotations(char * str_content) /* Before Error System */
     return str_content;
 }
 
-void split_operands(const char *inst_content, char *first_operand, char *second_operand) /* Before Opti | Before Error System */
+/* Split two instruction's operands */
+void split_operands(const char *inst_content, char *first_operand, char *second_operand) /* Before Error System */
 {
     int i = 0;
     int j = 0;

@@ -12,10 +12,11 @@
 char * remove_str_quotations(char * str_content);
 
 /**
- * @brief 
+ * @brief Split two instruction's operands
  *
- * @param 
- * @param 
+ * @param inst_content Two operands with a comma that splits them.
+ * @param first_operand Pointer to save to the first_operand
+ * @param second_operand Pointer to save to the second_operand
  */
 void split_operands(const char *inst_content, char *first_operand, char *second_operand);
 
