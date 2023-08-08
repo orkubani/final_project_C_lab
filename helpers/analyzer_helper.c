@@ -69,7 +69,7 @@ void set_analyzer_error(Analyzed_line * analyzed_line, char error_content[MAX_SY
 /* Checks if there is an error that raised until now regarding the current line. */
 int is_valid_analyzed_line(Analyzed_line * analyzed_line)
 {
-    if (strcmp(analyzed_line->syntax_error, NULL) == 0)
+    if (analyzed_line->syntax_error[0] == '\0')
         return TRUE;
 
     return FALSE;
