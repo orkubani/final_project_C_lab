@@ -65,3 +65,12 @@ void set_analyzer_error(Analyzed_line * analyzed_line, char error_content[MAX_SY
 {
     strcpy(analyzed_line->syntax_error, error_content);
 }
+
+/* Checks if there is an error that raised until now regarding the current line. */
+int is_valid_analyzed_line(Analyzed_line * analyzed_line)
+{
+    if (strcmp(analyzed_line->syntax_error, NULL) == 0)
+        return TRUE;
+
+    return FALSE;
+}
