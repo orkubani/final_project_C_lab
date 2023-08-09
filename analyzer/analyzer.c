@@ -324,7 +324,7 @@ int get_num_inst_operands(int inst_enum_code)
 }
 
 /* Set instruction operand - Register / Const Number / Label. */
-void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i) /* Before Error System */
+void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int operand_i)
 {
     int reg_num = -1;
 
@@ -348,6 +348,8 @@ void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int ope
             sprintf(analyzed_line->syntax_error, "Invalid register number! '%d'", reg_num);
             return;
         }
+        
+        sprintf(analyzed_line->syntax_error, "Invalid register syntax! After '@' must come 'r'. Actual :'%c'", *(inst_operand + 1));
         return;
     } 
 
@@ -356,6 +358,13 @@ void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int ope
     {
         analyzed_line->dir_or_inst.instruction.inst_operand_options[operand_i] = operand_const_number;
         analyzed_line->dir_or_inst.instruction.inst_operands[operand_i].const_number = str_to_int(inst_operand);
+        return;
+    }
+
+    /* Catch floats and invalid labels */
+    if (strpbrk(inst_operand, ",.:") != NULL) 
+    {
+        sprintf(analyzed_line->syntax_error, "Invalid intruction operand!");
         return;
     }
 
