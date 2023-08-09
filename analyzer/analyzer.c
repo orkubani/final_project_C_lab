@@ -283,7 +283,7 @@ const char * get_inst_name(int inst_enum_code)
 }
 
 /* Get the inst_content - the data that comes after the opcode. */
-char * get_inst_content(const char * inst_name, char * clean_line) /* Before Error System */
+char * get_inst_content(const char * inst_name, char * clean_line)
 {
     char * inst_content;
     int inst_len = 0;
@@ -294,7 +294,7 @@ char * get_inst_content(const char * inst_name, char * clean_line) /* Before Err
 }
 
 /* Get the numbers of operands of the current instruction. */
-int get_num_inst_operands(int inst_enum_code) /* Before Error System */
+int get_num_inst_operands(int inst_enum_code)
 {
     int i;
     int src = 0;
@@ -366,7 +366,7 @@ void set_inst_operand(char * inst_operand, Analyzed_line *analyzed_line, int ope
 }
 
 /* Set an Assembly Instruction and related data regarding the instruction. */
-void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Error System */
+void set_instruction(char *line, Analyzed_line *analyzed_line)
 {
     int i;
     const char* inst_name;
@@ -399,6 +399,19 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Error S
     /* Set instruction with two operands */
     if (num_of_operands == TWO_OPERANDS)
     {
+        
+        if(strlen(inst_content) == 0)
+        {
+            sprintf(analyzed_line->syntax_error, "Invalid body for inst: '%s'! There body is empty!", inst_name);
+            return;
+        }
+        
+        if (strchr(inst_content, ',') == NULL)
+        {
+            sprintf(analyzed_line->syntax_error, "Invalid body for inst: '%s'! There are no 2 operands!", inst_name);
+            return;
+        }
+
         split_operands(inst_content, operands[first_op], operands[second_op]);
 
         for (i = 0; i < num_of_operands; i++)
@@ -411,6 +424,19 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Error S
     /* Set instruction with a single operand */
     else if (num_of_operands == SINGLE_OPERAND)
     {
+
+        if(strlen(inst_content) == 0)
+        {
+            sprintf(analyzed_line->syntax_error, "Invalid body for inst: '%s'! There body is empty!", inst_name);
+            return;
+        }
+
+        if (strchr(inst_content, ',') != NULL)
+        {
+            sprintf(analyzed_line->syntax_error, "Invalid body for inst: '%s'! There are more than 1 operands!", inst_name);
+            return;
+        }
+
         strcpy(operands[first_op], inst_content);
         set_inst_operand(operands[first_op],analyzed_line, first_op);
         analyzed_line->dir_or_inst.instruction.inst_operand_options[second_op] = operand_none;
@@ -420,11 +446,19 @@ void set_instruction(char *line, Analyzed_line *analyzed_line) /* Before Error S
     /* Set instruction with zero operands */
     else if (num_of_operands == ZERO_OPERANDS)
     {
+        if(strlen(inst_content) != 0)
+        {
+            sprintf(analyzed_line->syntax_error, "Invalid body for inst: '%s'! There body is not empty!", inst_name);
+            return;
+        }
+
         analyzed_line->dir_or_inst.instruction.inst_operand_options[first_op] = operand_none;
         analyzed_line->dir_or_inst.instruction.inst_operand_options[second_op] = operand_none;
         return;
     }
-        
+
+
+    sprintf(analyzed_line->syntax_error, "Invalid number of operands!");    
     return;
 }
 
