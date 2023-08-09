@@ -472,14 +472,20 @@ void set_instruction(char *line, Analyzed_line *analyzed_line)
 }
 
 /* Analayzes and "Brakes" a line into a structure of Assembly directive / instruction. */
-Analyzed_line get_analyzed_line(char *line) /* Before Error System */
+Analyzed_line get_analyzed_line(char *line)
 {
     /* Create 'analyzed_line' obj and remove white spaces. */
     Analyzed_line analyzed_line;
 
+    /* Initilize syntax_error */
+    strcpy(analyzed_line.syntax_error, "");
+
     /* Set main fields of the Analyzed_line obj */
     set_main_label(line, &analyzed_line);
     set_dir_or_inst(line, &analyzed_line);
+
+    if (is_valid_analyzed_line(&analyzed_line) == FALSE) 
+        return analyzed_line;
 
     /* Set Assembly Directive */
     if (analyzed_line.analyzed_line_opt == directive)

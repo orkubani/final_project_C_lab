@@ -1,3 +1,4 @@
+#include "helpers/analyzer_helper.h"
 #include "helpers/utils.h"
 #include "preprocessor/preprocessor.h"
 #include "analyzer/analyzer.h"
@@ -37,6 +38,13 @@ int main(int argc, char **argv)
     while (fgets(line, MAX_LINE_LENGTH, am_file) != NULL) 
     {
         analyzed_line_result = get_analyzed_line(line);
+        if (is_valid_analyzed_line(&analyzed_line_result) == FALSE) 
+        {
+            printf("Error in line: %s", line);
+            printf("%s\n", analyzed_line_result.syntax_error);
+            continue;
+        }
+
         fprintf(analyzer_tester_output,"Line: %s", line);
         fprintf(analyzer_tester_output, "Main Label: '%s'\n", analyzed_line_result.label_name);
 

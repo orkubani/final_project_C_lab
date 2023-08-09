@@ -64,7 +64,7 @@ int get_reg_num(char * reg) /* Before Opti | Before Error System */
 /* Checks if there is an error that raised until now regarding the current line. */
 int is_valid_analyzed_line(Analyzed_line * analyzed_line)
 {
-    if (analyzed_line->syntax_error[0] == '\0')
+    if (strcmp(analyzed_line->syntax_error, "") == 0)
         return TRUE;
 
     return FALSE;
