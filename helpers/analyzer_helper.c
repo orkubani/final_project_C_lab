@@ -4,7 +4,7 @@
 #include <string.h>
 
 /* Remove the str quotations to save it as is. */
-char * remove_str_quotations(char * str_content) /* Before Error System */
+char * remove_str_quotations(char * str_content)
 {
     int i;
 
@@ -25,7 +25,7 @@ char * remove_str_quotations(char * str_content) /* Before Error System */
 }
 
 /* Split two instruction's operands */
-void split_operands(const char *inst_content, char *first_operand, char *second_operand) /* Before Error System */
+void split_operands(const char *inst_content, char *first_operand, char *second_operand)
 {
     int i = 0;
     int j = 0;
@@ -48,7 +48,7 @@ void split_operands(const char *inst_content, char *first_operand, char *second_
 }
 
 /* Get the number of a given register. */
-int get_reg_num(char * reg) /* Before Opti | Before Error System */
+int get_reg_num(char * reg)
 {
     int reg_num;
     char * reg_num_str;
