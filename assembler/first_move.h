@@ -7,7 +7,7 @@
 typedef struct Compiled_Line /* Code section */
 {
     int line_index;
-    unsigned int ** dir_words;
+    unsigned int ** words;
     int num_of_words;
     struct Compiled_Line *next_compiled_line;
 
@@ -48,5 +48,13 @@ Compiled_Line * insert_compiled_line_to_table(Compiled_Line *compiled_line, int 
  * @return Pointer to the compiled_line Node or Null if isn't exist.
  */
 Compiled_Line * get_compiled_line(Compiled_Line *compiled_line, int line_index);
+
+/**
+ * @brief Inserts a new word into the words array of the given Compiled_Line.
+ * 
+ * @param word to add to a given compiled_line.
+ * @param compiled_line Pointer to the compiled_line to add the word to.
+ */
+void insert_word(Compiled_Line *compiled_line, unsigned int word);
 
 #endif /* FIRST_MOVE_H */
