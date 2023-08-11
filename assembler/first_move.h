@@ -16,10 +16,10 @@
 
 #define BASE_ADDRESS 100
 
-typedef struct Object_File 
+/*typedef struct Object_File 
 {
 
-}Object_File;
+}Object_File;*/
 
 /**
  * @brief First move on the am_file.

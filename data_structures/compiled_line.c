@@ -69,17 +69,10 @@ void insert_word(Compiled_Line *compiled_line, unsigned int word)
     compiled_line->num_of_words += 1;
 }
 
-/* Frees the memory allocated for the Words array of a given Compiled_Line. */
-void free_compiled_line_words(Compiled_Line *compiled_line) 
-{
-    int i = 0;
-    free(compiled_line->words);
-}
-
 /* Frees the memory allocated for the given Compiled_Line and its associated Words. */
 void free_compiled_line(Compiled_Line *compiled_line) 
 {
-    free_compiled_line_words(compiled_line);
+    free(compiled_line->words);
     free(compiled_line);
 }
 

@@ -11,15 +11,13 @@ typedef struct Compiled_Line /* Code section */
 
 }Compiled_Line;
 
-typedef struct Extern_Calls 
+/*typedef struct Extern_Calls 
 {
-    /* Implement struct here */
-}Extern_Calls;
+}Extern_Calls;*/
 
-typedef struct Entries_Calls 
+/*typedef struct Entries_Calls 
 {
-    /* Implement struct here */
-}Entries_Calls;
+}Entries_Calls;*/
 
 /**
  * @brief Create "compiled instruction" / "compile directive" Node.
@@ -54,13 +52,6 @@ Compiled_Line * get_compiled_line(Compiled_Line *compiled_line, int line_index);
  * @param compiled_line Pointer to the compiled_line to add the word to.
  */
 void insert_word(Compiled_Line *compiled_line, unsigned int word);
-
-/**
- * @brief Frees the memory allocated for the Words array of a given Compiled_Line.
- * 
- * @param compiled_line Pointer to a compiled_line Node
- */
-void free_compiled_line_words(Compiled_Line *compiled_line); 
 
 /**
  * @brief Frees the memory allocated for the given Compiled_Line and its associated Words.

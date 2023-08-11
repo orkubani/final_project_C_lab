@@ -5,6 +5,7 @@
 /* First move on the am_file. */
 int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_filename)
 {
+    int i;
     char line[MAX_LINE_LENGTH] = {0}; /* Initilize line */
     Analyzed_line analyzed_line;
     Compiled_Line * data_section = NULL;
@@ -28,9 +29,27 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
 
         if (analyzed_line.analyzed_line_opt == directive)
         {
-            /* Implement Here */
-            line_index++;
-            continue;
+            data_section = insert_compiled_line_to_table(data_section, line_index);
+            current_compiled_line = get_compiled_line(data_section, line_index);
+
+            if (analyzed_line.dir_or_inst.directive.dir_opt == dir_string)
+            {
+                for (i = 0; analyzed_line.dir_or_inst.directive.dir_operand.string[i] != '\0'; i++)
+                {
+                    insert_word(current_compiled_line, analyzed_line.dir_or_inst.directive.dir_operand.string[i]);
+                }
+                
+                insert_word(current_compiled_line, '\0');
+
+                line_index++;
+                continue;
+            }
+
+            else 
+            {
+                line_index++;
+                continue;
+            }           
         }
 
         else if (analyzed_line.analyzed_line_opt == instruction) 
@@ -47,7 +66,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
             insert_word(current_compiled_line, inst_word);
 
             /* Add here insertion for the extra words */
-            
+
             line_index++;
             continue;
         }
