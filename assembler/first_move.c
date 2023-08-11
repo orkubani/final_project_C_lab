@@ -11,7 +11,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
     Compiled_Line * code_section = NULL;
     Compiled_Line * current_compiled_line = NULL;
     int line_index = 1;
-    unsigned int word = 0;
+    unsigned int inst_word = 0;
 
     while (fgets(line, sizeof(line), am_file)) 
     {
@@ -38,14 +38,16 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
             code_section = insert_compiled_line_to_table(code_section, line_index);
 
             /* Define the instruction word */
-            word = analyzed_line.dir_or_inst.instruction.inst_operand_options[DEST_OPERAND_I] << DEST_INDENTATION;
-            word |= analyzed_line.dir_or_inst.instruction.inst_operand_options[SRC_OPERAND_I] << SRC_INDENTATION;
-            word |= analyzed_line.dir_or_inst.instruction.inst_opt << OPCODE_INDENTATION;
+            inst_word = analyzed_line.dir_or_inst.instruction.inst_operand_options[DEST_OPERAND_I] << DEST_INDENTATION;
+            inst_word |= analyzed_line.dir_or_inst.instruction.inst_operand_options[SRC_OPERAND_I] << SRC_INDENTATION;
+            inst_word |= analyzed_line.dir_or_inst.instruction.inst_opt << OPCODE_INDENTATION;
             
             /* Add the instruction word to the relevant compiled_line in the code_section */
             current_compiled_line = get_compiled_line(code_section, line_index);
-            insert_word(current_compiled_line, word);
+            insert_word(current_compiled_line, inst_word);
 
+            /* Add here insertion for the extra words */
+            
             line_index++;
             continue;
         }
@@ -55,5 +57,6 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
         return FALSE;
     } 
 
+    free_compiled_line_table(code_section);
     return TRUE;
 }
