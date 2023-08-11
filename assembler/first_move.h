@@ -40,4 +40,13 @@ Compiled_Line * create_compiled_line(int line_index);
  */
 Compiled_Line * insert_compiled_line_to_table(Compiled_Line *compiled_line, int line_index);
 
+/**
+ * @brief Searches for a Compiled_Line with the line_index into the compiled_line table.
+ * 
+ * @param line_index The line index from the am_file.
+ * @param compiled_line Pointer to the compiled_line table
+ * @return Pointer to the compiled_line Node or Null if isn't exist.
+ */
+Compiled_Line * get_compiled_line(Compiled_Line *compiled_line, int line_index);
+
 #endif /* FIRST_MOVE_H */

@@ -22,7 +22,7 @@ Compiled_Line * create_compiled_line(int line_index)
     return compiled_inst;
 }
 
-/* Inserts a new compiled_line with the given line_index into the compiled_line. */
+/* Inserts a new compiled_line with the given line_index into the compiled_line table. */
 Compiled_Line * insert_compiled_line_to_table(Compiled_Line *compiled_line, int line_index)
 {
    if (compiled_line == NULL) 
@@ -40,5 +40,19 @@ Compiled_Line * insert_compiled_line_to_table(Compiled_Line *compiled_line, int 
    
    insert_compiled_line_to_table(compiled_line->next_compiled_line, line_index);
    return compiled_line;
+}
+
+/* Searches for a Compiled_Line with the line_index into the compiled_line table. */
+Compiled_Line * get_compiled_line(Compiled_Line *compiled_line, int line_index)
+{
+    while (compiled_line != NULL)
+    {
+        if (compiled_line->line_index == line_index) 
+            return compiled_line;
+        
+        compiled_line = compiled_line->next_compiled_line;
+    }
+
+    return NULL;
 }
 
