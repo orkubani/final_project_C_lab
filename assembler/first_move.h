@@ -1,31 +1,50 @@
 #ifndef FIRST_MOVE_H
 #define FIRST_MOVE_H
 
-typedef struct Compiled_Inst /* Code section */
-{
-    unsigned int inst_word;
-    unsigned int first_extra_word;
-    unsigned int second_extra_word;
-    int num_of_words;
-    struct Compiled_Inst *next_inst;
-}Compiled_Inst;
+#define BASE_ADDRESS 100
 
-typedef struct Compiled_Dir /* Data section */
+/* "Instruction" / "Directive" Compiled Line */
+typedef struct Compiled_Line /* Code section */
 {
-    /* Implement struct here */
-    struct Compiled_Dir *next_dir;
-}Compiled_Dir;
+    enum
+    {
+        directive,
+        instruction
+    }analyzed_line_opt;
+    
+    struct
+    {
+        /* Implement Here */
+    }Compiled_Dir;
 
+    struct 
+    {
+        unsigned int inst_word;
+        unsigned int first_extra_word;
+        unsigned int second_extra_word;
+        int num_of_words;
+    }Compiled_Inst;
+
+    struct Compiled_Line *next_compiled_line;
+
+}Compiled_Line;
 
 typedef struct Extern_Calls 
 {
     /* Implement struct here */
 }Extern_Calls;
 
-
 typedef struct Entries_Calls 
 {
     /* Implement struct here */
 }Entries_Calls;
 
-#endif /*  */
+/**
+ * @brief Create "compiled instruction" / "compile directive" Node.
+ *
+ * @param inst_opt Instruction/Directive enum code to build the right compiled line.
+ * @return Pointer to the compiled_line Node
+ */
+Compiled_Line * create_compiled_line(int line_opt);
+
+#endif /* FIRST_MOVE_H */
