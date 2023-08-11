@@ -4,3 +4,4 @@
 /*.as
 tests/*.am
 analyzer/*.o
+tests/Tester_code.c
