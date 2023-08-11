@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* First move on the am_file. */
 int first_move(FILE * am_file, Object_File * object_file, const char * am_filename)
 {
     char line[MAX_LINE_LENGTH] = {0}; /* Initilize line */

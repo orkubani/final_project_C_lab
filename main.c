@@ -1,7 +1,4 @@
-#include "helpers/analyzer_helper.h"
-#include "helpers/utils.h"
 #include "preprocessor/preprocessor.h"
-#include "analyzer/analyzer.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
