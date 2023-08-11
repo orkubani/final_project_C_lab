@@ -17,7 +17,7 @@ $(PROG_NAME): build_dir main.o preprocessor.o macro_table.o utils.o analyzer_hel
 	$(CC) $(CFLAGS) $(OBJ_DIR)/*.o -o $(BIN_DIR)/$@
 
 main.o: main.c preprocessor/preprocessor.h preprocessor/macro_table.h \
- preprocessor/../helpers/utils.h
+ preprocessor/../helpers/utils.h assembler/first_move.h
 preprocessor.o: preprocessor/preprocessor.c preprocessor/preprocessor.h \
  preprocessor/macro_table.h preprocessor/../helpers/utils.h
 macro_table.o: preprocessor/macro_table.c preprocessor/macro_table.h \

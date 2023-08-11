@@ -1,3 +1,4 @@
+#include "assembler/first_move.h"
 #include "preprocessor/preprocessor.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,6 +19,7 @@ int main(int argc, char **argv)
         am_file = fopen(am_filename, "r");
         if (am_file) 
         {
+            first_move(am_file, am_filename);
             /* Implement compilation here */
         }
     }

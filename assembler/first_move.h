@@ -23,5 +23,5 @@ typedef struct Object_File
  *
  * @return TRUE (1) if there are no errors, FALSE (0) if there are errors and the process failed
  */
-int first_move(FILE * am_file, Object_File * object_file, const char * am_filename);
+int first_move(FILE * am_file, /*, Object_File * object_file*/ const char * am_filename);
 #endif /* FIRST_MOVE_H */
