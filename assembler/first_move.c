@@ -4,7 +4,7 @@
 
 
 /* Create "compiled instruction" / "compile directive" Node */
-Compiled_Line * create_compiled_line(int line_opt)
+Compiled_Line * create_compiled_line()
 {
     Compiled_Line * compiled_inst = NULL;
     compiled_inst = (Compiled_Line *)calloc(1, sizeof(Compiled_Line));
@@ -14,23 +14,9 @@ Compiled_Line * create_compiled_line(int line_opt)
         exit(0);
     }
 
-    if (line_opt == instruction)
-    {
-        compiled_inst->analyzed_line_opt = instruction;
-        compiled_inst->Compiled_Inst.inst_word = 0;
-        compiled_inst->Compiled_Inst.first_extra_word = 0;
-        compiled_inst->Compiled_Inst.second_extra_word = 0;
-        compiled_inst->Compiled_Inst.num_of_words = 0;
-        compiled_inst->next_compiled_line = NULL;
-        return compiled_inst;
-    }
-
-    else if (line_opt == directive) 
-    {
-        /* Implement here */
-        compiled_inst->next_compiled_line = NULL;
-        return compiled_inst;
-    }
+    compiled_inst->dir_words = NULL;
+    compiled_inst->num_of_words = 0;
+    compiled_inst->next_compiled_line = NULL;
 
     return compiled_inst;
 }
