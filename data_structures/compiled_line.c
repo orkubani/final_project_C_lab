@@ -59,13 +59,13 @@ Compiled_Line * get_compiled_line(Compiled_Line *compiled_line, int line_index)
 /* Inserts a new word into the words array of the given Compiled_Line. */
 void insert_word(Compiled_Line *compiled_line, unsigned int word)
 {
-    compiled_line->words[compiled_line->num_of_words] = calloc(4, sizeof(int)); /* 12 bit */
-    if (compiled_line->words[compiled_line->num_of_words] == NULL)
+    compiled_line->words = realloc(compiled_line->words, compiled_line->num_of_words * sizeof(unsigned int));
+    if (compiled_line->words == NULL)
     {
         printf("Memory allocation failed for a new word.\n");
         exit(0);
     }
-    compiled_line->words[compiled_line->num_of_words] = &word;
+    compiled_line->words[compiled_line->num_of_words] = word;
     compiled_line->num_of_words += 1;
 }
 
@@ -73,11 +73,6 @@ void insert_word(Compiled_Line *compiled_line, unsigned int word)
 void free_compiled_line_words(Compiled_Line *compiled_line) 
 {
     int i = 0;
-
-    for (i = 0; i < compiled_line->num_of_words; i++) 
-    {
-        free(compiled_line->words[i]);
-    }
     free(compiled_line->words);
 }
 

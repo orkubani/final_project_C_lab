@@ -5,7 +5,7 @@
 typedef struct Compiled_Line /* Code section */
 {
     int line_index;
-    unsigned int ** words;
+    unsigned int * words;
     int num_of_words;
     struct Compiled_Line *next_compiled_line;
 
