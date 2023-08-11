@@ -45,6 +45,18 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 continue;
             }
 
+            else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_data) 
+            {
+                for (i = 0; i < analyzed_line.dir_or_inst.directive.dir_operand.data.data_count; i++)
+                {
+                    insert_word(current_compiled_line, analyzed_line.dir_or_inst.directive.dir_operand.data.data[i]);
+                }
+
+                line_index++;
+                continue;
+            }
+
+            /* Remember to change / delete */    
             else 
             {
                 line_index++;
