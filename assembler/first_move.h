@@ -7,6 +7,13 @@
 #include "../data_structures/compiled_line.h"
 #include <stdio.h>
 
+#define SRC_OPERAND_I 0
+#define DEST_OPERAND_I 1
+
+#define DEST_INDENTATION 2
+#define SRC_INDENTATION 9
+#define OPCODE_INDENTATION 5
+
 #define BASE_ADDRESS 100
 
 typedef struct Object_File 
