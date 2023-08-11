@@ -57,4 +57,25 @@ Compiled_Line * get_compiled_line(Compiled_Line *compiled_line, int line_index);
  */
 void insert_word(Compiled_Line *compiled_line, unsigned int word);
 
+/**
+ * @brief Frees the memory allocated for the Words array of a given Compiled_Line.
+ * 
+ * @param compiled_line Pointer to a compiled_line Node
+ */
+void free_compiled_line_words(Compiled_Line *compiled_line); 
+
+/**
+ * @brief Frees the memory allocated for the given Compiled_Line and its associated Words.
+ * 
+ * @param compiled_line Pointer to a compiled_line Node to add the word to.
+ */
+void free_compiled_line(Compiled_Line *compiled_line);
+
+/**
+ * @brief Frees the entire compiled_line table and all the compiled_line it contains.
+ * 
+ * @param compiled_line Pointer to the compiled_line table.
+ */
+void free_compiled_line_table(Compiled_Line *compiled_line); 
+
 #endif /* FIRST_MOVE_H */
