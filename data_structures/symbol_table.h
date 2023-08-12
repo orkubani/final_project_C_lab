@@ -55,4 +55,20 @@ Symbol * insert_symbol_to_table(Symbol *symbol, char * symbol_name, unsigned int
  */
 Symbol * get_symbol(Symbol *symbol, char * symbol_name);
 
+
+/**
+ * @brief Frees the memory allocated for a given symbol.
+ * 
+ * @param symbol A symbol Node.
+ */
+void free_symbol(Symbol *symbol); 
+
+
+/**
+ * @brief Frees the entire symbol table and all the symbols it contains.
+ * 
+ * @param symbol The symbol table.
+ */
+void free_symbol_table(Symbol *symbol); 
+
 #endif /* SYMBOL_TABLE_H */

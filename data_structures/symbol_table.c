@@ -56,3 +56,20 @@ Symbol * get_symbol(Symbol *symbol, char * symbol_name)
 
     return NULL;
 }
+
+/* Frees the memory allocated for a given symbol. */
+void free_symbol(Symbol *symbol) 
+{
+    free(symbol);
+}
+
+/* Frees the entire symbol table and all the symbols it contains. */
+void free_symbol_table(Symbol *symbol) 
+{
+    while (symbol != NULL) 
+    {
+        Symbol *temp = symbol;
+        symbol = symbol->next_symbol;
+        free_symbol(temp);
+    }
+}
