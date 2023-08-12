@@ -43,10 +43,6 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
             continue;
         }
 
-        /* Handle Main Label Here */
-        if(strcmp(analyzed_line.label_name, "\0") != 0)
-            symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, 0);
-
         /* Compile (First Move) Directive */
         if (analyzed_line.analyzed_line_opt == directive)
         {
@@ -82,7 +78,28 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 continue;
             }
 
-            /* Remember to change / delete */    
+            /* entry def */
+            else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_entry) 
+            {
+                symbol = insert_symbol_to_table(symbol, analyzed_line.dir_or_inst.directive.dir_operand.label_name,
+                 line_index, symbol_entry_def);
+
+                DC++;
+                line_index++;
+                continue;
+            }
+
+            /* extern def */
+            else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_extern)
+            {
+                symbol = insert_symbol_to_table(symbol, analyzed_line.dir_or_inst.directive.dir_operand.label_name, 
+                line_index, symbol_extern_def);
+
+                DC++;
+                line_index++;
+                continue;
+            }
+
             else 
             {
                 line_index++;
@@ -181,6 +198,18 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
 
         fprintf(output_file, "\n");
         code_section = code_section->next_compiled_line;
+    }
+
+    fprintf(output_file, "\n############################ symbol_table ###########################\n");
+    while(symbol != NULL)
+    {
+        fprintf(output_file, "Symbol name: '%s'\n", symbol->symbol_name);
+        fprintf(output_file, "Symbol type: '%d'\n", symbol->symbol_opt);
+        fprintf(output_file, "Symbol def_line: '%d'\n", symbol->def_line);
+        fprintf(output_file, "Symbol address: '%d'\n", symbol->address);
+
+        fprintf(output_file, "\n");
+        symbol = symbol->next_symbol;
     }
 
     fclose(output_file);

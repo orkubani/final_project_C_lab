@@ -111,3 +111,25 @@ Missing Label 2 type: '0'
 Missing Label 2 name: ''
 Binary: 000111100000
 
+
+############################ symbol_table ###########################
+Symbol name: 'LENGTH'
+Symbol type: '5'
+Symbol def_line: '1'
+Symbol address: '0'
+
+Symbol name: 'W'
+Symbol type: '2'
+Symbol def_line: '2'
+Symbol address: '0'
+
+Symbol name: 'LOOP'
+Symbol type: '5'
+Symbol def_line: '10'
+Symbol address: '0'
+
+Symbol name: 'L3'
+Symbol type: '2'
+Symbol def_line: '16'
+Symbol address: '0'
+
