@@ -31,6 +31,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
     {
         analyzed_line = get_analyzed_line(line);
 
+        /* Check For Syntax Error */
         if (is_valid_analyzed_line(&analyzed_line) == FALSE)
         {
             printf("Error in line '%d'! %s\n", line_index, analyzed_line.syntax_error);
@@ -40,11 +41,14 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
 
         /* Handle Main Label Here */
 
+        /* Compile (First Move) Directive */
         if (analyzed_line.analyzed_line_opt == directive)
         {
+            /* Add directive to the data section */
             data_section = insert_compiled_line_to_table(data_section, line_index);
             current_compiled_line = get_compiled_line(data_section, line_index);
 
+            /* Compile String Directive */
             if (analyzed_line.dir_or_inst.directive.dir_opt == dir_string)
             {
                 for (i = 0; analyzed_line.dir_or_inst.directive.dir_operand.string[i] != '\0'; i++)
@@ -58,6 +62,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 continue;
             }
 
+            /* Compile Data Directive */
             else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_data) 
             {
                 for (i = 0; i < analyzed_line.dir_or_inst.directive.dir_operand.data.data_count; i++)
@@ -77,12 +82,16 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
             }           
         }
 
+        /* Compile (First Move) Instruction */
         else if (analyzed_line.analyzed_line_opt == instruction) 
         {
+            /* Add Instruction to the code section */
             code_section = insert_compiled_line_to_table(code_section, line_index);
             
+            /* Insert the inst word to the current compiled_line in the code_section. releavnt for all instructions. */
             inst_word = analyzed_line.dir_or_inst.instruction.inst_opt << OPCODE_INDENTATION;
             
+            /* No Operands */
             if (analyzed_line.dir_or_inst.instruction.inst_operand_options[0] == operand_none && 
                 analyzed_line.dir_or_inst.instruction.inst_operand_options[1] == operand_none)
             {
@@ -91,6 +100,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 insert_word(current_compiled_line, inst_word);
             } 
 
+            /* Single Operand. */
             else if (analyzed_line.dir_or_inst.instruction.inst_operand_options[0] == operand_none || 
                      analyzed_line.dir_or_inst.instruction.inst_operand_options[1] == operand_none)
             {
@@ -102,6 +112,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 insert_word(current_compiled_line, inst_word);
             }
 
+            /* Two Operands */
             else 
             {
                 dest_operand_i = 1;
@@ -113,6 +124,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 insert_word(current_compiled_line, inst_word);
             }     
 
+            /* Add Extra Words. */
             set_inst_extra_words(analyzed_line, current_compiled_line, num_of_operands);
             line_index++;
             continue;
