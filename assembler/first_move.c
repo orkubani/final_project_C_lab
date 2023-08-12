@@ -1,6 +1,7 @@
 #include "first_move.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "../helpers/assembler_helper.h"
 
 #define DEBUG
@@ -20,6 +21,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
     Compiled_Line * data_section = NULL;
     Compiled_Line * code_section = NULL;
     Compiled_Line * current_compiled_line = NULL;
+    Symbol * symbol = NULL;
     int line_index = 1;
     unsigned int inst_word = 0;
 
@@ -42,6 +44,8 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
         }
 
         /* Handle Main Label Here */
+        if(strcmp(analyzed_line.label_name, "\0") != 0)
+            symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, 0);
 
         /* Compile (First Move) Directive */
         if (analyzed_line.analyzed_line_opt == directive)
@@ -182,6 +186,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
     fclose(output_file);
     #endif
 
+    /* Add here free symbol */
     free_compiled_line_table(data_section);
     free_compiled_line_table(code_section);
     return TRUE;

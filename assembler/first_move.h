@@ -5,6 +5,7 @@
 #include "../analyzer/analyzer.h"
 #include "../helpers/analyzer_helper.h"
 #include "../data_structures/compiled_line.h"
+#include "../data_structures/symbol_table.h"
 #include <stdio.h>
 
 #define DEST_INDENTATION 2
