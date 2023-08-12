@@ -1,5 +1,5 @@
-#ifndef FIRST_MOVE_H
-#define FIRST_MOVE_H
+#ifndef ASSEMBLER_H
+#define ASSEMBLER_H
 
 #include "../helpers/utils.h"
 #include "../analyzer/analyzer.h"
@@ -17,10 +17,6 @@
 
 #define BASE_ADDRESS 100
 
-/*typedef struct Object_File 
-{
-
-}Object_File;*/
 
 /**
  * @brief First move on the am_file.
@@ -32,4 +28,5 @@
  * @return TRUE (1) if there are no errors, FALSE (0) if there are errors and the process failed
  */
 int first_move(FILE * am_file, /*, Object_File * object_file*/ const char * am_filename);
-#endif /* FIRST_MOVE_H */
+
+#endif /* ASSEMBLER_H */

@@ -1,7 +1,7 @@
 #ifndef ASSEMBLER_HELPER_H
 #define ASSEMBLER_HELPER_H
 
-#include "../assembler/first_move.h"
+#include "../assembler/assembler.h"
 
 /**
  * @brief Set extra word for instruction based on the operand type.
