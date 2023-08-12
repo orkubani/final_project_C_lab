@@ -20,9 +20,28 @@ typedef struct Symbol
         symbol_entry_def,
         symbol_entry_code,
         symbol_entry_data
-    };
+    }symbol_opt;
 	struct Symbol *next_symbol;
 
 } Symbol;
+
+/**
+ * @brief Create symbol Node
+ * 
+ * @param symbol_name The name of the Symbol.
+ * @param def_line The defenition line of the Symbol.
+ * @param symbol_opt The type of the symbol.
+ */
+Symbol * create_symbol(char * symbol_name, unsigned int def_line, int symbol_opt);
+
+/**
+ * @brief Inserts a new symbol into the symbol table table.
+ * 
+ * @param symbol The symbol table.
+ * @param symbol_name The name of the Symbol.
+ * @param def_line The defenition line of the Symbol.
+ * @param symbol_opt The type of the symbol.
+ */
+Symbol * insert_symbol_to_table(Symbol *symbol, char * symbol_name, unsigned int def_line, int symbol_opt);
 
 #endif /* SYMBOL_TABLE_H */
