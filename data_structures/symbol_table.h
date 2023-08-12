@@ -29,8 +29,10 @@ typedef struct Symbol
  * @param symbol_name The name of the Symbol.
  * @param def_line The defenition line of the Symbol.
  * @param symbol_opt The type of the symbol.
+ * @param address The address of the label.
+ * @return Pointer to the Symbol Node. 
  */
-Symbol * create_symbol(char * symbol_name, unsigned int def_line, int symbol_opt);
+Symbol * create_symbol(char * symbol_name, unsigned int def_line, int symbol_opt, int * address);
 
 /**
  * @brief Inserts a new symbol into the symbol table table.
@@ -39,14 +41,17 @@ Symbol * create_symbol(char * symbol_name, unsigned int def_line, int symbol_opt
  * @param symbol_name The name of the Symbol.
  * @param def_line The defenition line of the Symbol.
  * @param symbol_opt The type of the symbol.
+ * @param address The address of the label.
+ * @return Pointer to the Symbol Table.
  */
-Symbol * insert_symbol_to_table(Symbol *symbol, char * symbol_name, unsigned int def_line, int symbol_opt);
+Symbol * insert_symbol_to_table(Symbol *symbol, char * symbol_name, unsigned int def_line, int symbol_opt, int * address);
 
 /**
  * @brief Searches for a symbol with the symbol_name into the symbol table.
  * 
  * @param symbol The symbol table.
  * @param symbol_name The name of the Symbol.
+ * @return Pointer to the required Symbol or NULL if isn't exist.
  */
 Symbol * get_symbol(Symbol *symbol, char * symbol_name);
 

@@ -52,10 +52,10 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 if (temp_symbol->symbol_opt == symbol_entry_def) 
                 {
                     if (analyzed_line.analyzed_line_opt == directive)
-                        symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, symbol_entry_data);
+                        symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, symbol_entry_data, &address);
 
                     else
-                        symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, symbol_entry_code);
+                        symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, symbol_entry_code, &address);
                 }
 
                 else 
@@ -68,10 +68,10 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
             else 
             {
                 if (analyzed_line.analyzed_line_opt == directive)
-                    symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, symbol_local_data);
+                    symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, symbol_local_data, &address);
 
                 else
-                    symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, symbol_local_code);
+                    symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, symbol_local_code, &address);
             }
         }
 
@@ -132,7 +132,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 }
 
                 symbol = insert_symbol_to_table(symbol, analyzed_line.dir_or_inst.directive.dir_operand.label_name,
-                 line_index, symbol_entry_def);
+                 line_index, symbol_entry_def, &address);
 
                 line_index++;
                 continue;
@@ -150,7 +150,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 }
 
                 symbol = insert_symbol_to_table(symbol, analyzed_line.dir_or_inst.directive.dir_operand.label_name, 
-                line_index, symbol_extern_def);
+                line_index, symbol_extern_def, &address);
 
                 line_index++;
                 continue;

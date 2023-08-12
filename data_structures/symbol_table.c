@@ -4,7 +4,7 @@
 
 
 /* Creates symbol Node */
-Symbol * create_symbol(char * symbol_name, unsigned int def_line, int symbol_opt)
+Symbol * create_symbol(char * symbol_name, unsigned int def_line, int symbol_opt, int * address)
 {
     Symbol * symbol = NULL;
     symbol = (Symbol *)calloc(1, sizeof(Symbol));
@@ -16,7 +16,7 @@ Symbol * create_symbol(char * symbol_name, unsigned int def_line, int symbol_opt
 
     strcpy(symbol->symbol_name, symbol_name);
     symbol->def_line = def_line;
-    symbol->address = 0;
+    symbol->address = *address;
     symbol->symbol_opt = symbol_opt;
     symbol->next_symbol = NULL;
 
@@ -24,22 +24,22 @@ Symbol * create_symbol(char * symbol_name, unsigned int def_line, int symbol_opt
 }
 
 /* Inserts a new symbol into the symbol table table. */
-Symbol * insert_symbol_to_table(Symbol *symbol, char * symbol_name, unsigned int def_line, int symbol_opt)
+Symbol * insert_symbol_to_table(Symbol *symbol, char * symbol_name, unsigned int def_line, int symbol_opt, int * address)
 {
    if (symbol == NULL) 
    {
-        symbol = create_symbol(symbol_name, def_line, symbol_opt);
+        symbol = create_symbol(symbol_name, def_line, symbol_opt, address);
         return symbol;
    }
 
    else if (symbol->next_symbol == NULL) 
    {
-        symbol->next_symbol = create_symbol(symbol_name, def_line, symbol_opt);
+        symbol->next_symbol = create_symbol(symbol_name, def_line, symbol_opt, address);
         symbol->next_symbol->next_symbol = NULL;
         return symbol;
    } 
    
-   insert_symbol_to_table(symbol->next_symbol, symbol_name, def_line, symbol_opt);
+   insert_symbol_to_table(symbol->next_symbol, symbol_name, def_line, symbol_opt, address);
    return symbol;
 }
 
