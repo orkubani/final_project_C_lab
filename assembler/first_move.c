@@ -11,6 +11,8 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
     int i;
     char line[MAX_LINE_LENGTH] = {0}; /* Initilize line */
     Analyzed_line analyzed_line;
+    int dest_operand_i;
+    int src_operand_i;
     Compiled_Line * data_section = NULL;
     Compiled_Line * code_section = NULL;
     Compiled_Line * current_compiled_line = NULL;
@@ -76,11 +78,30 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
         else if (analyzed_line.analyzed_line_opt == instruction) 
         {
             code_section = insert_compiled_line_to_table(code_section, line_index);
+            
+            inst_word = analyzed_line.dir_or_inst.instruction.inst_opt << OPCODE_INDENTATION;
+            
+            if (analyzed_line.dir_or_inst.instruction.inst_operand_options[0] == operand_none && 
+                analyzed_line.dir_or_inst.instruction.inst_operand_options[1] == operand_none)
+            {
+                /* Do nothing */
+            } 
 
-            /* Define the instruction word */
-            inst_word = analyzed_line.dir_or_inst.instruction.inst_operand_options[DEST_OPERAND_I] << DEST_INDENTATION;
-            inst_word |= analyzed_line.dir_or_inst.instruction.inst_operand_options[SRC_OPERAND_I] << SRC_INDENTATION;
-            inst_word |= analyzed_line.dir_or_inst.instruction.inst_opt << OPCODE_INDENTATION;
+            else if (analyzed_line.dir_or_inst.instruction.inst_operand_options[0] == operand_none || 
+                     analyzed_line.dir_or_inst.instruction.inst_operand_options[1] == operand_none)
+            {
+                dest_operand_i = 0;
+                inst_word |= analyzed_line.dir_or_inst.instruction.inst_operand_options[dest_operand_i] << DEST_INDENTATION;
+            }
+
+            else 
+            {
+                dest_operand_i = 1;
+                src_operand_i = 0;
+                inst_word |= analyzed_line.dir_or_inst.instruction.inst_operand_options[dest_operand_i] << DEST_INDENTATION;
+                inst_word |= analyzed_line.dir_or_inst.instruction.inst_operand_options[src_operand_i] << SRC_INDENTATION;
+            }     
+
             
             /* Add the instruction word to the relevant compiled_line in the code_section */
             current_compiled_line = get_compiled_line(code_section, line_index);
@@ -106,7 +127,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
 
         if (data_section->num_of_words > 0)
         {
-            fprintf(output_file, "Num Of Wrods: '%d'\n",data_section->num_of_words);
+            fprintf(output_file, "Num Of Words: '%d'\n",data_section->num_of_words);
 
             for(j = 0; j < data_section->num_of_words; j++)
             {
@@ -120,7 +141,14 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
     fprintf(output_file, "\n############################ code_section ###########################\n");
     while (code_section != NULL) 
     {
-        fprintf(output_file, "%d\n",code_section->line_index);
+        fprintf(output_file, "Line Index: '%d'\n",code_section->line_index);
+        fprintf(output_file, "Num Of Words: '%d'\n",code_section->num_of_words);
+        for(j = 0; j < code_section->num_of_words; j++)
+        {
+            print_file_decimal_to_binary(code_section->words[j], output_file);
+        }
+
+        fprintf(output_file, "\n");
         code_section = code_section->next_compiled_line;
     }
 

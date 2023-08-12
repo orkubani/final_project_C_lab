@@ -7,8 +7,8 @@ Line Index: '2'
 Line Index: '10'
 
 Line Index: '13'
-Num Of Wrods: '7'
-Binary: 000001100001
+Num Of Words: '7'
+Binary: 000001100001 
 Binary: 000001100010
 Binary: 000001100011
 Binary: 000001100100
@@ -17,25 +17,52 @@ Binary: 000001100110
 Binary: 0
 
 Line Index: '14'
-Num Of Wrods: '3'
+Num Of Words: '3'
 Binary: 000000000110
 Binary: 111111110111
 Binary: 000000001111
 
 Line Index: '15'
-Num Of Wrods: '1'
+Num Of Words: '1'
 Binary: 000000010110
 
 Line Index: '16'
 
 
 ############################ code_section ###########################
-3
-4
-5
-6
-7
-8
-9
-11
-12
+Line Index: '3'
+Num Of Words: '1'
+Binary: 101000001100
+
+Line Index: '4'
+Num Of Words: '1'
+Binary: 000100101100
+
+Line Index: '5'
+Num Of Words: '1'
+Binary: 000110000100
+
+Line Index: '6'
+Num Of Words: '1'
+Binary: 000101001100
+
+Line Index: '7'
+Num Of Words: '1'
+Binary: 101001110100
+
+Line Index: '8'
+Num Of Words: '1'
+Binary: 000101001100
+
+Line Index: '9'
+Num Of Words: '1'
+Binary: 000011101100
+    
+Line Index: '11'
+Num Of Words: '1'
+Binary: 000100101100
+
+Line Index: '12'
+Num Of Words: '1'
+Binary: 000111100000
+
