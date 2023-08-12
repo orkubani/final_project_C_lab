@@ -44,31 +44,41 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
             continue;
         }
 
-        /* Compile (First Move) Directive */
-        if (analyzed_line.analyzed_line_opt == directive)
+        /* Add main label to the symbol table */
+        if (strcmp(analyzed_line.label_name, "\0") != 0)
         {
-            if (strcmp(analyzed_line.label_name, "\0") != 0)
+            temp_symbol = get_symbol(symbol, analyzed_line.label_name);
+            if (temp_symbol)
             {
-                temp_symbol = get_symbol(symbol, analyzed_line.label_name);
-                if (temp_symbol)
+                if (temp_symbol->symbol_opt == symbol_entry_def) 
                 {
-                    if (temp_symbol->symbol_opt == symbol_entry_def) 
-                    {
+                    if (analyzed_line.analyzed_line_opt == directive)
                         symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, symbol_entry_data);
-                    }
 
-                    else 
-                    {
-                        printf("Redeclaration of label: '%s'!\n", analyzed_line.label_name);
-                        assembler_error(line_index);
-                    }
+                    else
+                        symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, symbol_entry_code);
                 }
 
                 else 
                 {
-                    symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, symbol_local_data);
+                    printf("Redeclaration of label: '%s'!\n", analyzed_line.label_name);
+                    assembler_error(line_index);
                 }
             }
+
+            else 
+            {
+                if (analyzed_line.analyzed_line_opt == directive)
+                    symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, symbol_local_data);
+
+                else
+                    symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, symbol_local_code);
+            }
+        }
+
+        /* Compile (First Move) Directive */
+        if (analyzed_line.analyzed_line_opt == directive)
+        {
             /* Add directive to the data section */
             data_section = insert_compiled_line_to_table(data_section, line_index);
             current_compiled_line = get_compiled_line(data_section, line_index);
@@ -104,6 +114,26 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
             /* entry def */
             else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_entry) 
             {
+                temp_symbol = get_symbol(symbol, analyzed_line.dir_or_inst.directive.dir_operand.label_name);
+                if (temp_symbol) 
+                {
+                    if (temp_symbol->symbol_opt == symbol_local_data) 
+                    {
+                        temp_symbol->symbol_opt = symbol_entry_data;
+                    }
+
+                    else if (temp_symbol->symbol_opt == symbol_local_code) 
+                    {
+                        temp_symbol->symbol_opt = symbol_entry_code;
+                    }
+
+                    else 
+                    {
+                        printf("The entry label '%s' is already defined not as entry!", analyzed_line.dir_or_inst.directive.dir_operand.label_name);
+                        assembler_error(line_index);
+                    }
+                }
+
                 symbol = insert_symbol_to_table(symbol, analyzed_line.dir_or_inst.directive.dir_operand.label_name,
                  line_index, symbol_entry_def);
 
