@@ -128,6 +128,21 @@ Symbol type: '5'
 Symbol def_line: '10'
 Symbol address: '0'
 
+Symbol name: 'STR'
+Symbol type: '1'
+Symbol def_line: '13'
+Symbol address: '0'
+
+Symbol name: 'LENGTH'
+Symbol type: '7'
+Symbol def_line: '14'
+Symbol address: '0'
+
+Symbol name: 'K'
+Symbol type: '1'
+Symbol def_line: '15'
+Symbol address: '0'
+
 Symbol name: 'L3'
 Symbol type: '2'
 Symbol def_line: '16'

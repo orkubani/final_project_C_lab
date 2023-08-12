@@ -44,4 +44,12 @@ Symbol * create_symbol(char * symbol_name, unsigned int def_line, int symbol_opt
  */
 Symbol * insert_symbol_to_table(Symbol *symbol, char * symbol_name, unsigned int def_line, int symbol_opt);
 
+/**
+ * @brief Searches for a symbol with the symbol_name into the symbol table.
+ * 
+ * @param symbol The symbol table.
+ * @param symbol_name The name of the Symbol.
+ */
+Symbol * get_symbol(Symbol *symbol, char * symbol_name);
+
 #endif /* SYMBOL_TABLE_H */

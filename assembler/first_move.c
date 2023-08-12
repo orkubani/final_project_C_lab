@@ -22,6 +22,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
     Compiled_Line * code_section = NULL;
     Compiled_Line * current_compiled_line = NULL;
     Symbol * symbol = NULL;
+    Symbol * temp_symbol = NULL;
     int line_index = 1;
     unsigned int inst_word = 0;
 
@@ -46,6 +47,28 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
         /* Compile (First Move) Directive */
         if (analyzed_line.analyzed_line_opt == directive)
         {
+            if (strcmp(analyzed_line.label_name, "\0") != 0)
+            {
+                temp_symbol = get_symbol(symbol, analyzed_line.label_name);
+                if (temp_symbol)
+                {
+                    if (temp_symbol->symbol_opt == symbol_entry_def) 
+                    {
+                        symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, symbol_entry_data);
+                    }
+
+                    else 
+                    {
+                        /* Error */
+                        /* Could be extern or redeclaration. */
+                    }
+                }
+
+                else 
+                {
+                    symbol = insert_symbol_to_table(symbol, analyzed_line.label_name, line_index, symbol_local_data);
+                }
+            }
             /* Add directive to the data section */
             data_section = insert_compiled_line_to_table(data_section, line_index);
             current_compiled_line = get_compiled_line(data_section, line_index);

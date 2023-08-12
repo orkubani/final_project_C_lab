@@ -42,3 +42,17 @@ Symbol * insert_symbol_to_table(Symbol *symbol, char * symbol_name, unsigned int
    insert_symbol_to_table(symbol->next_symbol, symbol_name, def_line, symbol_opt);
    return symbol;
 }
+
+/* Searches for a symbol with the symbol_name into the symbol table. */
+Symbol * get_symbol(Symbol *symbol, char * symbol_name)
+{
+    while (symbol != NULL)
+    {
+        if (strcmp(symbol->symbol_name, symbol_name) == 0) 
+            return symbol;
+        
+        symbol = symbol->next_symbol;
+    }
+
+    return NULL;
+}
