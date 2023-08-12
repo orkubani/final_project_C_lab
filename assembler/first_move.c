@@ -1,6 +1,7 @@
 #include "first_move.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "../helpers/assembler_helper.h"
 
 #define DEBUG
 
@@ -85,13 +86,20 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 analyzed_line.dir_or_inst.instruction.inst_operand_options[1] == operand_none)
             {
                 /* Do nothing */
+                current_compiled_line = get_compiled_line(code_section, line_index);
+                insert_word(current_compiled_line, inst_word);
             } 
 
             else if (analyzed_line.dir_or_inst.instruction.inst_operand_options[0] == operand_none || 
                      analyzed_line.dir_or_inst.instruction.inst_operand_options[1] == operand_none)
             {
                 dest_operand_i = 0;
+
                 inst_word |= analyzed_line.dir_or_inst.instruction.inst_operand_options[dest_operand_i] << DEST_INDENTATION;
+
+                current_compiled_line = get_compiled_line(code_section, line_index);
+                insert_word(current_compiled_line, inst_word);
+                set_inst_extra_word(analyzed_line, current_compiled_line, dest_operand_i);
             }
 
             else 
@@ -100,14 +108,9 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 src_operand_i = 0;
                 inst_word |= analyzed_line.dir_or_inst.instruction.inst_operand_options[dest_operand_i] << DEST_INDENTATION;
                 inst_word |= analyzed_line.dir_or_inst.instruction.inst_operand_options[src_operand_i] << SRC_INDENTATION;
+                current_compiled_line = get_compiled_line(code_section, line_index);
+                insert_word(current_compiled_line, inst_word);
             }     
-
-            
-            /* Add the instruction word to the relevant compiled_line in the code_section */
-            current_compiled_line = get_compiled_line(code_section, line_index);
-            insert_word(current_compiled_line, inst_word);
-
-            /* Add here insertion for the extra words */
 
             line_index++;
             continue;

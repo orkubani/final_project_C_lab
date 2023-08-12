@@ -8,7 +8,7 @@ Line Index: '10'
 
 Line Index: '13'
 Num Of Words: '7'
-Binary: 000001100001 
+Binary: 000001100001
 Binary: 000001100010
 Binary: 000001100011
 Binary: 000001100100
@@ -39,8 +39,9 @@ Num Of Words: '1'
 Binary: 000100101100
 
 Line Index: '5'
-Num Of Words: '1'
+Num Of Words: '2'
 Binary: 000110000100
+Binary: 111111101100
 
 Line Index: '6'
 Num Of Words: '1'
@@ -57,7 +58,7 @@ Binary: 000101001100
 Line Index: '9'
 Num Of Words: '1'
 Binary: 000011101100
-    
+
 Line Index: '11'
 Num Of Words: '1'
 Binary: 000100101100
