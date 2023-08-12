@@ -1,12 +1,19 @@
 #ifndef COMPILED_LINE_H
 #define COMPILED_LINE_H
 
+#include "../helpers/utils.h"
 /* "Instruction" / "Directive" Compiled Line */
 typedef struct Compiled_Line /* Code section */
 {
     int line_index;
     unsigned int * words;
     int num_of_words;
+    enum
+    {
+        src_label,
+        dest_label
+    }missing_label_op_type[2];
+    char missing_label[2][MAX_LABEL_LENGTH]; /* Will be found in the second_move */
     struct Compiled_Line *next_compiled_line;
 
 }Compiled_Line;

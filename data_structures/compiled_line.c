@@ -1,6 +1,7 @@
 #include "compiled_line.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 /* Create "compiled instruction" / "compile directive" Node */
@@ -17,6 +18,8 @@ Compiled_Line * create_compiled_line(int line_index)
     compiled_inst->line_index = line_index;
     compiled_inst->words = NULL;
     compiled_inst->num_of_words = 0;
+    strcpy(compiled_inst->missing_label[0], "\0");
+    strcpy(compiled_inst->missing_label[1], "\0");
     compiled_inst->next_compiled_line = NULL;
 
     return compiled_inst;

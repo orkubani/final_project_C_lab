@@ -31,41 +31,83 @@ Line Index: '16'
 
 ############################ code_section ###########################
 Line Index: '3'
-Num Of Words: '2'
+Num Of Words: '3'
+Missing Label 1 type: '0'
+Missing Label 1 name: ''
+Missing Label 2 type: '1'
+Missing Label 2 name: 'LENGTH'
 Binary: 101000001100
 Binary: 000110000000
+Binary: 0
 
 Line Index: '4'
-Num Of Words: '1'
+Num Of Words: '2'
+Missing Label 1 type: '1'
+Missing Label 1 name: 'L1'
+Missing Label 2 type: '0'
+Missing Label 2 name: ''
 Binary: 000100101100
+Binary: 0
 
 Line Index: '5'
 Num Of Words: '2'
+Missing Label 1 type: '0'
+Missing Label 1 name: ''
+Missing Label 2 type: '0'
+Missing Label 2 name: ''
 Binary: 000110000100
 Binary: 111111101100
 
 Line Index: '6'
-Num Of Words: '1'
+Num Of Words: '2'
+Missing Label 1 type: '1'
+Missing Label 1 name: 'W'
+Missing Label 2 type: '0'
+Missing Label 2 name: ''
 Binary: 000101001100
+Binary: 0
 
 Line Index: '7'
 Num Of Words: '2'
+Missing Label 1 type: '0'
+Missing Label 1 name: ''
+Missing Label 2 type: '0'
+Missing Label 2 name: ''
 Binary: 101001110100
 Binary: 000010010000
 
 Line Index: '8'
-Num Of Words: '1'
+Num Of Words: '2'
+Missing Label 1 type: '1'
+Missing Label 1 name: 'L3'
+Missing Label 2 type: '0'
+Missing Label 2 name: ''
 Binary: 000101001100
+Binary: 0
 
 Line Index: '9'
-Num Of Words: '1'
+Num Of Words: '2'
+Missing Label 1 type: '1'
+Missing Label 1 name: 'K'
+Missing Label 2 type: '0'
+Missing Label 2 name: ''
 Binary: 000011101100
+Binary: 0
 
 Line Index: '11'
-Num Of Words: '1'
+Num Of Words: '2'
+Missing Label 1 type: '1'
+Missing Label 1 name: 'W'
+Missing Label 2 type: '0'
+Missing Label 2 name: ''
 Binary: 000100101100
+Binary: 0
 
 Line Index: '12'
 Num Of Words: '1'
+Missing Label 1 type: '0'
+Missing Label 1 name: ''
+Missing Label 2 type: '0'
+Missing Label 2 name: ''
 Binary: 000111100000
 

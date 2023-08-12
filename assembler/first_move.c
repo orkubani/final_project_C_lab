@@ -166,6 +166,10 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
     {
         fprintf(output_file, "Line Index: '%d'\n",code_section->line_index);
         fprintf(output_file, "Num Of Words: '%d'\n",code_section->num_of_words);
+        fprintf(output_file, "Missing Label 1 type: '%d'\n", code_section->missing_label_op_type[0]);
+        fprintf(output_file, "Missing Label 1 name: '%s'\n", code_section->missing_label[0]);
+        fprintf(output_file, "Missing Label 2 type: '%d'\n", code_section->missing_label_op_type[1]);
+        fprintf(output_file, "Missing Label 2 name: '%s'\n", code_section->missing_label[1]);
         for(j = 0; j < code_section->num_of_words; j++)
         {
             print_file_decimal_to_binary(code_section->words[j], output_file);
