@@ -14,6 +14,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
     Analyzed_line analyzed_line;
     int dest_operand_i;
     int src_operand_i;
+    int num_of_operands;
     Compiled_Line * data_section = NULL;
     Compiled_Line * code_section = NULL;
     Compiled_Line * current_compiled_line = NULL;
@@ -94,24 +95,25 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                      analyzed_line.dir_or_inst.instruction.inst_operand_options[1] == operand_none)
             {
                 dest_operand_i = 0;
-
+                num_of_operands = 1;
                 inst_word |= analyzed_line.dir_or_inst.instruction.inst_operand_options[dest_operand_i] << DEST_INDENTATION;
 
                 current_compiled_line = get_compiled_line(code_section, line_index);
                 insert_word(current_compiled_line, inst_word);
-                set_inst_extra_word(analyzed_line, current_compiled_line, dest_operand_i);
             }
 
             else 
             {
                 dest_operand_i = 1;
                 src_operand_i = 0;
+                num_of_operands = 2;
                 inst_word |= analyzed_line.dir_or_inst.instruction.inst_operand_options[dest_operand_i] << DEST_INDENTATION;
                 inst_word |= analyzed_line.dir_or_inst.instruction.inst_operand_options[src_operand_i] << SRC_INDENTATION;
                 current_compiled_line = get_compiled_line(code_section, line_index);
                 insert_word(current_compiled_line, inst_word);
             }     
 
+            set_inst_extra_words(analyzed_line, current_compiled_line, num_of_operands);
             line_index++;
             continue;
         }

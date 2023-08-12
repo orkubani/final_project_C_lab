@@ -31,8 +31,9 @@ Line Index: '16'
 
 ############################ code_section ###########################
 Line Index: '3'
-Num Of Words: '1'
+Num Of Words: '2'
 Binary: 101000001100
+Binary: 000110000000
 
 Line Index: '4'
 Num Of Words: '1'
@@ -48,8 +49,9 @@ Num Of Words: '1'
 Binary: 000101001100
 
 Line Index: '7'
-Num Of Words: '1'
+Num Of Words: '2'
 Binary: 101001110100
+Binary: 000010010000
 
 Line Index: '8'
 Num Of Words: '1'
