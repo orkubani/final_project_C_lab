@@ -16,13 +16,12 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
     int dest_operand_i;
     int src_operand_i;
     int num_of_operands;
-    int IC = 0;
-    int DC = 0;
     Compiled_Line * data_section = NULL;
     Compiled_Line * code_section = NULL;
     Compiled_Line * current_compiled_line = NULL;
     Symbol * symbol = NULL;
     Symbol * temp_symbol = NULL;
+    int address = BASE_ADDRESS;
     int line_index = 1;
     unsigned int inst_word = 0;
 
@@ -80,7 +79,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
         if (analyzed_line.analyzed_line_opt == directive)
         {
             /* Add directive to the data section */
-            data_section = insert_compiled_line_to_table(data_section, line_index);
+            data_section = insert_compiled_line_to_table(data_section, line_index, &address);
             current_compiled_line = get_compiled_line(data_section, line_index);
 
             /* Compile String Directive */
@@ -88,12 +87,11 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
             {
                 for (i = 0; analyzed_line.dir_or_inst.directive.dir_operand.string[i] != '\0'; i++)
                 {
-                    insert_word(current_compiled_line, analyzed_line.dir_or_inst.directive.dir_operand.string[i]);
+                    insert_word(current_compiled_line, analyzed_line.dir_or_inst.directive.dir_operand.string[i], &address);
                 }
                 
-                insert_word(current_compiled_line, '\0');
+                insert_word(current_compiled_line, '\0', &address);
 
-                DC++;
                 line_index++;
                 continue;
             }
@@ -103,10 +101,9 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
             {
                 for (i = 0; i < analyzed_line.dir_or_inst.directive.dir_operand.data.data_count; i++)
                 {
-                    insert_word(current_compiled_line, analyzed_line.dir_or_inst.directive.dir_operand.data.data[i]);
+                    insert_word(current_compiled_line, analyzed_line.dir_or_inst.directive.dir_operand.data.data[i], &address);
                 }
 
-                DC++;
                 line_index++;
                 continue;
             }
@@ -137,7 +134,6 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 symbol = insert_symbol_to_table(symbol, analyzed_line.dir_or_inst.directive.dir_operand.label_name,
                  line_index, symbol_entry_def);
 
-                DC++;
                 line_index++;
                 continue;
             }
@@ -156,7 +152,6 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 symbol = insert_symbol_to_table(symbol, analyzed_line.dir_or_inst.directive.dir_operand.label_name, 
                 line_index, symbol_extern_def);
 
-                DC++;
                 line_index++;
                 continue;
             }
@@ -173,7 +168,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
         {
             
             /* Add Instruction to the code section */
-            code_section = insert_compiled_line_to_table(code_section, line_index);
+            code_section = insert_compiled_line_to_table(code_section, line_index, &address);
             
             /* Insert the inst word to the current compiled_line in the code_section. releavnt for all instructions. */
             inst_word = analyzed_line.dir_or_inst.instruction.inst_opt << OPCODE_INDENTATION;
@@ -184,7 +179,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
             {
                 /* Do nothing */
                 current_compiled_line = get_compiled_line(code_section, line_index);
-                insert_word(current_compiled_line, inst_word);
+                insert_word(current_compiled_line, inst_word, &address);
             } 
 
             /* Single Operand. */
@@ -196,7 +191,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 inst_word |= analyzed_line.dir_or_inst.instruction.inst_operand_options[dest_operand_i] << DEST_INDENTATION;
 
                 current_compiled_line = get_compiled_line(code_section, line_index);
-                insert_word(current_compiled_line, inst_word);
+                insert_word(current_compiled_line, inst_word, &address);
             }
 
             /* Two Operands */
@@ -208,12 +203,11 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 inst_word |= analyzed_line.dir_or_inst.instruction.inst_operand_options[dest_operand_i] << DEST_INDENTATION;
                 inst_word |= analyzed_line.dir_or_inst.instruction.inst_operand_options[src_operand_i] << SRC_INDENTATION;
                 current_compiled_line = get_compiled_line(code_section, line_index);
-                insert_word(current_compiled_line, inst_word);
+                insert_word(current_compiled_line, inst_word, &address);
             }     
 
             /* Add Extra Words. */
-            set_inst_extra_words(analyzed_line, current_compiled_line, num_of_operands);
-            IC++;
+            set_inst_extra_words(analyzed_line, current_compiled_line, num_of_operands, &address);
             line_index++;
             continue;
         }
@@ -229,7 +223,8 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
     while (data_section != NULL) 
     {
         fprintf(output_file,"Line Index: '%d'\n",data_section->line_index);
-
+        fprintf(output_file, "Begin Address: '%d'\n", data_section->begin_address);
+        fprintf(output_file, "End Address: '%d'\n", data_section->end_address);
         if (data_section->num_of_words > 0)
         {
             fprintf(output_file, "Num Of Words: '%d'\n",data_section->num_of_words);
@@ -247,6 +242,8 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
     while (code_section != NULL) 
     {
         fprintf(output_file, "Line Index: '%d'\n",code_section->line_index);
+        fprintf(output_file, "Begin Address: '%d'\n", code_section->begin_address);
+        fprintf(output_file, "End Address: '%d'\n", code_section->end_address);
         fprintf(output_file, "Num Of Words: '%d'\n",code_section->num_of_words);
         fprintf(output_file, "Missing Label 1 type: '%d'\n", code_section->missing_label_op_type[0]);
         fprintf(output_file, "Missing Label 1 name: '%s'\n", code_section->missing_label[0]);

@@ -1,12 +1,20 @@
 
 ############################ data_section ###########################
 Line Index: '1'
+Begin Address: '100'
+End Address: '100'
 
 Line Index: '2'
+Begin Address: '100'
+End Address: '100'
 
 Line Index: '10'
+Begin Address: '115'
+End Address: '115'
 
 Line Index: '13'
+Begin Address: '118'
+End Address: '124'
 Num Of Words: '7'
 Binary: 000001100001
 Binary: 000001100010
@@ -17,20 +25,28 @@ Binary: 000001100110
 Binary: 0
 
 Line Index: '14'
+Begin Address: '125'
+End Address: '127'
 Num Of Words: '3'
 Binary: 000000000110
 Binary: 111111110111
 Binary: 000000001111
 
 Line Index: '15'
+Begin Address: '128'
+End Address: '128'
 Num Of Words: '1'
 Binary: 000000010110
 
 Line Index: '16'
+Begin Address: '129'
+End Address: '129'
 
 
 ############################ code_section ###########################
 Line Index: '3'
+Begin Address: '100'
+End Address: '102'
 Num Of Words: '3'
 Missing Label 1 type: '0'
 Missing Label 1 name: ''
@@ -41,6 +57,8 @@ Binary: 000110000000
 Binary: 0
 
 Line Index: '4'
+Begin Address: '103'
+End Address: '104'
 Num Of Words: '2'
 Missing Label 1 type: '1'
 Missing Label 1 name: 'L1'
@@ -50,6 +68,8 @@ Binary: 000100101100
 Binary: 0
 
 Line Index: '5'
+Begin Address: '105'
+End Address: '106'
 Num Of Words: '2'
 Missing Label 1 type: '0'
 Missing Label 1 name: ''
@@ -59,6 +79,8 @@ Binary: 000110000100
 Binary: 111111101100
 
 Line Index: '6'
+Begin Address: '107'
+End Address: '108'
 Num Of Words: '2'
 Missing Label 1 type: '1'
 Missing Label 1 name: 'W'
@@ -68,6 +90,8 @@ Binary: 000101001100
 Binary: 0
 
 Line Index: '7'
+Begin Address: '109'
+End Address: '110'
 Num Of Words: '2'
 Missing Label 1 type: '0'
 Missing Label 1 name: ''
@@ -77,6 +101,8 @@ Binary: 101001110100
 Binary: 000010010000
 
 Line Index: '8'
+Begin Address: '111'
+End Address: '112'
 Num Of Words: '2'
 Missing Label 1 type: '1'
 Missing Label 1 name: 'L3'
@@ -86,6 +112,8 @@ Binary: 000101001100
 Binary: 0
 
 Line Index: '9'
+Begin Address: '113'
+End Address: '114'
 Num Of Words: '2'
 Missing Label 1 type: '1'
 Missing Label 1 name: 'K'
@@ -95,6 +123,8 @@ Binary: 000011101100
 Binary: 0
 
 Line Index: '11'
+Begin Address: '115'
+End Address: '116'
 Num Of Words: '2'
 Missing Label 1 type: '1'
 Missing Label 1 name: 'W'
@@ -104,6 +134,8 @@ Binary: 000100101100
 Binary: 0
 
 Line Index: '12'
+Begin Address: '117'
+End Address: '117'
 Num Of Words: '1'
 Missing Label 1 type: '0'
 Missing Label 1 name: ''
