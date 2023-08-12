@@ -14,8 +14,6 @@ typedef struct Symbol
         symbol_local_data,
 
         symbol_extern_def,
-        symbol_extern_code,
-        symbol_extern_data,
 
         symbol_entry_def,
         symbol_entry_code,

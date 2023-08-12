@@ -114,7 +114,7 @@ Binary: 000111100000
 
 ############################ symbol_table ###########################
 Symbol name: 'LENGTH'
-Symbol type: '5'
+Symbol type: '3'
 Symbol def_line: '1'
 Symbol address: '0'
 
@@ -129,7 +129,7 @@ Symbol def_line: '3'
 Symbol address: '0'
 
 Symbol name: 'LOOP'
-Symbol type: '6'
+Symbol type: '4'
 Symbol def_line: '4'
 Symbol address: '0'
 
@@ -139,7 +139,7 @@ Symbol def_line: '9'
 Symbol address: '0'
 
 Symbol name: 'LOOP'
-Symbol type: '5'
+Symbol type: '3'
 Symbol def_line: '10'
 Symbol address: '0'
 
@@ -154,7 +154,7 @@ Symbol def_line: '13'
 Symbol address: '0'
 
 Symbol name: 'LENGTH'
-Symbol type: '7'
+Symbol type: '5'
 Symbol def_line: '14'
 Symbol address: '0'
 
