@@ -15,6 +15,8 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
     int dest_operand_i;
     int src_operand_i;
     int num_of_operands;
+    int IC = 0;
+    int DC = 0;
     Compiled_Line * data_section = NULL;
     Compiled_Line * code_section = NULL;
     Compiled_Line * current_compiled_line = NULL;
@@ -58,6 +60,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                 
                 insert_word(current_compiled_line, '\0');
 
+                DC++;
                 line_index++;
                 continue;
             }
@@ -70,6 +73,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
                     insert_word(current_compiled_line, analyzed_line.dir_or_inst.directive.dir_operand.data.data[i]);
                 }
 
+                DC++;
                 line_index++;
                 continue;
             }
@@ -85,6 +89,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
         /* Compile (First Move) Instruction */
         else if (analyzed_line.analyzed_line_opt == instruction) 
         {
+            
             /* Add Instruction to the code section */
             code_section = insert_compiled_line_to_table(code_section, line_index);
             
@@ -126,6 +131,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
 
             /* Add Extra Words. */
             set_inst_extra_words(analyzed_line, current_compiled_line, num_of_operands);
+            IC++;
             line_index++;
             continue;
         }
