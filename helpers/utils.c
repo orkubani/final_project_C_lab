@@ -84,3 +84,79 @@ int str_to_int(const char *str)
     else 
         return num;
 }
+
+/* Print to the terminal a deciaml number in a binary base. */
+void print_terminal_decimal_to_binary(int decimal)
+{
+    int binary[12];
+    int i;
+    int index = 0;
+
+    if (decimal == 0)
+    {
+        printf("Binary: 0\n");
+        return;
+    }
+
+    if (decimal < 0)
+    {
+        printf("Binary: ");
+        decimal = (1 << 31) + decimal;
+    }
+
+    else
+    {
+        printf("Binary: ");
+    }
+
+    while (index < 12)
+    {
+        binary[index++] = decimal % 2;
+        decimal /= 2;
+    }
+
+    for (i = 11; i >= 0; i--)
+    {
+        printf("%d", binary[i]);
+    }
+
+    printf("\n");
+}
+
+/* Print to an output file a deciaml number in a binary base. */
+void print_file_decimal_to_binary(int decimal, FILE * output_file)
+{
+    int binary[12];
+    int i;
+    int index = 0;
+
+    if (decimal == 0)
+    {
+        fprintf(output_file, "Binary: 0\n");
+        return;
+    }
+
+    if (decimal < 0)
+    {
+        fprintf(output_file, "Binary: ");
+        decimal = (1 << 31) + decimal;
+    }
+
+    else
+    {
+        fprintf(output_file, "Binary: ");
+    }
+
+    while (index < 12)
+    {
+        binary[index++] = decimal % 2;
+        decimal /= 2;
+    }
+
+    for (i = 11; i >= 0; i--)
+    {
+        fprintf(output_file ,"%d", binary[i]);
+    }
+
+    fprintf(output_file, "\n");
+}

@@ -1,6 +1,7 @@
 #ifndef UTILS
 #define UTILS
 
+#include <stdio.h>
 #define COMMENT_PREFIX ';'
 #define MAX_LINE_LENGTH 81
 #define MAX_FILE_NAME_LENGTH 200
@@ -56,5 +57,20 @@ int is_integer(const char *str);
  * @return The number as an int
  */
 int str_to_int(const char *str); 
+
+/**
+ * @brief Print to the terminal a deciaml number in a binary base.
+ * 
+ * @param decimal int Decimal number to print in binary base.
+ */
+void print_terminal_decimal_to_binary(int decimal); 
+
+/**
+ * @brief Print to an output file a deciaml number in a binary base.
+ * 
+ * @param decimal int Decimal number to print in binary base.
+ * @param output_file File to print to.
+ */
+void print_file_decimal_to_binary(int decimal, FILE * output_file);
 
 #endif /* UTILS */

@@ -2,9 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define DEBUG
+
 /* First move on the am_file. */
 int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_filename)
 {
+    int j;
     int i;
     char line[MAX_LINE_LENGTH] = {0}; /* Initilize line */
     Analyzed_line analyzed_line;
@@ -13,6 +16,12 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
     Compiled_Line * current_compiled_line = NULL;
     int line_index = 1;
     unsigned int inst_word = 0;
+
+    #ifdef DEBUG
+    char * output_filename = "/mnt/c/Or_Kubani_Openu_CS/2023B/maabada_20476/final_project_C_lab/tests/first_move/first_move_output.txt";
+    FILE * output_file;
+    output_file = fopen(output_filename, "w");
+    #endif
 
     while (fgets(line, sizeof(line), am_file)) 
     {
@@ -88,6 +97,37 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
         return FALSE;
     } 
 
+    #ifdef DEBUG
+
+    fprintf(output_file, "\n############################ data_section ###########################\n");
+    while (data_section != NULL) 
+    {
+        fprintf(output_file,"Line Index: '%d'\n",data_section->line_index);
+
+        if (data_section->num_of_words > 0)
+        {
+            fprintf(output_file, "Num Of Wrods: '%d'\n",data_section->num_of_words);
+
+            for(j = 0; j < data_section->num_of_words; j++)
+            {
+                print_file_decimal_to_binary(data_section->words[j], output_file);
+            }   
+        }
+        fprintf(output_file, "\n");
+        data_section = data_section->next_compiled_line;
+    }
+
+    fprintf(output_file, "\n############################ code_section ###########################\n");
+    while (code_section != NULL) 
+    {
+        fprintf(output_file, "%d\n",code_section->line_index);
+        code_section = code_section->next_compiled_line;
+    }
+
+    fclose(output_file);
+    #endif
+
+    free_compiled_line_table(data_section);
     free_compiled_line_table(code_section);
     return TRUE;
 }
