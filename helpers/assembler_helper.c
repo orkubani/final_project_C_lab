@@ -1,5 +1,9 @@
 #include "assembler_helper.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+
+
 
 /* Set extra word for instruction based on the operand type. */
 void set_inst_extra_words(Analyzed_line analyzed_line, Compiled_Line * compiled_line, int num_of_operands)
@@ -60,4 +64,18 @@ void set_inst_extra_words(Analyzed_line analyzed_line, Compiled_Line * compiled_
     }
 
     return;
+}
+
+/* generate assembler warning */
+void assembler_warning(int line_index)
+{
+    printf("WARNING! Line Number '%d':\n", line_index);
+    return;
+}
+
+/* generate assembler error */
+void assembler_error(int line_index)
+{
+    printf("Error! Exit in Line Number '%d'\n", line_index);
+    exit(0);
 }

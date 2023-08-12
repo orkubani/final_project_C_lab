@@ -59,8 +59,8 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
 
                     else 
                     {
-                        /* Error */
-                        /* Could be extern or redeclaration. */
+                        printf("Redeclaration of label: '%s'!\n", analyzed_line.label_name);
+                        assembler_error(line_index);
                     }
                 }
 
