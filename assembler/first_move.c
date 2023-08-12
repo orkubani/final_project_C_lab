@@ -129,7 +129,7 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
 
                     else 
                     {
-                        printf("The entry label '%s' is already defined not as entry!", analyzed_line.dir_or_inst.directive.dir_operand.label_name);
+                        printf("Try to define entry label '%s' but found the same label as extern!\n", analyzed_line.dir_or_inst.directive.dir_operand.label_name);
                         assembler_error(line_index);
                     }
                 }
@@ -145,6 +145,14 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
             /* extern def */
             else if (analyzed_line.dir_or_inst.directive.dir_opt == dir_extern)
             {
+                
+                temp_symbol = get_symbol(symbol, analyzed_line.dir_or_inst.directive.dir_operand.label_name);
+                if (temp_symbol) 
+                {
+                    printf("Recleration of the extern label '%s' in line '%d'\n", analyzed_line.dir_or_inst.directive.dir_operand.label_name, temp_symbol->def_line);
+                    assembler_error(line_index);
+                }
+
                 symbol = insert_symbol_to_table(symbol, analyzed_line.dir_or_inst.directive.dir_operand.label_name, 
                 line_index, symbol_extern_def);
 
