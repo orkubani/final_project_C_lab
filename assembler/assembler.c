@@ -7,7 +7,7 @@
 #define DEBUG
 
 /* First move on the am_file. */
-int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_filename)
+int first_move(FILE * am_file, const char * am_filename)
 {
     int j;
     int i;
@@ -213,6 +213,9 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
         }
 
         /* First Move failed */
+        free_symbol_table(symbol);
+        free_compiled_line_table(data_section);
+        free_compiled_line_table(code_section);
         line_index++;
         return FALSE;
     } 
@@ -273,8 +276,5 @@ int first_move(FILE * am_file/*, Object_File * object_file*/, const char * am_fi
     fclose(output_file);
     #endif
 
-    /* Add here free symbol */
-    free_compiled_line_table(data_section);
-    free_compiled_line_table(code_section);
     return TRUE;
 }
