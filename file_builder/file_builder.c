@@ -49,3 +49,41 @@ void build_extern_file(char * extern_filename, Symbol * extern_table)
 
     fclose(extern_file);
 }
+
+/* Get the compiled code_section and data_section adn build an '.ob' file from on them. */
+void build_ob_file(char * ob_filename, Compiled_Line * code_section, Compiled_Line * data_section)
+{
+    FILE * ob_file;
+    int i;
+
+    ob_filename = strcat(ob_filename, DOT_OB_SUFFIX);
+    ob_file = fopen(ob_filename, "w");
+
+    if (ob_file == NULL) 
+    {
+        printf("Failed to open ob_file\n");
+        return;
+    }
+
+    while (code_section != NULL) 
+    {
+        for (i = 0; i < code_section->num_of_words; i++)
+        {
+            print_file_decimal_to_base64(code_section->words[i], ob_file);
+        }
+
+        code_section = code_section->next_compiled_line;
+    }
+
+    while (data_section != NULL) 
+    {
+        for (i = 0; i < data_section->num_of_words; i++)
+        {
+            print_file_decimal_to_base64(data_section->words[i], ob_file);
+        }
+
+        data_section = data_section->next_compiled_line;
+    }
+
+    fclose(ob_file);
+}

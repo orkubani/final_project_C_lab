@@ -168,13 +168,13 @@ void print_file_decimal_to_base64(int decimal, FILE *output_file)
 
     if (decimal >= 0) 
     {
-        fprintf(output_file, "Custom Base64: %c%c\n", base64_chars[decimal / 64], base64_chars[decimal % 64]);
+        fprintf(output_file, "%c%c\n", base64_chars[decimal / 64], base64_chars[decimal % 64]);
     } 
     
     else if (decimal < 0) 
     {
         decimal = -decimal;
-        fprintf(output_file, "Custom Base64: -%c%c\n", base64_chars[decimal / 64], base64_chars[decimal % 64]);
+        fprintf(output_file, "-%c%c\n", base64_chars[decimal / 64], base64_chars[decimal % 64]);
     }
     
 }

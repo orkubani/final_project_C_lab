@@ -24,4 +24,13 @@ void build_entry_file(char * entry_filename, Symbol * entry_table);
  */
 void build_extern_file(char * extern_filename, Symbol * extern_table);
 
+/**
+ * @brief Get the compiled code_section and data_section adn build an '.ob' file from on them.
+ * 
+ * @param ob_filename The am_filename without the '.am' suffix.
+ * @param code_section Table with all the address where extern symbols are called.
+ * @param data_section The am_filename without the '.am' suffix.
+ */
+void build_ob_file(char * ob_filename, Compiled_Line * code_section, Compiled_Line * data_section);
+
 #endif /* FILE_BUILDER_H */

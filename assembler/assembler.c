@@ -4,7 +4,7 @@
 #include <string.h>
 #include "../helpers/assembler_helper.h"
 #include "../file_builder/file_builder.h"
-#define DEBUG
+
 
 /* First move on the am_file. */
 Object_File first_move(FILE * am_file, const char * am_filename)
@@ -272,6 +272,7 @@ int assembler(FILE * am_file, const char * am_filename)
     Object_File object_file;
     char entry_filename[MAX_FILE_NAME_LENGTH] = {0};
     char extern_filename[MAX_FILE_NAME_LENGTH] = {0};
+    char ob_filename[MAX_FILE_NAME_LENGTH] = {0};
 
     #ifdef DEBUG
     FILE * output_file;
@@ -294,6 +295,9 @@ int assembler(FILE * am_file, const char * am_filename)
         remove_suffix(am_filename, extern_filename, DOT_AM_SUFFIX);
         build_extern_file(extern_filename, object_file.extern_calls);
     }
+    
+    remove_suffix(am_filename, ob_filename, DOT_OB_SUFFIX);
+    build_ob_file(ob_filename, object_file.code_section, object_file.data_section);
 
     #ifdef DEBUG
     fprintf(output_file, "\n############################ data_section ###########################\n");
