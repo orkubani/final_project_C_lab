@@ -19,8 +19,7 @@ int main(int argc, char **argv)
         am_file = fopen(am_filename, "r");
         if (am_file) 
         {
-            first_move(am_file, am_filename);
-            /* Implement compilation here */
+            assembler(am_file, am_filename);
         }
     }
 

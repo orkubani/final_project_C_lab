@@ -7,9 +7,8 @@
 #define DEBUG
 
 /* First move on the am_file. */
-int first_move(FILE * am_file, const char * am_filename)
+Object_File first_move(FILE * am_file, const char * am_filename)
 {
-    int j;
     int i;
     char line[MAX_LINE_LENGTH] = {0}; /* Initilize line */
     Analyzed_line analyzed_line;
@@ -22,17 +21,10 @@ int first_move(FILE * am_file, const char * am_filename)
     Symbol * symbol = NULL;
     Symbol * temp_symbol = NULL;
     Symbol * entry_calls = NULL;
-    Symbol * extern_calls = NULL;
     Object_File object_file;
     unsigned int address = BASE_ADDRESS;
     int line_index = 1;
     unsigned int inst_word = 0;
-
-    #ifdef DEBUG
-    char * output_filename = "/mnt/c/Or_Kubani_Openu_CS/2023B/maabada_20476/final_project_C_lab/tests/first_move/first_move_output.txt";
-    FILE * output_file;
-    output_file = fopen(output_filename, "w");
-    #endif
 
     while (fgets(line, sizeof(line), am_file)) 
     {
@@ -222,7 +214,24 @@ int first_move(FILE * am_file, const char * am_filename)
     object_file.symbol_table = symbol;
     object_file.entry_calls = entry_calls;
 
+    return object_file;
+}
+
+Object_File second_move(FILE * am_file, const char * am_filename, Object_File * object_file)
+{
+    return *object_file;
+}
+
+int assembler(FILE * am_file, const char * am_filename)
+{
+    Object_File object_file;
+    object_file = first_move(am_file, am_filename);
+    
     #ifdef DEBUG
+    char * output_filename = "/mnt/c/Or_Kubani_Openu_CS/2023B/maabada_20476/final_project_C_lab/tests/first_move/first_move_output.txt";
+    FILE * output_file;
+    int j;
+    output_file = fopen(output_filename, "w");
 
     fprintf(output_file, "\n############################ data_section ###########################\n");
     while (object_file.data_section != NULL) 
@@ -275,17 +284,17 @@ int first_move(FILE * am_file, const char * am_filename)
         fprintf(output_file, "\n");
         object_file.symbol_table = object_file.symbol_table->next_symbol;
     }
-    
+
     fclose(output_file);
     #endif
 
-    /* First Move failed */
-    free_symbol_table(symbol);
-    free_compiled_line_table(data_section);
-    free_compiled_line_table(code_section);
-    line_index++;
-    return FALSE;
-    
+    /* Second Move */
+
+    /* Backend */
+
+    free_symbol_table(object_file.symbol_table);
+    free_compiled_line_table(object_file.data_section);
+    free_compiled_line_table(object_file.code_section);
 
     return TRUE;
 }

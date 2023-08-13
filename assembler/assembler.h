@@ -30,11 +30,30 @@ typedef struct Object_File
  * @brief First move on the am_file.
  * 
  * @param am_file Pointer to the am_file.
- * @param object_file Pointer to a struct thats hold the relevant data for the object file.
  * @param am_filename The am filename.
  *
- * @return TRUE (1) if there are no errors, FALSE (0) if there are errors and the process failed
+ * @return Struct that contains: Symbol table, code_section, data_section, entry_table.
  */
-int first_move(FILE * am_file, /*, Object_File * object_file*/ const char * am_filename);
+Object_File first_move(FILE * am_file, const char * am_filename);
+
+/**
+ * @brief Second move to complete all the relvant data to create the following files: '.ob' .ent' '.ext'.
+ * 
+ * @param am_file Pointer to the am_file.
+ * @param am_filename The am filename.
+ * @param object_file Pointer to a struct with: Symbol table, code_section, data_section, entry_table.
+ *
+ * @return Struct with all the required information to create the following files: '.ob' .ent' '.ext'.
+ */
+Object_File second_move(FILE * am_file, const char * am_filename, Object_File * object_file);
+
+/**
+ * @brief Calls to the first and the second moves and calls to the releavnt methods to create the following files: '.ob' .ent' '.ext'.
+ * 
+ * @param am_file Pointer to the am_file.
+ * @param am_filename The am filename.
+ * @return True (1) pass / False (0) failed
+ */
+int assembler(FILE * am_file, const char * am_filename);
 
 #endif /* ASSEMBLER_H */
