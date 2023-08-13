@@ -43,7 +43,6 @@ Missing Label 2 name: 'LENGTH'
 Binary: 101000001100
 Binary: 000110000000
 Binary: 000111110110
-        000111110110
 
 Line Index: '4'
 Begin Address: '103'
@@ -55,7 +54,6 @@ Missing Label 2 type: '0'
 Missing Label 2 name: ''
 Binary: 000100101100
 Binary: 000111000110
-        000111000110
 
 Line Index: '5'
 Begin Address: '105'
@@ -78,7 +76,6 @@ Missing Label 2 type: '0'
 Missing Label 2 name: ''
 Binary: 000101001100
 Binary: 000000000001
-        000000000001
 
 Line Index: '7'
 Begin Address: '109'
@@ -101,8 +98,6 @@ Missing Label 2 type: '0'
 Missing Label 2 name: ''
 Binary: 000101001100
 Binary: 000000000001
-        000000000001
-
 
 Line Index: '9'
 Begin Address: '113'
@@ -114,7 +109,6 @@ Missing Label 2 type: '0'
 Missing Label 2 name: ''
 Binary: 000011101100
 Binary: 001000000010
-        001000000010
 
 Line Index: '11'
 Begin Address: '115'
@@ -126,7 +120,6 @@ Missing Label 2 type: '0'
 Missing Label 2 name: ''
 Binary: 000100101100
 Binary: 000000000001
-        000000000001
 
 Line Index: '12'
 Begin Address: '117'
@@ -195,3 +188,22 @@ Symbol type: '2'
 Symbol def_line: '16'
 Symbol address: '1'
 
+
+############################ entry_calls ###########################
+Symbol name: 'LOOP'
+Symbol address: '103'
+ 
+Symbol name: 'LENGTH'
+Symbol address: '125'
+ 
+
+############################ extern_calls ###########################
+Symbol name: 'W'
+Symbol address: '108'
+ 
+Symbol name: 'L3'
+Symbol address: '112'
+ 
+Symbol name: 'W'
+Symbol address: '116'
+ 

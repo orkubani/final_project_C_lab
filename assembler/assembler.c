@@ -223,8 +223,8 @@ Object_File second_move(Object_File object_file)
 {
     int i;
     Object_File temp = object_file;
-    Symbol * extern_calls;
-    Symbol * temp_symbol;
+    Symbol * extern_calls = NULL;
+    Symbol * temp_symbol = NULL;
 
     while (object_file.code_section != NULL) 
     {
@@ -242,7 +242,7 @@ Object_File second_move(Object_File object_file)
 
                 if (temp_symbol->symbol_opt == symbol_extern_def)
                 {
-                    extern_calls = insert_symbol_to_table(temp_symbol, object_file.code_section->missing_label[i], object_file.code_section->line_index, symbol_extern_def, &(object_file.code_section->begin_address));
+                    extern_calls = insert_symbol_to_table(extern_calls, object_file.code_section->missing_label[i], object_file.code_section->line_index, symbol_extern_def, &(object_file.code_section->begin_address) + 1);
                 }   
                  
                 current_address = get_symbol_def_address(object_file.symbol_table, object_file.code_section->missing_label[i]); 
