@@ -171,10 +171,29 @@ void print_file_decimal_to_base64(int decimal, FILE *output_file)
         fprintf(output_file, "%c%c\n", base64_chars[decimal / 64], base64_chars[decimal % 64]);
     } 
     
-    else if (decimal < 0) 
+    /* If negative num, first covert to binary and handle seperatly the LSB and the MSB */
+    else if (decimal < 0)
     {
-        decimal = -decimal;
-        fprintf(output_file, "-%c%c\n", base64_chars[decimal / 64], base64_chars[decimal % 64]);
+        int binary[12];
+        int i;
+        int index = 0;
+        int lsb = 0;
+        int msb = 0;
+        decimal = (1 << 31) + decimal;
+        while (index < 12)
+        {
+            binary[index++] = decimal % 2;
+            decimal /= 2;
+        }
+        for (i = 5; i >= 0; i--)
+        {
+            lsb = (lsb << 1) | binary[i];
+        }
+        for (i = 11; i >= 6; i--)
+        {
+            msb = (msb << 1) | binary[i];
+        }
+        fprintf(output_file, "%c%c\n", base64_chars[msb], base64_chars[lsb]);
     }
     
 }
