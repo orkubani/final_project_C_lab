@@ -4,8 +4,6 @@
 #include <string.h>
 #include "../helpers/assembler_helper.h"
 
-#define DEBUG
-
 /* First move on the am_file. */
 Object_File first_move(FILE * am_file, const char * am_filename)
 {
