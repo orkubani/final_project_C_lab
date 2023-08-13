@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../helpers/assembler_helper.h"
+#include "../file_builder/file_builder.h"
 
 /* First move on the am_file. */
 Object_File first_move(FILE * am_file, const char * am_filename)
@@ -268,6 +269,8 @@ int assembler(FILE * am_file, const char * am_filename)
 {
     
     Object_File object_file;
+    char entry_filename[MAX_FILE_NAME_LENGTH] = {0};
+    char extern_filename[MAX_FILE_NAME_LENGTH] = {0};
 
     #ifdef DEBUG
     FILE * output_file;
@@ -278,6 +281,18 @@ int assembler(FILE * am_file, const char * am_filename)
 
     object_file = first_move(am_file, am_filename);
     object_file = second_move(object_file); /* Fix the symbols' addresses and build extern_calls table. */
+
+    if (object_file.entry_calls != NULL)
+    {
+        remove_suffix(am_filename, entry_filename, DOT_AM_SUFFIX);
+        build_entry_file(entry_filename, object_file.entry_calls);
+    }
+
+    if(object_file.extern_calls != NULL)
+    {
+        remove_suffix(am_filename, extern_filename, DOT_AM_SUFFIX);
+        build_extern_file(extern_filename, object_file.extern_calls);
+    }
 
     #ifdef DEBUG
     fprintf(output_file, "\n############################ data_section ###########################\n");

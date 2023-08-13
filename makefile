@@ -13,7 +13,7 @@ endif
 
 all: build_dir $(PROG_NAME)
 
-$(PROG_NAME): build_dir main.o preprocessor.o macro_table.o utils.o analyzer_helper.o analyzer.o compiled_line.o assembler_helper.o assembler.o symbol_table.o
+$(PROG_NAME): build_dir main.o preprocessor.o macro_table.o utils.o analyzer_helper.o analyzer.o compiled_line.o assembler_helper.o assembler.o symbol_table.o file_builder.o
 	$(CC) $(CFLAGS) $(OBJ_DIR)/*.o -o $(BIN_DIR)/$@
 
 main.o: main.c preprocessor/preprocessor.h preprocessor/macro_table.h \
@@ -29,10 +29,11 @@ analyzer.o: analyzer/analyzer.c analyzer/analyzer.h \
 compiled_line.o: data_structures/compiled_line.c data_structures/compiled_line.h
 assembler_helper.o: helpers/assembler_helper.c helpers/assembler_helper.h 
 symbol_table.o: data_structures/symbol_table.c data_structures/symbol_table.h
+file_builder.o: file_builder/file_builder.c file_builder/file_builder.h
 assembler.o: assembler/assembler.c assembler/assembler.h \
  assembler/../helpers/utils.h assembler/../helpers/analyzer_helper.h \
  assembler/../analyzer/analyzer.h assembler/../data_structures/compiled_line.h assembler/../helpers/assembler_helper.h \
- assembler/../data_structures/symbol_table.h
+ assembler/../data_structures/symbol_table.h assembler/../file_builder/file_builder.h
 
 %.o:
 	$(CC) $(CFLAGS) -c $< -o $(OBJ_DIR)/$@

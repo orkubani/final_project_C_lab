@@ -12,6 +12,8 @@
 #define TRUE 1
 #define FALSE 0
 
+#define DOT_AM_SUFFIX ".am"
+
 #define SYNTAX_ERROR -2
 #define INVALID_VALUE -3
 
@@ -72,5 +74,14 @@ void print_terminal_decimal_to_binary(int decimal);
  * @param output_file File to print to.
  */
 void print_file_decimal_to_binary(int decimal, FILE * output_file);
+
+/**
+ * @brief Remove a filename suffix.
+ * 
+ * @param src_filename original filename with the suffix.
+ * @param dest_filename The new filename without the suffix.
+ * @param suffix The suffix to remove.
+ */
+void remove_suffix(const char* src_filename, char* dest_filename, const char* suffix); 
 
 #endif /* UTILS */

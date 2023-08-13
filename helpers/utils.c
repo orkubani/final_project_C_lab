@@ -160,3 +160,11 @@ void print_file_decimal_to_binary(int decimal, FILE * output_file)
 
     fprintf(output_file, "\n");
 }
+
+/* Remove a filename suffix */
+void remove_suffix(const char* src_filename, char* dest_filename, const char* suffix) 
+{
+    int src_len = strlen(src_filename);
+    int suffix_len = strlen(suffix);
+    strncpy(dest_filename, src_filename, src_len - suffix_len);
+}
