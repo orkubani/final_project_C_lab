@@ -3,6 +3,10 @@
 
 #include "../helpers/utils.h"
 
+#define ARE_INDENTATION 2
+#define ARE_EXTERN 1 /* 0B01*/
+#define ARE_NEW 2 /* 0B10 */
+
 typedef struct Symbol
 {
 	char symbol_name[MAX_LABEL_LENGTH];
@@ -54,6 +58,15 @@ Symbol * insert_symbol_to_table(Symbol *symbol, char * symbol_name, unsigned int
  * @return Pointer to the required Symbol or NULL if isn't exist.
  */
 Symbol * get_symbol(Symbol *symbol, char * symbol_name);
+
+/**
+ * @brief Searches for a symbol in the symbol table and returns the symbol's address if the symbol was declared.
+ * 
+ * @param symbol The symbol table.
+ * @param symbol_name The name of the Symbol.
+ * @return Address for the symbol if declared. Otherwisw returns 0.
+ */
+unsigned int get_symbol_def_address(Symbol *symbol, char * symbol_name);
 
 /**
  * @brief Get "entry" symbols that are using as a start point.

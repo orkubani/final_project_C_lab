@@ -57,6 +57,34 @@ Symbol * get_symbol(Symbol *symbol, char * symbol_name)
     return NULL;
 }
 
+/* Searches for a symbol in the symbol table and returns the symbol's address if the symbol was declared. */
+unsigned int get_symbol_def_address(Symbol *symbol, char * symbol_name)
+{
+    while (symbol != NULL)
+    {
+        if (strcmp(symbol->symbol_name, symbol_name) == 0)
+        {
+            if (symbol->symbol_opt == symbol_extern_def) 
+            {
+                symbol->address = 0;
+                symbol->address |= ARE_EXTERN;
+                return symbol->address;
+            }
+
+            else if(symbol->symbol_opt != symbol_entry_def)
+            {
+                symbol->address = symbol->address << ARE_INDENTATION;
+                symbol->address |= ARE_NEW;
+                return symbol->address;
+            }
+        }
+         
+        symbol = symbol->next_symbol;
+    }
+
+    return FALSE;
+}
+
 /* Get "entry" symbols that are using as a start point. */
 Symbol * get_entry_calls(Symbol * symbol_table, Symbol * entry_calls)
 {

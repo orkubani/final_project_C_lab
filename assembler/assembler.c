@@ -226,6 +226,7 @@ Object_File second_move(Object_File object_file)
 
     while (object_file.code_section != NULL) 
     {
+        unsigned int current_address = 0;
         Compiled_Line * original_current_line = NULL;
 
         /* Index '0' of words is the instruction word. Thats why 'num_of_words - 1'. */
@@ -234,7 +235,14 @@ Object_File second_move(Object_File object_file)
             if (strcmp(object_file.code_section->missing_label[i], "\0") != 0)
             {
                 original_current_line = get_compiled_line(temp.code_section, object_file.code_section->line_index);
-                original_current_line->words[i + 1] = 1234; /* Index '0' of words is the instruction word. Thats why 'i + 1'*/
+                current_address = get_symbol_def_address(object_file.symbol_table, object_file.code_section->missing_label[i]); 
+                if (current_address == 0) 
+                {
+                    printf("Can't find the address of the label: '%s' in the Symbol Table\n", object_file.code_section->missing_label[i]);
+                    assembler_error(temp.code_section->line_index);
+                }
+
+                original_current_line->words[i + 1] = current_address; /* Index '0' of words is the instruction word. Thats why 'i + 1'*/
             }
         }
 

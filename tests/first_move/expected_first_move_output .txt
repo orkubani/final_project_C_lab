@@ -42,7 +42,8 @@ Missing Label 2 type: '1'
 Missing Label 2 name: 'LENGTH'
 Binary: 101000001100
 Binary: 000110000000
-Binary: 0
+Binary: 000111110110
+        000111110110
 
 Line Index: '4'
 Begin Address: '103'
@@ -53,7 +54,8 @@ Missing Label 1 name: 'L1'
 Missing Label 2 type: '0'
 Missing Label 2 name: ''
 Binary: 000100101100
-Binary: 0
+Binary: 000111000110
+        000111000110
 
 Line Index: '5'
 Begin Address: '105'
@@ -75,7 +77,8 @@ Missing Label 1 name: 'W'
 Missing Label 2 type: '0'
 Missing Label 2 name: ''
 Binary: 000101001100
-Binary: 0
+Binary: 000000000001
+        000000000001
 
 Line Index: '7'
 Begin Address: '109'
@@ -97,7 +100,9 @@ Missing Label 1 name: 'L3'
 Missing Label 2 type: '0'
 Missing Label 2 name: ''
 Binary: 000101001100
-Binary: 0
+Binary: 000000000001
+        000000000001
+
 
 Line Index: '9'
 Begin Address: '113'
@@ -108,7 +113,8 @@ Missing Label 1 name: 'K'
 Missing Label 2 type: '0'
 Missing Label 2 name: ''
 Binary: 000011101100
-Binary: 0
+Binary: 001000000010
+        001000000010
 
 Line Index: '11'
 Begin Address: '115'
@@ -119,7 +125,8 @@ Missing Label 1 name: 'W'
 Missing Label 2 type: '0'
 Missing Label 2 name: ''
 Binary: 000100101100
-Binary: 0
+Binary: 000000000001
+        000000000001
 
 Line Index: '12'
 Begin Address: '117'
@@ -141,7 +148,7 @@ Symbol address: '100'
 Symbol name: 'W'
 Symbol type: '2'
 Symbol def_line: '2'
-Symbol address: '100'
+Symbol address: '1'
 
 Symbol name: 'MAIN'
 Symbol type: '0'
@@ -156,7 +163,7 @@ Symbol address: '103'
 Symbol name: 'L1'
 Symbol type: '0'
 Symbol def_line: '9'
-Symbol address: '113'
+Symbol address: '454'
 
 Symbol name: 'LOOP'
 Symbol type: '3'
@@ -176,15 +183,15 @@ Symbol address: '118'
 Symbol name: 'LENGTH'
 Symbol type: '5'
 Symbol def_line: '14'
-Symbol address: '125'
+Symbol address: '502'
 
 Symbol name: 'K'
 Symbol type: '1'
 Symbol def_line: '15'
-Symbol address: '128'
+Symbol address: '514'
 
 Symbol name: 'L3'
 Symbol type: '2'
 Symbol def_line: '16'
-Symbol address: '129'
+Symbol address: '1'
 
