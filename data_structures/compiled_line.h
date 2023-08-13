@@ -8,8 +8,8 @@ typedef struct Compiled_Line /* Code section */
     int line_index;
     unsigned int * words;
     int num_of_words;
-    int begin_address;
-    int end_address;
+    unsigned int begin_address;
+    unsigned int end_address;
     enum
     {
         src_label,
