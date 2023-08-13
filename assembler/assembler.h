@@ -17,6 +17,12 @@
 
 #define BASE_ADDRESS 100
 
+typedef struct Object_File 
+{
+    Compiled_Line * data_section;
+    Compiled_Line * code_section;
+    Symbol * symbol_table;
+}Object_File;
 
 /**
  * @brief First move on the am_file.

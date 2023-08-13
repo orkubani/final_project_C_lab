@@ -21,6 +21,7 @@ int first_move(FILE * am_file, const char * am_filename)
     Compiled_Line * current_compiled_line = NULL;
     Symbol * symbol = NULL;
     Symbol * temp_symbol = NULL;
+    Object_File object_file;
     int address = BASE_ADDRESS;
     int line_index = 1;
     unsigned int inst_word = 0;
@@ -211,70 +212,76 @@ int first_move(FILE * am_file, const char * am_filename)
             line_index++;
             continue;
         }
-
-        /* First Move failed */
-        free_symbol_table(symbol);
-        free_compiled_line_table(data_section);
-        free_compiled_line_table(code_section);
-        line_index++;
-        return FALSE;
     } 
+
+    object_file.code_section = code_section;
+    object_file.data_section = data_section;
+    object_file.symbol_table = symbol;
 
     #ifdef DEBUG
 
     fprintf(output_file, "\n############################ data_section ###########################\n");
-    while (data_section != NULL) 
+    while (object_file.data_section != NULL) 
     {
-        fprintf(output_file,"Line Index: '%d'\n",data_section->line_index);
-        fprintf(output_file, "Begin Address: '%d'\n", data_section->begin_address);
-        fprintf(output_file, "End Address: '%d'\n", data_section->end_address);
-        if (data_section->num_of_words > 0)
-        {
-            fprintf(output_file, "Num Of Words: '%d'\n",data_section->num_of_words);
 
-            for(j = 0; j < data_section->num_of_words; j++)
+        if (object_file.data_section->num_of_words > 0)
+        {
+            fprintf(output_file,"Line Index: '%d'\n",object_file.data_section->line_index);
+            fprintf(output_file, "Begin Address: '%d'\n", object_file.data_section->begin_address);
+            fprintf(output_file, "End Address: '%d'\n", object_file.data_section->end_address);         
+            fprintf(output_file, "Num Of Words: '%d'\n", object_file.data_section->num_of_words);
+
+            for(j = 0; j < object_file.data_section->num_of_words; j++)
             {
-                print_file_decimal_to_binary(data_section->words[j], output_file);
+                print_file_decimal_to_binary(object_file.data_section->words[j], output_file);
             }   
         }
         fprintf(output_file, "\n");
-        data_section = data_section->next_compiled_line;
+        object_file.data_section = object_file.data_section->next_compiled_line;
     }
 
     fprintf(output_file, "\n############################ code_section ###########################\n");
-    while (code_section != NULL) 
+    while (object_file.code_section != NULL) 
     {
-        fprintf(output_file, "Line Index: '%d'\n",code_section->line_index);
-        fprintf(output_file, "Begin Address: '%d'\n", code_section->begin_address);
-        fprintf(output_file, "End Address: '%d'\n", code_section->end_address);
-        fprintf(output_file, "Num Of Words: '%d'\n",code_section->num_of_words);
-        fprintf(output_file, "Missing Label 1 type: '%d'\n", code_section->missing_label_op_type[0]);
-        fprintf(output_file, "Missing Label 1 name: '%s'\n", code_section->missing_label[0]);
-        fprintf(output_file, "Missing Label 2 type: '%d'\n", code_section->missing_label_op_type[1]);
-        fprintf(output_file, "Missing Label 2 name: '%s'\n", code_section->missing_label[1]);
-        for(j = 0; j < code_section->num_of_words; j++)
+        fprintf(output_file, "Line Index: '%d'\n",object_file.code_section->line_index);
+        fprintf(output_file, "Begin Address: '%d'\n", object_file.code_section->begin_address);
+        fprintf(output_file, "End Address: '%d'\n", object_file.code_section->end_address);
+        fprintf(output_file, "Num Of Words: '%d'\n",object_file.code_section->num_of_words);
+        fprintf(output_file, "Missing Label 1 type: '%d'\n", object_file.code_section->missing_label_op_type[0]);
+        fprintf(output_file, "Missing Label 1 name: '%s'\n", object_file.code_section->missing_label[0]);
+        fprintf(output_file, "Missing Label 2 type: '%d'\n", object_file.code_section->missing_label_op_type[1]);
+        fprintf(output_file, "Missing Label 2 name: '%s'\n", object_file.code_section->missing_label[1]);
+        for(j = 0; j < object_file.code_section->num_of_words; j++)
         {
-            print_file_decimal_to_binary(code_section->words[j], output_file);
+            print_file_decimal_to_binary(object_file.code_section->words[j], output_file);
         }
 
         fprintf(output_file, "\n");
-        code_section = code_section->next_compiled_line;
+        object_file.code_section = object_file.code_section->next_compiled_line;
     }
 
     fprintf(output_file, "\n############################ symbol_table ###########################\n");
-    while(symbol != NULL)
+    while(object_file.symbol_table != NULL)
     {
-        fprintf(output_file, "Symbol name: '%s'\n", symbol->symbol_name);
-        fprintf(output_file, "Symbol type: '%d'\n", symbol->symbol_opt);
-        fprintf(output_file, "Symbol def_line: '%d'\n", symbol->def_line);
-        fprintf(output_file, "Symbol address: '%d'\n", symbol->address);
+        fprintf(output_file, "Symbol name: '%s'\n", object_file.symbol_table->symbol_name);
+        fprintf(output_file, "Symbol type: '%d'\n", object_file.symbol_table->symbol_opt);
+        fprintf(output_file, "Symbol def_line: '%d'\n", object_file.symbol_table->def_line);
+        fprintf(output_file, "Symbol address: '%d'\n", object_file.symbol_table->address);
 
         fprintf(output_file, "\n");
-        symbol = symbol->next_symbol;
+        object_file.symbol_table = object_file.symbol_table->next_symbol;
     }
-
+    
     fclose(output_file);
     #endif
+
+    /* First Move failed */
+    free_symbol_table(symbol);
+    free_compiled_line_table(data_section);
+    free_compiled_line_table(code_section);
+    line_index++;
+    return FALSE;
+    
 
     return TRUE;
 }

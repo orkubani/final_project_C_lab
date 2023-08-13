@@ -1,16 +1,7 @@
 
 ############################ data_section ###########################
-Line Index: '1'
-Begin Address: '100'
-End Address: '100'
 
-Line Index: '2'
-Begin Address: '100'
-End Address: '100'
 
-Line Index: '10'
-Begin Address: '115'
-End Address: '115'
 
 Line Index: '13'
 Begin Address: '118'
@@ -38,9 +29,6 @@ End Address: '128'
 Num Of Words: '1'
 Binary: 000000010110
 
-Line Index: '16'
-Begin Address: '129'
-End Address: '129'
 
 
 ############################ code_section ###########################
