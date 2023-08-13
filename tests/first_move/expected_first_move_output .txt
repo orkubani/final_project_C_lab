@@ -7,27 +7,27 @@ Line Index: '13'
 Begin Address: '118'
 End Address: '124'
 Num Of Words: '7'
-Binary: 000001100001
-Binary: 000001100010
-Binary: 000001100011
-Binary: 000001100100
-Binary: 000001100101
-Binary: 000001100110
-Binary: 0
+Custom Base64: Bh
+Custom Base64: Bi
+Custom Base64: Bj
+Custom Base64: Bk
+Custom Base64: Bl
+Custom Base64: Bm
+Custom Base64: AA
 
 Line Index: '14'
 Begin Address: '125'
 End Address: '127'
 Num Of Words: '3'
-Binary: 000000000110
-Binary: 111111110111
-Binary: 000000001111
+Custom Base64: AG
+Custom Base64: -AJ
+Custom Base64: AP
 
 Line Index: '15'
 Begin Address: '128'
 End Address: '128'
 Num Of Words: '1'
-Binary: 000000010110
+Custom Base64: AW
 
 
 
@@ -40,9 +40,9 @@ Missing Label 1 type: '0'
 Missing Label 1 name: ''
 Missing Label 2 type: '1'
 Missing Label 2 name: 'LENGTH'
-Binary: 101000001100
-Binary: 000110000000
-Binary: 000111110110
+Custom Base64: oM
+Custom Base64: GA
+Custom Base64: H2
 
 Line Index: '4'
 Begin Address: '103'
@@ -52,8 +52,8 @@ Missing Label 1 type: '1'
 Missing Label 1 name: 'L1'
 Missing Label 2 type: '0'
 Missing Label 2 name: ''
-Binary: 000100101100
-Binary: 000111000110
+Custom Base64: Es
+Custom Base64: HG
 
 Line Index: '5'
 Begin Address: '105'
@@ -63,8 +63,8 @@ Missing Label 1 type: '0'
 Missing Label 1 name: ''
 Missing Label 2 type: '0'
 Missing Label 2 name: ''
-Binary: 000110000100
-Binary: 111111101100
+Custom Base64: GE
+Custom Base64: -AU
 
 Line Index: '6'
 Begin Address: '107'
@@ -74,8 +74,8 @@ Missing Label 1 type: '1'
 Missing Label 1 name: 'W'
 Missing Label 2 type: '0'
 Missing Label 2 name: ''
-Binary: 000101001100
-Binary: 000000000001
+Custom Base64: FM
+Custom Base64: AB
 
 Line Index: '7'
 Begin Address: '109'
@@ -85,8 +85,8 @@ Missing Label 1 type: '0'
 Missing Label 1 name: ''
 Missing Label 2 type: '0'
 Missing Label 2 name: ''
-Binary: 101001110100
-Binary: 000010010000
+Custom Base64: p0
+Custom Base64: CQ
 
 Line Index: '8'
 Begin Address: '111'
@@ -96,8 +96,8 @@ Missing Label 1 type: '1'
 Missing Label 1 name: 'L3'
 Missing Label 2 type: '0'
 Missing Label 2 name: ''
-Binary: 000101001100
-Binary: 000000000001
+Custom Base64: FM
+Custom Base64: AB
 
 Line Index: '9'
 Begin Address: '113'
@@ -107,8 +107,8 @@ Missing Label 1 type: '1'
 Missing Label 1 name: 'K'
 Missing Label 2 type: '0'
 Missing Label 2 name: ''
-Binary: 000011101100
-Binary: 001000000010
+Custom Base64: Ds
+Custom Base64: IC
 
 Line Index: '11'
 Begin Address: '115'
@@ -118,8 +118,8 @@ Missing Label 1 type: '1'
 Missing Label 1 name: 'W'
 Missing Label 2 type: '0'
 Missing Label 2 name: ''
-Binary: 000100101100
-Binary: 000000000001
+Custom Base64: Es
+Custom Base64: AB
 
 Line Index: '12'
 Begin Address: '117'
@@ -129,7 +129,7 @@ Missing Label 1 type: '0'
 Missing Label 1 name: ''
 Missing Label 2 type: '0'
 Missing Label 2 name: ''
-Binary: 000111100000
+Custom Base64: Hg
 
 
 ############################ symbol_table ###########################

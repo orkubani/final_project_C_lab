@@ -161,6 +161,24 @@ void print_file_decimal_to_binary(int decimal, FILE * output_file)
     fprintf(output_file, "\n");
 }
 
+/* Print to an output file a decimal number in base64. */
+void print_file_decimal_to_base64(int decimal, FILE *output_file) 
+{
+    const char base64_chars[BASE64_NUM_OF_CHARS] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+    if (decimal >= 0) 
+    {
+        fprintf(output_file, "Custom Base64: %c%c\n", base64_chars[decimal / 64], base64_chars[decimal % 64]);
+    } 
+    
+    else if (decimal < 0) 
+    {
+        decimal = -decimal;
+        fprintf(output_file, "Custom Base64: -%c%c\n", base64_chars[decimal / 64], base64_chars[decimal % 64]);
+    }
+    
+}
+
 /* Remove a filename suffix */
 void remove_suffix(const char* src_filename, char* dest_filename, const char* suffix) 
 {

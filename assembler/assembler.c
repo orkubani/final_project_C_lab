@@ -4,6 +4,7 @@
 #include <string.h>
 #include "../helpers/assembler_helper.h"
 #include "../file_builder/file_builder.h"
+#define DEBUG
 
 /* First move on the am_file. */
 Object_File first_move(FILE * am_file, const char * am_filename)
@@ -308,7 +309,7 @@ int assembler(FILE * am_file, const char * am_filename)
 
             for(j = 0; j < object_file.data_section->num_of_words; j++)
             {
-                print_file_decimal_to_binary(object_file.data_section->words[j], output_file);
+                print_file_decimal_to_base64(object_file.data_section->words[j], output_file);
             }   
         }
         fprintf(output_file, "\n");
@@ -328,7 +329,7 @@ int assembler(FILE * am_file, const char * am_filename)
         fprintf(output_file, "Missing Label 2 name: '%s'\n", object_file.code_section->missing_label[1]);
         for(j = 0; j < object_file.code_section->num_of_words; j++)
         {
-            print_file_decimal_to_binary(object_file.code_section->words[j], output_file);
+            print_file_decimal_to_base64(object_file.code_section->words[j], output_file);
         }
 
         fprintf(output_file, "\n");

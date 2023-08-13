@@ -11,11 +11,8 @@
 #define MACRO_DEF_STR_LENGTH 4
 #define TRUE 1
 #define FALSE 0
-
+#define BASE64_NUM_OF_CHARS 65 /* Including NULL */
 #define DOT_AM_SUFFIX ".am"
-
-#define SYNTAX_ERROR -2
-#define INVALID_VALUE -3
 
 
 /**
@@ -74,6 +71,14 @@ void print_terminal_decimal_to_binary(int decimal);
  * @param output_file File to print to.
  */
 void print_file_decimal_to_binary(int decimal, FILE * output_file);
+
+/**
+ * @brief Print to an output file a deciaml number in base64.
+ * 
+ * @param decimal int Decimal number to print in base64.
+ * @param output_file File to print to.
+ */
+void print_file_decimal_to_base64(int decimal, FILE *output_file); 
 
 /**
  * @brief Remove a filename suffix.
