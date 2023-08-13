@@ -36,7 +36,7 @@ typedef struct Object_File
 Object_File first_move(FILE * am_file, const char * am_filename);
 
 /**
- * @brief In this move I am going over the code section only to update the symbols' addresses 
+ * @brief This move goes over the code_section only to update the symbols' addresses and to build the extern_calls table.
  *
  * @param object_file Pointer to a struct with: Symbol table, code_section, data_section, entry_table.
  * @return Struct with all the required information to create the following files: '.ob' .ent' '.ext'.

@@ -218,7 +218,7 @@ Object_File first_move(FILE * am_file, const char * am_filename)
     return object_file;
 }
 
-/* In this move I am going over the code section only in order to update the symbols' addresses. */
+/* This move goes over the code_section only to update the symbols' addresses and to build the extern_calls table. */
 Object_File second_move(Object_File object_file)
 {
     int i;
@@ -238,13 +238,14 @@ Object_File second_move(Object_File object_file)
             {
                 original_current_line = get_compiled_line(temp.code_section, object_file.code_section->line_index);
 
+                /* Build extern_calls table */
                 temp_symbol = get_symbol(object_file.symbol_table, object_file.code_section->missing_label[i]);
-
                 if (temp_symbol->symbol_opt == symbol_extern_def)
                 {
                     extern_calls = insert_symbol_to_table(extern_calls, object_file.code_section->missing_label[i], object_file.code_section->line_index, symbol_extern_def, &(object_file.code_section->begin_address) + 1);
                 }   
-                 
+
+                /* Update symbols' addresses */ 
                 current_address = get_symbol_def_address(object_file.symbol_table, object_file.code_section->missing_label[i]); 
                 if (current_address == 0) 
                 {
@@ -259,11 +260,12 @@ Object_File second_move(Object_File object_file)
         object_file.code_section = object_file.code_section->next_compiled_line;
     }
 
+    /* Save the extern_calls table */
     temp.extern_calls = extern_calls;
     return temp;
 }
 
-/* Calls to the first and the second moves and calls to the releavnt methods to create the following files: '.ob' .ent' '.ext'. */
+/* Calls to the first and the second moves and the relevant methods to create the following files: '.ob' .ent' '.ext'. */
 int assembler(FILE * am_file, const char * am_filename)
 {
     
@@ -277,7 +279,7 @@ int assembler(FILE * am_file, const char * am_filename)
     #endif
 
     object_file = first_move(am_file, am_filename);
-    object_file = second_move(object_file); /* Fix the symbols' addresses only. */
+    object_file = second_move(object_file); /* Fix the symbols' addresses and build extern_calls table. */
 
     #ifdef DEBUG
     fprintf(output_file, "\n############################ data_section ###########################\n");
@@ -352,16 +354,14 @@ int assembler(FILE * am_file, const char * am_filename)
         object_file.extern_calls = object_file.extern_calls->next_symbol;
     }
 
-
-
-
     fclose(output_file);
     #endif
 
-    /* Second Move */
 
     /* Backend */
 
+    free(object_file.extern_calls);
+    free(object_file.entry_calls);
     free_symbol_table(object_file.symbol_table);
     free_compiled_line_table(object_file.data_section);
     free_compiled_line_table(object_file.code_section);
