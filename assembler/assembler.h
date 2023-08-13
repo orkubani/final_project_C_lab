@@ -37,15 +37,12 @@ typedef struct Object_File
 Object_File first_move(FILE * am_file, const char * am_filename);
 
 /**
- * @brief Second move to complete all the relvant data to create the following files: '.ob' .ent' '.ext'.
- * 
- * @param am_file Pointer to the am_file.
- * @param am_filename The am filename.
- * @param object_file Pointer to a struct with: Symbol table, code_section, data_section, entry_table.
+ * @brief In this move I am going over the code section only to update the symbols' addresses 
  *
+ * @param object_file Pointer to a struct with: Symbol table, code_section, data_section, entry_table.
  * @return Struct with all the required information to create the following files: '.ob' .ent' '.ext'.
  */
-Object_File second_move(FILE * am_file, const char * am_filename, Object_File * object_file);
+Object_File second_move(Object_File object_file);
 
 /**
  * @brief Calls to the first and the second moves and calls to the releavnt methods to create the following files: '.ob' .ent' '.ext'.

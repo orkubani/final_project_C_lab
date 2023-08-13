@@ -214,25 +214,53 @@ Object_File first_move(FILE * am_file, const char * am_filename)
     object_file.symbol_table = symbol;
     object_file.entry_calls = entry_calls;
 
+    fclose(am_file);
     return object_file;
 }
 
-Object_File second_move(FILE * am_file, const char * am_filename, Object_File * object_file)
+/* In this move I am going over the code section only in order to update the symbols' addresses. */
+Object_File second_move(Object_File object_file)
 {
-    return *object_file;
+    int i;
+    Object_File temp = object_file;
+
+    while (object_file.code_section != NULL) 
+    {
+        Compiled_Line * original_current_line = NULL;
+
+        /* Index '0' of words is the instruction word. Thats why 'num_of_words - 1'. */
+        for(i = 0; i < object_file.code_section->num_of_words - 1; i++)
+        {
+            if (strcmp(object_file.code_section->missing_label[i], "\0") != 0)
+            {
+                original_current_line = get_compiled_line(temp.code_section, object_file.code_section->line_index);
+                original_current_line->words[i + 1] = 1234; /* Index '0' of words is the instruction word. Thats why 'i + 1'*/
+            }
+        }
+
+        object_file.code_section = object_file.code_section->next_compiled_line;
+    }
+
+    return temp;
 }
 
+/* Calls to the first and the second moves and calls to the releavnt methods to create the following files: '.ob' .ent' '.ext'. */
 int assembler(FILE * am_file, const char * am_filename)
 {
-    Object_File object_file;
-    object_file = first_move(am_file, am_filename);
     
+    Object_File object_file;
+
     #ifdef DEBUG
-    char * output_filename = "/mnt/c/Or_Kubani_Openu_CS/2023B/maabada_20476/final_project_C_lab/tests/first_move/first_move_output.txt";
     FILE * output_file;
     int j;
+    char * output_filename = "/mnt/c/Or_Kubani_Openu_CS/2023B/maabada_20476/final_project_C_lab/tests/first_move/first_move_output.txt";
     output_file = fopen(output_filename, "w");
+    #endif
 
+    object_file = first_move(am_file, am_filename);
+    object_file = second_move(object_file); /* Fix the symbols' addresses only. */
+
+    #ifdef DEBUG
     fprintf(output_file, "\n############################ data_section ###########################\n");
     while (object_file.data_section != NULL) 
     {
