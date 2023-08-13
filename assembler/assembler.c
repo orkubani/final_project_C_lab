@@ -268,18 +268,10 @@ Object_File second_move(Object_File object_file)
 /* Calls to the first and the second moves and the relevant methods to create the following files: '.ob' .ent' '.ext'. */
 int assembler(FILE * am_file, const char * am_filename)
 {
-    
     Object_File object_file;
     char entry_filename[MAX_FILE_NAME_LENGTH] = {0};
     char extern_filename[MAX_FILE_NAME_LENGTH] = {0};
     char ob_filename[MAX_FILE_NAME_LENGTH] = {0};
-
-    #ifdef DEBUG
-    FILE * output_file;
-    int j;
-    char * output_filename = "/mnt/c/Or_Kubani_Openu_CS/2023B/maabada_20476/final_project_C_lab/tests/first_move/first_move_output.txt";
-    output_file = fopen(output_filename, "w");
-    #endif
 
     object_file = first_move(am_file, am_filename);
     object_file = second_move(object_file); /* Fix the symbols' addresses and build extern_calls table. */
@@ -298,85 +290,6 @@ int assembler(FILE * am_file, const char * am_filename)
     
     remove_suffix(am_filename, ob_filename, DOT_OB_SUFFIX);
     build_ob_file(ob_filename, object_file.code_section, object_file.data_section);
-
-    #ifdef DEBUG
-    fprintf(output_file, "\n############################ data_section ###########################\n");
-    while (object_file.data_section != NULL) 
-    {
-
-        if (object_file.data_section->num_of_words > 0)
-        {
-            fprintf(output_file,"Line Index: '%d'\n",object_file.data_section->line_index);
-            fprintf(output_file, "Begin Address: '%d'\n", object_file.data_section->begin_address);
-            fprintf(output_file, "End Address: '%d'\n", object_file.data_section->end_address);         
-            fprintf(output_file, "Num Of Words: '%d'\n", object_file.data_section->num_of_words);
-
-            for(j = 0; j < object_file.data_section->num_of_words; j++)
-            {
-                print_file_decimal_to_base64(object_file.data_section->words[j], output_file);
-            }   
-        }
-        fprintf(output_file, "\n");
-        object_file.data_section = object_file.data_section->next_compiled_line;
-    }
-
-    fprintf(output_file, "\n############################ code_section ###########################\n");
-    while (object_file.code_section != NULL) 
-    {
-        fprintf(output_file, "Line Index: '%d'\n",object_file.code_section->line_index);
-        fprintf(output_file, "Begin Address: '%d'\n", object_file.code_section->begin_address);
-        fprintf(output_file, "End Address: '%d'\n", object_file.code_section->end_address);
-        fprintf(output_file, "Num Of Words: '%d'\n",object_file.code_section->num_of_words);
-        fprintf(output_file, "Missing Label 1 type: '%d'\n", object_file.code_section->missing_label_op_type[0]);
-        fprintf(output_file, "Missing Label 1 name: '%s'\n", object_file.code_section->missing_label[0]);
-        fprintf(output_file, "Missing Label 2 type: '%d'\n", object_file.code_section->missing_label_op_type[1]);
-        fprintf(output_file, "Missing Label 2 name: '%s'\n", object_file.code_section->missing_label[1]);
-        for(j = 0; j < object_file.code_section->num_of_words; j++)
-        {
-            print_file_decimal_to_base64(object_file.code_section->words[j], output_file);
-        }
-
-        fprintf(output_file, "\n");
-        object_file.code_section = object_file.code_section->next_compiled_line;
-    }
-
-    fprintf(output_file, "\n############################ symbol_table ###########################\n");
-    while(object_file.symbol_table != NULL)
-    {
-        fprintf(output_file, "Symbol name: '%s'\n", object_file.symbol_table->symbol_name);
-        fprintf(output_file, "Symbol type: '%d'\n", object_file.symbol_table->symbol_opt);
-        fprintf(output_file, "Symbol def_line: '%d'\n", object_file.symbol_table->def_line);
-        fprintf(output_file, "Symbol address: '%d'\n", object_file.symbol_table->address);
-
-        fprintf(output_file, "\n");
-        object_file.symbol_table = object_file.symbol_table->next_symbol;
-    }
-
-    fprintf(output_file, "\n############################ entry_calls ###########################\n");
-    while (object_file.entry_calls != NULL) 
-    {
-        fprintf(output_file, "Symbol name: '%s'\n", object_file.entry_calls->symbol_name);
-        fprintf(output_file, "Symbol address: '%d'\n ", object_file.entry_calls->address);
-
-        fprintf(output_file, "\n");
-        object_file.entry_calls = object_file.entry_calls->next_symbol;
-    }
-
-    fprintf(output_file, "\n############################ extern_calls ###########################\n");
-    while (object_file.extern_calls != NULL) 
-    {
-        fprintf(output_file, "Symbol name: '%s'\n", object_file.extern_calls->symbol_name);
-        fprintf(output_file, "Symbol address: '%d'\n ", object_file.extern_calls->address);
-        
-        fprintf(output_file, "\n");
-        object_file.extern_calls = object_file.extern_calls->next_symbol;
-    }
-
-    fclose(output_file);
-    #endif
-
-
-    /* Backend */
 
     free(object_file.extern_calls);
     free(object_file.entry_calls);
