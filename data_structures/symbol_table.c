@@ -4,7 +4,7 @@
 
 
 /* Creates symbol Node */
-Symbol * create_symbol(char * symbol_name, unsigned int def_line, int symbol_opt, int * address)
+Symbol * create_symbol(char * symbol_name, unsigned int def_line, int symbol_opt, unsigned int * address)
 {
     Symbol * symbol = NULL;
     symbol = (Symbol *)calloc(1, sizeof(Symbol));
@@ -24,7 +24,7 @@ Symbol * create_symbol(char * symbol_name, unsigned int def_line, int symbol_opt
 }
 
 /* Inserts a new symbol into the symbol table table. */
-Symbol * insert_symbol_to_table(Symbol *symbol, char * symbol_name, unsigned int def_line, int symbol_opt, int * address)
+Symbol * insert_symbol_to_table(Symbol *symbol, char * symbol_name, unsigned int def_line, int symbol_opt, unsigned int * address)
 {
    if (symbol == NULL) 
    {
@@ -56,6 +56,26 @@ Symbol * get_symbol(Symbol *symbol, char * symbol_name)
 
     return NULL;
 }
+
+/* Get "entry" symbols that are using as a start point. */
+Symbol * get_entry_calls(Symbol * symbol_table, Symbol * entry_calls)
+{
+    Symbol * temp = symbol_table;
+
+    while (temp != NULL) 
+    {
+        if (temp->symbol_opt == symbol_entry_code || temp->symbol_opt == symbol_entry_data) 
+        {
+            entry_calls = insert_symbol_to_table(entry_calls, temp->symbol_name,
+             temp->def_line, temp->symbol_opt, &(temp->address));
+        }
+
+        temp = temp->next_symbol;
+    }
+
+    return entry_calls;
+}
+
 
 /* Frees the memory allocated for a given symbol. */
 void free_symbol(Symbol *symbol) 

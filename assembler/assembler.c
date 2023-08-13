@@ -21,8 +21,10 @@ int first_move(FILE * am_file, const char * am_filename)
     Compiled_Line * current_compiled_line = NULL;
     Symbol * symbol = NULL;
     Symbol * temp_symbol = NULL;
+    Symbol * entry_calls = NULL;
+    Symbol * extern_calls = NULL;
     Object_File object_file;
-    int address = BASE_ADDRESS;
+    unsigned int address = BASE_ADDRESS;
     int line_index = 1;
     unsigned int inst_word = 0;
 
@@ -214,9 +216,11 @@ int first_move(FILE * am_file, const char * am_filename)
         }
     } 
 
+    entry_calls = get_entry_calls(symbol, entry_calls);
     object_file.code_section = code_section;
     object_file.data_section = data_section;
     object_file.symbol_table = symbol;
+    object_file.entry_calls = entry_calls;
 
     #ifdef DEBUG
 

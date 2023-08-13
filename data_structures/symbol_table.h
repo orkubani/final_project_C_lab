@@ -32,7 +32,7 @@ typedef struct Symbol
  * @param address The address of the label.
  * @return Pointer to the Symbol Node. 
  */
-Symbol * create_symbol(char * symbol_name, unsigned int def_line, int symbol_opt, int * address);
+Symbol * create_symbol(char * symbol_name, unsigned int def_line, int symbol_opt, unsigned int * address);
 
 /**
  * @brief Inserts a new symbol into the symbol table table.
@@ -44,7 +44,7 @@ Symbol * create_symbol(char * symbol_name, unsigned int def_line, int symbol_opt
  * @param address The address of the label.
  * @return Pointer to the Symbol Table.
  */
-Symbol * insert_symbol_to_table(Symbol *symbol, char * symbol_name, unsigned int def_line, int symbol_opt, int * address);
+Symbol * insert_symbol_to_table(Symbol *symbol, char * symbol_name, unsigned int def_line, int symbol_opt, unsigned int * address);
 
 /**
  * @brief Searches for a symbol with the symbol_name into the symbol table.
@@ -55,6 +55,14 @@ Symbol * insert_symbol_to_table(Symbol *symbol, char * symbol_name, unsigned int
  */
 Symbol * get_symbol(Symbol *symbol, char * symbol_name);
 
+/**
+ * @brief Get "entry" symbols that are using as a start point.
+ * 
+ * @param symbol_table The symbol table.
+ * @param entry_calls The entry calls table.
+ * @return Pointer to the entry calls table.
+ */
+Symbol * get_entry_calls(Symbol * symbol_table, Symbol * entry_calls);
 
 /**
  * @brief Frees the memory allocated for a given symbol.

@@ -5,7 +5,7 @@
 
 
 /* Create "compiled instruction" / "compile directive" Node */
-Compiled_Line * create_compiled_line(int line_index, int * begin_address)
+Compiled_Line * create_compiled_line(int line_index, unsigned int * begin_address)
 {
     Compiled_Line * compiled_inst = NULL;
     compiled_inst = (Compiled_Line *)calloc(1, sizeof(Compiled_Line));
@@ -28,7 +28,7 @@ Compiled_Line * create_compiled_line(int line_index, int * begin_address)
 }
 
 /* Inserts a new compiled_line with the given line_index into the compiled_line table. */
-Compiled_Line * insert_compiled_line_to_table(Compiled_Line *compiled_line, int line_index, int * begin_address)
+Compiled_Line * insert_compiled_line_to_table(Compiled_Line *compiled_line, int line_index, unsigned int * begin_address)
 {
    if (compiled_line == NULL) 
    {
@@ -62,7 +62,7 @@ Compiled_Line * get_compiled_line(Compiled_Line *compiled_line, int line_index)
 }
 
 /* Inserts a new word into the words array of the given Compiled_Line. */
-void insert_word(Compiled_Line *compiled_line, unsigned int word, int * address)
+void insert_word(Compiled_Line *compiled_line, unsigned int word, unsigned int * address)
 {
     compiled_line->num_of_words += 1;
     compiled_line->words = (unsigned int *)realloc(compiled_line->words, compiled_line->num_of_words * sizeof(unsigned int));

@@ -6,7 +6,7 @@
 
 
 /* Set extra word for instruction based on the operand type. */
-void set_inst_extra_words(Analyzed_line analyzed_line, Compiled_Line * compiled_line, int num_of_operands, int * address)
+void set_inst_extra_words(Analyzed_line analyzed_line, Compiled_Line * compiled_line, int num_of_operands, unsigned int * address)
 {
     unsigned int extra_word = 0;
     int i;

@@ -28,7 +28,7 @@ typedef struct Compiled_Line /* Code section */
  * @param begin_address for the new compiled_line
  * @return Pointer to the compiled_line Node.
  */
-Compiled_Line * create_compiled_line(int line_index, int * begin_address);
+Compiled_Line * create_compiled_line(int line_index, unsigned int * begin_address);
 
 /**
  * @brief Inserts a new compiled_line with the given line_index into the compiled_line.
@@ -38,7 +38,7 @@ Compiled_Line * create_compiled_line(int line_index, int * begin_address);
  * @param begin_address for the new compiled_line
  * @return Pointer to the compiled_line Node.
  */
-Compiled_Line * insert_compiled_line_to_table(Compiled_Line *compiled_line, int line_index, int *begin_address);
+Compiled_Line * insert_compiled_line_to_table(Compiled_Line *compiled_line, int line_index, unsigned int *begin_address);
 
 /**
  * @brief Searches for a Compiled_Line with the line_index into the compiled_line table.
@@ -56,7 +56,7 @@ Compiled_Line * get_compiled_line(Compiled_Line *compiled_line, int line_index);
  * @param compiled_line Pointer to the compiled_line to add the word to.
  * @param address for the new word.
  */
-void insert_word(Compiled_Line *compiled_line, unsigned int word, int * address);
+void insert_word(Compiled_Line *compiled_line, unsigned int word, unsigned int * address);
 
 /**
  * @brief Frees the memory allocated for the given Compiled_Line and its associated Words.

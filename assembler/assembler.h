@@ -22,6 +22,8 @@ typedef struct Object_File
     Compiled_Line * data_section;
     Compiled_Line * code_section;
     Symbol * symbol_table;
+    Symbol * entry_calls;
+    Symbol * extern_calls;
 }Object_File;
 
 /**

@@ -11,7 +11,7 @@
  * @param operand_i operand dest/src.
  * @param address for the new words
  */
-void set_inst_extra_words(Analyzed_line analyzed_line, Compiled_Line * compiled_line, int num_of_operands, int * address);
+void set_inst_extra_words(Analyzed_line analyzed_line, Compiled_Line * compiled_line, int num_of_operands, unsigned int * address);
 
 /**
  * @brief Generate assembler warning.
