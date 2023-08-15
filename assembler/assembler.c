@@ -239,7 +239,14 @@ Object_File second_move(Object_File object_file)
 
                 /* Build extern_calls table */
                 temp_symbol = get_symbol(object_file.symbol_table, object_file.code_section->missing_label[i]);
-                if (temp_symbol->symbol_opt == symbol_extern_def)
+                
+                if (temp_symbol == NULL) 
+                {
+                    printf("Can't find the label: '%s' in the Symbol Table\n", object_file.code_section->missing_label[i]);
+                    assembler_error(object_file.code_section->line_index);
+                }
+
+                else if (temp_symbol->symbol_opt == symbol_extern_def)
                 {
                     extern_calls = insert_symbol_to_table(extern_calls, object_file.code_section->missing_label[i], object_file.code_section->line_index, symbol_extern_def, &(object_file.code_section->begin_address) + 1);
                 }   
@@ -249,7 +256,7 @@ Object_File second_move(Object_File object_file)
                 if (current_address == 0) 
                 {
                     printf("Can't find the address of the label: '%s' in the Symbol Table\n", object_file.code_section->missing_label[i]);
-                    assembler_error(temp.code_section->line_index);
+                    assembler_error(object_file.code_section->line_index);
                 }
 
                 original_current_line->words[i + 1] = current_address; /* Index '0' of words is the instruction word. Thats why 'i + 1'*/
