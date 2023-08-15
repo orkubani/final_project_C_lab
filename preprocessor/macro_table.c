@@ -57,14 +57,22 @@ Macro * get_macro(Macro * macro, const char * macro_name)
 }
 
 /* Inserts a new line into the lines array of the given macro. */
-void insert_macro_line(Macro * macro, const char *line)
+void insert_macro_line(Macro *macro, const char *line)
 {
+    macro->lines = realloc(macro->lines, (macro->num_of_lines + 1) * sizeof(char *));
+    if (macro->lines == NULL)
+    {
+        printf("Memory allocation failed for the macro's lines.\n");
+        exit(0);
+    }
+
     macro->lines[macro->num_of_lines] = calloc(MAX_LINE_LENGTH, sizeof(char));
     if (macro->lines[macro->num_of_lines] == NULL)
     {
         printf("Memory allocation failed for a new macro's line.\n");
         exit(0);
     }
+
     strcpy(macro->lines[macro->num_of_lines], line);
     macro->num_of_lines += 1;
 }
