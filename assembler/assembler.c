@@ -33,9 +33,8 @@ Object_File first_move(FILE * am_file, const char * am_filename)
         /* Check For Syntax Error */
         if (is_valid_analyzed_line(&analyzed_line) == FALSE)
         {
-            printf("Error in line '%d'! %s\n", line_index, analyzed_line.syntax_error);
-            line_index++;
-            continue;
+            printf("%s\n", analyzed_line.syntax_error);
+            assembler_error(line_index);
         }
 
         /* Add main label to the symbol table */
