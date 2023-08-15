@@ -5,6 +5,8 @@
 #include <string.h>
 
 
+/* exe file path: "build/bin/main" */
+
 int main(int argc, char **argv)
 {
     int i;
