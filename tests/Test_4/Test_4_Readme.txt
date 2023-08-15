@@ -4,6 +4,8 @@ This Test checks a scenario when "mov" inst is written with a single operand
 Expected result:
 
 Valid "am.file"  - V
+Indication Error - V (Terminal)
+
 "ent.file"       - X
 "ext.file"       - X
 "ob.file"        - X
