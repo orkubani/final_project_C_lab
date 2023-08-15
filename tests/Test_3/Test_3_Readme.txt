@@ -1,4 +1,4 @@
-This Test is based on the as file from the assigment (ps.as).
+The as file contains the same content as Test_1 but with white spaces and blank lines.
 
 Expected result:
 
