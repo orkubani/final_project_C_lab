@@ -1,4 +1,4 @@
-This tester is based on the as file from the assigment (ps.as).
+This Test is based on the as file from the assigment (ps.as).
 
 Expected result:
 
