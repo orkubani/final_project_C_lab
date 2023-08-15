@@ -13,14 +13,25 @@ int main(int argc, char **argv)
     {
         FILE * am_file;
         char * am_filename = (char*)calloc(MAX_FILE_NAME_LENGTH, sizeof(char));
-        if (am_filename) 
-            am_filename = process_as_file(argv[i]);
 
-        am_file = fopen(am_filename, "r");
-        if (am_file) 
+        if (am_filename == NULL) 
         {
-            assembler(am_file, am_filename);
+            printf("Memory allocation failed for am_filename.\n");
+            exit(0);
         }
+
+        am_filename = process_as_file(argv[i]);
+
+        am_file = fopen(am_filename, "r"); /* Closed in the assembler() */
+
+        if (am_file == NULL) 
+        {
+            printf("Failed open am_file.\n");
+            exit(0);
+        }
+
+        assembler(am_file, am_filename);
+        free(am_filename);
     }
 
     return 0;
