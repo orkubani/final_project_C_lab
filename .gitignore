@@ -5,3 +5,4 @@
 tests/*.am
 analyzer/*.o
 tests/Tester_code.c
+tests/Test_1/expected_ob.txt
